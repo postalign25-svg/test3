@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>논문 요약 - 전민 연구 기록</title>
+<meta name="description" content="전민 연구 기록의 논문 요약 페이지. 질문, 결론, 핵심 수치, 자료와 방법, 논문이 밝힌 한계를 한 장에 정리했습니다.">
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* 논문 요약 페이지(B 등급 공통)에만 쓰는 규칙 */
+.basis{font-size:13.5px;color:var(--meta);margin:14px 0 0}
+.post-link{margin:18px 0 0;font-size:15.5px}
+.links{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:15px;margin:0}
+.en-title{font-size:15px;color:var(--ink-2);margin:0 0 14px;line-height:1.6}
+</style>
+</head>
+<body>
+<header class="top" data-root=""></header>
+
+<main class="post"><div class="wrap" id="paper">
+  <!-- 아래 내용은 주소의 ?id=로 CATALOG.PAPERS에서 찾아 그린다 -->
+  <section class="hero"><p class="eyebrow">논문 요약</p><h1>논문을 불러오는 중입니다</h1></section>
+</div></main>
+
+<script src="assets/catalog.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const C=window.CATALOG,S=window.SITE,esc=S.esc,host=document.getElementById('paper');
+const id=new URLSearchParams(location.search).get('id')||'';
+const p=C.PAPERS.find(x=>x.id===id);
+const TOPIC=Object.fromEntries(C.TOPICS.map(t=>[t.id,t]));
+
+/* 없는 id: 친절한 빈 상태 */
+if(!p){
+  document.title='논문을 찾지 못했습니다 - 전민 연구 기록';
+  const recent=C.PAPERS.filter(x=>x.tier!=='C').slice(0,5);
+  host.innerHTML=`<section class="hero"><p class="eyebrow">논문 요약</p><h1>이 주소의 논문을 찾지 못했습니다</h1>
+  <p class="lede">주소가 바뀌었거나 목록에서 빠진 논문일 수 있습니다. 논문 전체 목록에서 제목이나 학술지로 찾아 주세요.</p>
+  <p class="links"><a href="./#papers">논문 전체에서 찾기</a><a href="./">처음으로</a></p></section>
+  <h2>최근 논문</h2><ul>${recent.map(x=>`<li><a href="${esc(S.href(x,''))}">${esc(x.title_ko||x.title)}</a> <span class="note">${esc(x.venue||'')}, ${x.year||''}</span></li>`).join('')}</ul>`;
+  return;
+}
+
+const title=p.title_ko||p.title;
+document.title=title+' - 전민 연구 기록';
+const topics=p.topics.map(t=>S.topicShort[t]||(TOPIC[t]&&TOPIC[t].name_ko)).filter(Boolean);
+const cite=[(p.authors||[]).join(', '),p.title,[p.venue,[p.year,p.volume].filter(Boolean).join(';')+(p.pages?':'+p.pages:'')].filter(Boolean).join('. '),p.doi?'doi:'+p.doi:''].filter(Boolean).join('. ')+'.';
+const isPost=p.tier==='A'&&p.slug;
+
+/* 핵심 수치: 데이터에 있는 값만. 0~1 성능 지표와 신뢰구간이 있는 오즈비는 눈금으로 */
+const num=v=>typeof v==='number'?v:(typeof v==='string'&&/^-?\d+(\.\d+)?$/.test(v.trim())?+v:null);
+const PERF=/AUROC|AUC|AUPRC|MCC|F1|정확도|민감도|특이도|accuracy|sensitivity|specificity/i;
+function krGauge(k){
+  const v=num(k.value); if(v==null)return '';
+  const cv=k.comparator?num(k.comparator.value):null;
+  if(PERF.test(k.label||'')&&v>=0&&v<=1&&(cv==null||(cv>=0&&cv<=1))){
+    const pts=[{v,label:`${k.label} ${k.value}`}];
+    if(cv!=null)pts.unshift({v:cv,ref:1,label:`${k.comparator.label||'비교'} ${k.comparator.value}`});
+    return S.gauge({min:0,max:1,ticks:[0,.25,.5,.75,1],pts},`${k.label} ${k.value}`);
+  }
+  const ci=String(k.ci||'').match(/(-?\d+(?:\.\d+)?)\s*[-–~]\s*(-?\d+(?:\.\d+)?)/);
+  if(/\bOR\b|오즈|HR\b|위험비/.test(k.label||'')&&ci){
+    const lo=+ci[1],hi=+ci[2]; if(!(lo<=v&&v<=hi))return '';
+    const a=Math.min(lo,1),b=Math.max(hi,1),pad=(b-a)*.15||.1,min=+(a-pad).toFixed(3),max=+(b+pad).toFixed(3);
+    return S.gauge({min,max,ticks:[+min.toFixed(2),1,+max.toFixed(2)],ci:[lo,hi],pts:[{v:1,ref:1,label:'1: 관련 없음'},{v,label:`${k.label} ${k.value} (95% 신뢰구간 ${k.ci})`}]},`${k.label} ${k.value}`);
+  }
+  return '';
+}
+const KR=(p.key_results||[]).filter(k=>k&&k.label&&k.value!=null&&k.value!=='');
+const krHtml=KR.length?`<h2 id="results">핵심 수치</h2><div class="kr">${KR.map(k=>`<div><span class="k-label">${esc(k.label)}</span><span class="k-val">${esc(k.value)}</span>
+  ${k.ci||k.comparator?`<span class="k-sub">${k.ci?(/\d\s*[-–~]\s*\d/.test(k.ci)?'95% 신뢰구간 '+esc(k.ci):esc(k.ci)):''}${k.ci&&k.comparator?', ':''}${k.comparator?esc((k.comparator.label||'비교')+' '+k.comparator.value):''}</span>`:''}${krGauge(k)}</div>`).join('')}</div>`:'';
+
+const d=p.data||{};
+const facts=[
+  ['자료',[d.source,d.n,d.period].filter(Boolean).map(esc).join('<br>')],
+  ['설계',esc(p.design||'')],
+  ['방법',p.methods&&p.methods.length?`<ul>${p.methods.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''],
+  ['검증',p.validation&&p.validation.length?esc(p.validation.join(', ')):'']
+].filter(f=>f[1]);
+
+const basisNote=p.source_basis==='abstract'||p.source_basis==='web_abstract'?'<p class="basis">초록을 바탕으로 정리했습니다.</p>':'';
+host.innerHTML=`<section class="hero">
+  <p class="eyebrow">논문 요약${topics.length?': '+esc(topics.join(', ')):''}</p>
+  <h1>${esc(title)}</h1>
+  ${p.title_ko&&p.title?`<p class="en-title">${esc(p.title)}</p>`:''}
+  ${p.question?`<p class="lede">${esc(p.question)}</p>`:''}
+  <p class="meta">${esc([p.venue,p.year].filter(Boolean).join(', '))}${p.volume?` ${esc(p.volume)}`:''}${p.pages?`:${esc(p.pages)}`:''}</p>
+  ${isPost?`<p class="post-link"><a href="posts/${esc(p.slug)}.html">이 논문의 인터랙티브 해설 읽기</a></p>`:''}
+  ${basisNote}
+</section>
+${p.motivation?`<h2 id="why">왜 필요했나</h2><p>${esc(p.motivation)}</p>`:''}
+${krHtml}
+${facts.length?`<h2 id="how">자료와 방법</h2><dl class="facts">${facts.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`:''}
+${p.limitations&&p.limitations.length?`<h2 id="limits">논문이 밝힌 한계</h2><ul>${p.limitations.map(l=>`<li>${esc(l)}</li>`).join('')}</ul>`:''}
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">${esc(cite)}</p>
+  <p class="links">${p.doi?`<a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">DOI ${esc(p.doi)}</a>`:''}${p.pmid?`<a href="https://pubmed.ncbi.nlm.nih.gov/${esc(p.pmid)}/" target="_blank" rel="noopener">PubMed ${esc(p.pmid)}</a>`:''}</p>
+  <p>이 요약은 원문을 바탕으로 정리했습니다. 수치와 표현은 원문을 확인해 주세요.</p>
+</footer>`;
+
+if(p.tier==='C'){
+  host.querySelector('.hero').insertAdjacentHTML('beforeend','<p class="basis">이 논문은 목록에만 올려 두었습니다. 자세한 내용은 원문을 확인해 주세요.</p>');
+}
+const hero=host.querySelector('.hero');
+const c=S.concl(p,{root:''}); if(c)hero.after(c);
+if(p.need){const sc=document.createElement('section');hero.after(sc);S.scene(p,sc)}
+const cn=S.connect(p,{root:''}); if(cn)host.querySelector('footer').before(cn);
+})();
+</script>
+</body>
+</html>

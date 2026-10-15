@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>얼굴 영상 심박변이도로 우울 선별 - 전민 연구 기록</title>
+<meta name="description" content="웹캠 얼굴 영상에서 비접촉으로 잰 심박변이도와 간단한 인구학 정보로 우울 증상을 가려낸 연구(Translational Psychiatry, 2026)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line-2);margin:0 0 14px}
+.steps button{border:0;border-left:1px solid var(--line-2);background:var(--surface);padding:9px 6px;font-size:13.5px;line-height:1.35;color:var(--ink-2);border-radius:var(--r)}
+.steps button:first-child{border-left:0}
+.steps button b{display:block;font-family:var(--num);font-weight:500;font-size:12px;color:var(--meta)}
+.steps button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.steps button[aria-pressed="true"] b{color:var(--bg)}
+.wave{display:block;width:100%;height:120px;background:var(--bg)}
+.wave .w-raw{fill:none;stroke:var(--meta);stroke-width:1.2}
+.wave .w-sig{fill:none;stroke:var(--signal);stroke-width:1.8}
+.wave .w-pk{fill:var(--ink)}
+.wave .w-rr{stroke:var(--ink);stroke-width:1}
+.wave .w-roi{fill:none;stroke:var(--ink);stroke-dasharray:4 3}
+.wave .w-face{fill:none;stroke:var(--line-2);stroke-width:1.5}
+.step-text{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.cmp{display:grid;grid-template-columns:110px minmax(0,1fr) 150px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 11px;font-size:13.5px;border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:96px minmax(0,1fr) 128px;gap:12px;align-items:center;padding:6px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-axis{display:grid;grid-template-columns:96px minmax(0,1fr) 128px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.shap{list-style:none;margin:0;padding:0;counter-reset:r;border-top:1px solid var(--line)}
+.shap li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:15px;transition:opacity .15s}
+.shap li .rk{font-family:var(--num);font-size:13px;color:var(--meta)}
+.shap li .kd{font-size:13px;color:var(--meta)}
+.shap li.dim{opacity:.35}
+.shap li.on .nm{font-weight:600}
+.bars{display:grid;gap:6px;margin-top:4px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.bar .bn small{display:block;font-size:12px;color:var(--meta);font-family:var(--num)}
+.bar .bt{position:relative;height:16px;background:var(--tint)}
+.bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.bar.hi .bf{background:var(--signal)}
+.bar .bv{font-family:var(--num);font-size:13px;text-align:right}
+.bar.hi .bv{color:var(--signal-ink)}
+.bar-ticks{display:grid;grid-template-columns:150px minmax(0,1fr) 52px;gap:10px;margin-top:2px}
+.bar-ticks div{position:relative;height:16px}
+.bar-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta)}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+@media (max-width:640px){
+  .steps{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .steps button{font-size:11.5px;padding:8px 2px}
+  .cmp{grid-template-columns:72px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .fp-row,.fp-axis{grid-template-columns:70px minmax(0,1fr) 92px;gap:8px;font-size:13px}
+  .fp-row .fp-val{font-size:11.5px}
+  .bar,.bar-ticks{grid-template-columns:96px minmax(0,1fr) 44px;gap:8px;font-size:13px}
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 디지털 표현형, 우울 선별</p>
+  <h1>카메라에 비친 얼굴에서 심장 박동의 리듬을 읽어, 우울 증상을 가려낼 수 있을까요?</h1>
+  <p class="lede">심장은 일정한 박자로 뛰지 않습니다. 박동과 박동 사이의 간격은 조금씩 늘었다 줄었다 하고, 이 흔들림을 <span class="term" data-tip="Heart rate variability. 연속한 심장 박동 사이 간격이 얼마나 변하는지를 나타내는 값. 자율신경계 활동의 지표로 쓰인다.">심박변이도</span>라고 부릅니다. 우울증이 있는 사람은 심박변이도가 낮은 경향이 있다고 알려져 있습니다. 이 연구는 그 심박변이도를 몸에 아무것도 붙이지 않고, 웹캠으로 찍은 얼굴 영상에서 재 보았습니다. 그리고 1,453명의 자료로 우울 증상이 있는 사람을 얼마나 가려낼 수 있는지 확인했습니다.</p>
+  <p class="meta">원문: Jhon M, Kim J-W 외. Translational Psychiatry 16:49, 2026<br>읽는 데 약 12분, 직접 눌러 보는 요소 5개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>전남대병원과 화순전남대병원의 진단 횡단 연구에서 얼굴 영상과 우울 척도(PHQ-9)를 모두 가진 <b>1,453명</b>을 분석했습니다. PHQ-9 5점 이상인 559명을 우울 증상군으로 보았습니다.</li>
+    <li>얼굴 피부색의 미세한 변화에서 맥박을 읽어 심박변이도를 계산했습니다. 우울 증상군은 평균 심박수가 조금 높고(중앙값 75.4 대 73.9 bpm) 여러 심박변이도 지표가 낮았습니다.</li>
+    <li>네 가지 모델을 쌓은 스태킹 모델의 가장 좋은 판별은 <b>AUROC 0.64</b>(AUPRC 0.45, MCC 0.21)였습니다. 심박변이도만으로는 약했고, 흡연, 성별, 동반 질환 같은 인구학 정보에 더했을 때 성능이 조금 나아졌습니다.</li>
+    <li>논문은 이 방법을 진단이 아니라 <b>선별의 첫 단계</b>로 쓸 수 있는 가능성으로 보고, 조명과 움직임 같은 환경 잡음, 자기보고 척도, 한국 임상 표본이라는 한계를 함께 밝힙니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>1,453명</b><span>분석한 참여자(우울 증상군 559명)</span></div>
+  <div class="stat"><b>0.64</b><span>스태킹 모델의 가장 좋은 판별(AUROC)</span></div>
+  <div class="stat"><b>1.023</b><span>평균 심박수 1 bpm당 우울 증상의 보정 오즈비</span></div>
+  <div class="stat"><b>0.65</b><span>비만(BMI 30 이상) 하위집단의 MCC</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 카메라였을까요</a></li>
+    <li><a href="#how">얼굴 영상에서 심박변이도를 재는 법</a></li>
+    <li><a href="#diff">우울 증상군의 심박은 어떻게 달랐을까요</a></li>
+    <li><a href="#model">모델은 얼마나 가려냈을까요</a></li>
+    <li><a href="#sub">누구에게서 더 잘 맞았을까요</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 카메라였을까요</h2>
+<p>우울증은 흔하지만 진단되지 않고 지나가는 경우가 많습니다. 논문은 그 이유로 낮은 건강 정보 이해력, 사회적 낙인, 치료 관계에 대한 불신을 꼽습니다. 그래서 스스로 말하지 않아도 쓸 수 있는 객관적이고 넓게 쓸 수 있는 선별 도구가 필요하다고 봅니다.</p>
+<p>심박변이도는 그 후보 가운데 하나입니다. 심박변이도는 <span class="term" data-tip="숨쉬기, 심장 박동, 소화처럼 의지와 상관없이 몸을 조절하는 신경계. 긴장할 때와 쉴 때의 균형을 맡는다.">자율신경계</span> 활동을 숫자로 보여 주고, 여러 메타분석에서 주요우울장애가 있는 사람의 심박변이도가 더 낮았습니다. 하지만 실제로 심박변이도로 우울 증상을 가려내려던 연구는 표본이 작거나 통제된 실험실에서 이뤄졌고, 손목 웨어러블은 움직임 같은 일상의 잡음에 흔들렸습니다. 논문이 인용한 한 웨어러블 연구에서 중등도 우울 증상을 가린 AUROC는 0.56이었습니다.</p>
+<div class="callout"><p><b>비유:</b> 맥박을 재려고 손목에 시계를 채우면, 시계를 찬 사람이 걷고 손을 흔들 때마다 기록이 흔들립니다. 얼굴은 다릅니다. 가만히 앉아 카메라를 보는 몇 분이면, 피부 아래 혈관을 지나는 피의 양이 바뀌면서 생기는 아주 작은 색 변화가 영상에 남습니다. 이 연구는 그 색 변화를 맥박으로 바꿔 읽었습니다.</p></div>
+
+<h2 id="how">2. 얼굴 영상에서 심박변이도를 재는 법</h2>
+<p>자료는 2021년 8월 2일부터 2023년 10월 1일까지 전남대병원과 화순전남대병원에서 모은 진단 횡단 연구에서 왔습니다. <span class="term" data-tip="특정 진단명별로 나누지 않고, 여러 진단에 공통인 증상과 과정을 함께 보는 연구 방식. 이 연구는 진단과 상관없이 우울 증상의 정도로만 집단을 나눴다.">진단 횡단</span> 연구라서 집단은 진단명이 아니라 우울 증상의 정도로 나눴습니다.</p>
+<ul class="flow" aria-label="참여자 흐름">
+  <li><b>2,021명</b><span>처음 모집(정신과 진단군 790명, 진단 없는 군 1,231명)</span></li>
+  <li><b>568명</b><span>얼굴 영상 심박변이도 등 정보가 빠져 제외</span></li>
+  <li><b>1,453명</b><span>분석에 포함</span></li>
+  <li><b>559명</b><span>우울 증상군: <span class="term" data-tip="Patient Health Questionnaire-9. 지난 2주 동안의 우울 증상 9가지를 0~3점으로 묻는 자기보고 척도. 총점 0~27점.">PHQ-9</span> 5점 이상(경도부터 중증까지)</span></li>
+  <li><b>894명</b><span>비우울군: PHQ-9 5점 미만</span></li>
+</ul>
+<p>측정은 병원을 방문한 날 그 자리에서 했습니다. 참여자는 5분 동안 쉬고, 금속 장신구를 빼고, 눈을 뜬 채 편하게 앉았습니다. 움직이거나 말하지 않고 평소처럼 숨 쉬도록 안내받았고, 모니터 위의 같은 기종 웹캠이 초당 30장으로 얼굴을 찍었습니다. 조명이 일정한 조용한 방에서, 화면과의 거리도 같게 했고, 훈련받은 검사자가 매번 지켜보았습니다.</p>
+
+<div class="panel figure" id="rppg"><span class="cx"></span>
+  <div class="fig-head"><h3>영상이 맥박이 되기까지, 다섯 단계</h3><span class="note">단계를 눌러 보세요</span></div>
+  <div class="steps" id="stepSeg" role="group" aria-label="측정 단계">
+    <button data-k="0"><b>1</b>얼굴 영역</button><button data-k="1"><b>2</b>색 신호</button><button data-k="2"><b>3</b>걸러내기</button><button data-k="3"><b>4</b>맥박 분리</button><button data-k="4"><b>5</b>지표 계산</button>
+  </div>
+  <svg class="wave" id="wave" viewBox="0 0 600 120" preserveAspectRatio="none" role="img" aria-label="단계별 설명용 가상 신호"></svg>
+  <p class="step-text" id="stepText" aria-live="polite"></p>
+  <p class="fig-note">파형은 단계를 설명하려고 만든 가상 신호이며 실제 참여자의 자료가 아닙니다. 이 소프트웨어(특허 10-2150635)의 타당성은 얼굴 영상과 심전도를 함께 기록한 공개 자료(MAHNOB-HCI, 27명)에서 영상 기반 값과 심전도 기반 값이 합리적으로 일치하는지로 확인했습니다.</p>
+</div>
+
+<h2 id="diff">3. 우울 증상군의 심박은 어떻게 달랐을까요</h2>
+<p>두 집단은 나이(중앙값 53세 대 56세)와 흡연(15.9% 대 10.5%)에서 차이가 있었고, 성별, 체질량지수, 동반 질환은 비슷했습니다. 심박 쪽에서는 우울 증상군의 평균 심박수가 조금 높고, 시간 영역 지표인 SDNN과 RMSSD, 주파수 영역의 여러 지표가 낮았습니다. 아래에서 지표를 골라 두 집단의 중앙값과 사분위 범위를 비교해 보세요.</p>
+
+<div class="panel figure" id="t2"><span class="cx"></span>
+  <div class="fig-head"><h3>지표별 두 집단 비교(표 2)</h3><span class="note">속 빈 점: 비우울군, 빨간 점: 우울 증상군, 회색 띠: 사분위 범위</span></div>
+  <div class="pick" id="t2Pick" role="group" aria-label="지표 고르기"></div>
+  <div id="t2Out"></div>
+  <p class="fig-note" id="t2Note"></p>
+</div>
+
+<p>다른 요인의 영향을 빼고도 관련이 남는지 보려고, 나이, 성별, 흡연, 동반 질환, 체질량지수를 보정한 로지스틱 회귀도 했습니다. 평균 심박수가 1 bpm 높을 때마다 우울 증상이 있을 오즈가 2.3% 높았고, 심박변이도 값이 클수록 우울 증상이 있을 오즈는 낮았습니다. 줄을 눌러 각 값이 무슨 뜻인지 읽어 보세요.</p>
+
+<div class="panel figure" id="t3"><span class="cx"></span>
+  <div class="fig-head"><h3>보정 오즈비와 95% 신뢰구간(표 3)</h3><span class="note">점선: 오즈비 1(관련 없음)</span></div>
+  <div class="fp" id="fp" role="group" aria-label="지표별 보정 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="fpTicks"></div><span></span></div>
+  <p class="fp-out" id="fpOut" aria-live="polite"></p>
+  <p class="fig-note">지표마다 단위가 달라서(평균 심박수는 1 bpm, SDNN과 RMSSD는 1 ms, 주파수 지표는 자연로그 값 1) 점의 위치끼리 크기를 견주지 않습니다. 보정 변수: 나이, 성별, 흡연, 동반 질환, 체질량지수.</p>
+</div>
+
+<h2 id="model">4. 모델은 얼마나 가려냈을까요</h2>
+<p>연구팀은 로지스틱 회귀, 그레이디언트 부스팅, XGBoost, 서포트 벡터 머신 네 모델의 판단을 다시 서포트 벡터 머신이 모아 최종 결정을 내리는 <span class="term" data-tip="여러 모델의 예측을 입력으로 받아 다른 모델(메타 학습기)이 최종 예측을 내리는 앙상블 방법.">스태킹 앙상블</span>을 만들었습니다. 성능은 자료를 다섯으로 나눠 번갈아 검증하는 <span class="term" data-tip="자료를 다섯 묶음으로 나누고, 한 묶음씩 돌아가며 검증에 쓰고 나머지로 학습하는 방법. 이 연구는 우울 증상군 비율을 묶음마다 같게 맞췄다.">층화 5겹 교차검증</span>으로 쟀습니다.</p>
+<p>눈여겨볼 선택이 하나 있습니다. 모델을 조정하는 기준을 AUROC가 아니라 <span class="term" data-tip="Matthews correlation coefficient. 참양성, 참음성, 거짓양성, 거짓음성을 모두 반영하는 이진 분류 지표. -1~1, 집단 크기가 다를 때도 균형 있게 평가한다.">MCC</span>로 정했습니다. 논문에 따르면 AUROC에 맞춰 조정하면 모델이 모든 사람을 비우울로 예측해 버렸기 때문입니다. MCC에 맞추자 우울 증상군을 실제로 찾아내는 쪽으로 보정되었습니다.</p>
+<p>그 결과 스태킹 모델의 가장 좋은 판별은 AUROC 0.64, AUPRC 0.45, MCC 0.21이었습니다. 스태킹 모델의 MCC는 다섯 검증 묶음 모두에서 개별 모델보다 높았습니다. MCC의 차이는 작았지만 모든 묶음에서 같은 방향이었습니다. AUROC와 AUPRC는 평균에서는 다른 모델이 앞선 경우도 있었고, 가장 좋은 묶음에서는 스태킹 모델이 어느 개별 모델보다도 높았다고 논문은 적습니다.</p>
+<p>특징 묶음을 바꿔 보면 무엇이 성능을 냈는지 드러납니다. 심박변이도만 넣은 모델은 예측력이 매우 약했고, 인구학 정보만 넣은 모델이 그보다 나았으며, 둘을 합친 모델이 가장 좋았습니다. 모델이 어떤 특징에 기댔는지는 <span class="term" data-tip="SHapley Additive exPlanations. 각 특징이 개별 예측에 얼마나 기여했는지 계산해, 모델이 무엇에 기대어 판단했는지 보여 주는 해석 방법.">SHAP</span> 분석으로 보았습니다.</p>
+
+<div class="panel figure" id="shap"><span class="cx"></span>
+  <div class="fig-head"><h3>모델에 영향을 준 특징 10개, 큰 순서(그림 2D의 순서)</h3></div>
+  <div class="ctrl"><div class="seg" id="shapSeg" role="group" aria-label="특징 종류"><button data-k="all">모두</button><button data-k="demo">인구학 정보</button><button data-k="hrv">심박 지표</button></div></div>
+  <ol class="shap" id="shapList"></ol>
+  <p class="fp-out" id="shapOut" aria-live="polite"></p>
+</div>
+
+<p>모델의 선택이 흡연 하나에 치우친 것은 아닌지도 확인했습니다. 벌점을 준 선형 분류기 네 가지(릿지, 라쏘, 엘라스틱넷 로지스틱 회귀, 선형 SVM)로 다시 해 보니 성능(MCC 약 0.14, AUROC 약 0.60)과 주요 예측 요인은 크게 달라지지 않았습니다.</p>
+
+<h2 id="sub">5. 누구에게서 더 잘 맞았을까요</h2>
+<p>같은 모델을 집단별로 나눠 보면 성능이 고르지 않았습니다. 비만인 사람(MCC 0.65)과 현재 흡연자(MCC 0.51)에서 특히 높았습니다. 비만 하위집단에서는 LF/HF 비와 일관성 비가 우울 증상군과 비우울군 사이에서 더 뚜렷하게 갈렸습니다. 논문은 자율신경, 대사, 행동 요인이 겹치는 집단에서 모델이 더 잘 작동했을 수 있다고 해석합니다.</p>
+
+<div class="panel figure" id="t4"><span class="cx"></span>
+  <div class="fig-head"><h3>하위집단별 스태킹 모델 성능(표 4)</h3><span class="note">빨간 막대: MCC 0.50 이상인 집단</span></div>
+  <div class="ctrl">
+    <div class="seg" id="t4Cat" role="group" aria-label="나눌 기준"><button data-k="age">나이</button><button data-k="bmi">체질량지수</button><button data-k="sex">성별</button><button data-k="smk">흡연</button><button data-k="com">동반 질환</button></div>
+    <div class="seg" id="t4Met" role="group" aria-label="지표"><button data-k="mcc">MCC</button><button data-k="auroc">AUROC</button><button data-k="auprc">AUPRC</button></div>
+  </div>
+  <div class="bars" id="t4Bars"></div>
+  <div class="bar-ticks" aria-hidden="true"><span></span><div id="t4Ticks"></div><span></span></div>
+  <p class="fig-note">집단 이름 아래 숫자는 전체에서 그 집단이 차지하는 비율(%)입니다. 나이에서는 65세 미만에서 AUROC 0.66~0.70, MCC 0.29~0.47로 비교적 고르게 유지됐고, 35~49세에서 MCC 0.47로 가장 높았습니다.</p>
+</div>
+
+<p>두 가지 확인이 더 있습니다. 우울 증상을 나누는 PHQ-9 기준점을 0점에서 5점까지 올리면 AUROC와 MCC가 함께 올랐고 그 뒤로는 비교적 안정적이었으며, AUPRC는 기준점이 높아질수록 조금씩 낮아졌습니다. 5점보다 높은 기준에서도 MCC가 유지되어, 경도부터 중증까지 균형 잡힌 판별이 지켜졌다고 논문은 봅니다. 또 임상에서 우울증 진단을 받은 사람을 모두 빼고 883명(비우울 699명, 우울 증상 184명)으로 다시 학습했을 때, 5겹 교차검증 평균 AUROC는 원래 표본의 0.58보다 조금 높은 0.63, AUPRC는 0.45보다 높은 0.71이었습니다. 논문은 모델의 판별력이 진단받은 중증 환자에게서만 나온 것이 아니라고 봅니다.</p>
+
+<h2 id="meaning">6. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>흡연, 성별, 동반 질환이 개별 심박변이도 지표보다 예측에 더 큰 몫을 했습니다. 흡연자의 우울 위험, 여성에서 더 흔한 우울, 동반 질환과 우울의 관계는 이미 알려진 것이어서, 논문은 건강 습관이 생리 신호만큼 우울 위험을 말해 줄 수 있음을 재확인했다고 적습니다. 그러면서도 인구학 정보만 쓸 때보다 심박변이도를 더했을 때 성능이 꾸준히 올랐다는 점에서, 심박변이도가 인구학 정보로 설명되지 않는 우울의 한 조각을 잡는다고 해석합니다.</p>
+<p>이 방법은 짧은 얼굴 영상과 기본 정보만 있으면 되어, 스마트폰이나 노트북 카메라로 지역사회 정신건강 프로그램, 직장이나 학교의 점검, 원격 정신의학에서 쓸 수 있다는 것이 논문의 전망입니다. 앞으로는 비접촉 심박변이도 선별을 첫 관문으로 두고, 걸린 사람에게 더 정밀한 평가를 이어 주는 단계적 진료 모형에 넣어 볼 수 있다고 제안합니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 몸이 내는 다른 신호로 우울을 들여다본 연구도 있습니다. <a data-paper="actigraphy_steps_jad_2025">걸음 수로 본 우울한 기분</a>, <a data-paper="depressllm_jbhi_2026">자서전적 서사로 우울을 읽는 언어모델</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>얼굴 영상 심박변이도는 접촉 없이 넓게 쓸 수 있지만, 조명 변화나 참여자의 움직임 같은 환경 잡음에 더 취약합니다. 통제되지 않은 환경에서 쓰려면 잡음 보정과 신호 정규화가 더 필요합니다.</li>
+  <li>우울 증상 분류가 자기보고 PHQ-9에 기대고 있어 임상 진단과 꼭 맞지 않을 수 있습니다. 이를 보완하려고 HADS-D를 함께 쟀습니다.</li>
+  <li>참여자가 주로 한국의 임상 현장에서 모집되었습니다. 더 다양한 집단에서 확인해야 합니다.</li>
+  <li>논문 스스로 전체 예측 성능을 중간 정도(modest)라고 적고, 자료를 더하고 표본을 넓히고 특징을 정교하게 하면 성능을 높일 수 있다고 봅니다. 이 모델은 예측 모델이며 원인을 말하지 않습니다.</li>
+</ul>
+
+<h2 id="quiz">7. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Jhon M, Kim J-W, Lee K, Kim D, Park S-H, Kim C, Lim B, Kim S-Y, Kim S-W, Kim J-M, Shin I-S, Choi Y. Contactless depression screening via facial video-derived heart rate variability. Transl Psychiatry. 2026;16:49. doi:10.1038/s41398-026-03831-y</p>
+  <p>DOI <a href="https://doi.org/10.1038/s41398-026-03831-y" target="_blank" rel="noopener">10.1038/s41398-026-03831-y</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/41605913/" target="_blank" rel="noopener">41605913</a><br>
+  원문은 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 라이선스로 공개되었습니다(© The Author(s) 2026). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1~4에서 가져왔습니다.</p>
+  <p>측정 단계의 파형은 설명을 위해 만든 가상 신호입니다. 이 연구의 모델은 진단 도구가 아니며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='facial-video-hrv';
+
+/* 1) 측정 단계: 설명용 가상 신호 */
+let seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+const N=300,beat=i=>{const ph=(i%50)/50;return Math.exp(-Math.pow((ph-.3)/.06,2))-0.35*Math.exp(-Math.pow((ph-.45)/.1,2))};
+const noise=[],drift=[];for(let i=0;i<N;i++){noise.push((rnd()-.5)*1.4);drift.push(Math.sin(i/37)*.9+Math.sin(i/11)*.35)}
+const path=(f,amp,off=60)=>'M'+Array.from({length:N},(_,i)=>`${(i*2).toFixed(1)},${(off-f(i)*amp).toFixed(1)}`).join(' L');
+const STEPS=[
+ {t:'카메라 영상에서 얼굴의 관심 영역을 자동으로 찾습니다. 이마와 뺨처럼 피부가 드러난 곳이 대상입니다.',draw:()=>`<ellipse class="w-face" cx="300" cy="62" rx="70" ry="52"/><rect class="w-roi" x="250" y="30" width="100" height="40"/>`},
+ {t:'관심 영역의 빨강, 초록, 파랑 값을 장마다 평균해 원시 맥파(PPG) 신호를 만듭니다. 이 단계의 신호에는 맥박보다 조명과 미세한 움직임이 더 크게 섞여 있습니다.',draw:()=>`<path class="w-raw" d="${path(i=>beat(i)*.25+noise[i]*.5+drift[i]*.6,26)}"/>`},
+ {t:'버터워스 대역 통과 필터로 0.75~2.5 Hz만 남깁니다. 1분에 45~150번 뛰는 심박에 해당하는 범위입니다(계산값: 0.75×60=45, 2.5×60=150).',draw:()=>`<path class="w-raw" d="${path(i=>beat(i)*.6+noise[i]*.25+drift[i]*.15,30)}"/>`},
+ {t:'CHROM 알고리즘이 세 색 신호를 정해진 방식으로 조합해 맥박 성분을 살리고 잡음을 줄입니다. 이어서 박동과 박동 사이 간격(RR 간격)을 뽑습니다.',draw:()=>`<path class="w-sig" d="${path(i=>beat(i),40)}"/>`},
+ {t:'RR 간격으로 표준 지표를 계산합니다. 시간 영역은 평균 심박수, SDNN, RMSSD, pNN50, 주파수 영역은 총파워(TP), 초저주파(VLF), 저주파(LF), 고주파(HF), LF/HF 비, 일관성 비입니다.',draw:()=>{let s=`<path class="w-sig" d="${path(i=>beat(i),40)}"/>`;for(let k=0;k<6;k++){const x=(k*50+15)*2;s+=`<circle class="w-pk" cx="${x}" cy="${60-40*beat(k*50+15)}" r="3.5"/>`;if(k<5)s+=`<line class="w-rr" x1="${x}" x2="${x+100}" y1="108" y2="108"/><line class="w-rr" x1="${x}" x2="${x}" y1="103" y2="113"/>`}return s}}
+];
+S.seg('stepSeg',k=>{const st=STEPS[+k];$('#wave').innerHTML=st.draw();$('#stepText').textContent=st.t},KEY+':step');
+
+/* 2) 표 2: 중앙값(사분위 범위). 비우울군 894명, 우울 증상군 559명 */
+const T2=[
+ {k:'hr',n:'평균 심박수',u:'bpm',a:[73.9,68,79.5],b:[75.4,70.4,81.7],p:'P < 0.001'},
+ {k:'sdnn',n:'SDNN',u:'ms',a:[46.2,39.8,54.2],b:[44.2,36.6,52.1],p:'P < 0.001'},
+ {k:'rmssd',n:'RMSSD',u:'ms',a:[57.1,48.5,67.4],b:[54.6,46,65.6],p:'P = 0.002'},
+ {k:'pnn50',n:'pNN50',u:'%',a:[24.1,20.4,27.7],b:[23.6,18.9,27.8],p:'P = 0.071'},
+ {k:'lntp',n:'LnTP',u:'ms²',a:[7.34,7.02,7.71],b:[7.24,6.8,7.63],p:'P < 0.001'},
+ {k:'lnvlf',n:'LnVLF',u:'ms²',a:[5.29,4.71,5.75],b:[5.12,4.63,5.64],p:'P = 0.001'},
+ {k:'lnlf',n:'LnLF',u:'ms²',a:[6.17,5.75,6.58],b:[6.06,5.57,6.45],p:'P < 0.001'},
+ {k:'lnhf',n:'LnHF',u:'ms²',a:[6.72,6.34,7.1],b:[6.6,6.18,7.02],p:'P = 0.001'},
+ {k:'lfhf',n:'LF/HF 비',u:'',a:[0.58,0.45,0.74],b:[0.56,0.45,0.70],p:'P = 0.112'},
+ {k:'coh',n:'일관성 비',u:'',a:[0.02,0.01,0.04],b:[0.02,0.02,0.04],p:'P = 0.512'}];
+const T2TIP={hr:'1분 동안 심장이 뛴 평균 횟수.',sdnn:'정상 박동 간격들의 표준편차. 전체 변이를 나타낸다.',rmssd:'이웃한 박동 간격 차이의 제곱평균제곱근. 주로 부교감신경 활동을 반영한다.',pnn50:'이웃한 박동 간격이 50 ms 넘게 차이 나는 비율.',lntp:'총파워의 자연로그. 전체 주파수 영역의 변이.',lnvlf:'초저주파 대역 파워의 자연로그.',lnlf:'저주파 대역 파워의 자연로그.',lnhf:'고주파 대역 파워의 자연로그. 호흡과 관련된 부교감신경 활동을 반영한다.',lfhf:'저주파 파워를 고주파 파워로 나눈 비.',coh:'심박 리듬이 한 주파수에 얼마나 고르게 모이는지를 나타내는 비.'};
+function nice(lo,hi){const span=hi-lo,st=[.01,.02,.05,.1,.2,.25,.5,1,2,5,10].find(s=>span/s<=6)||10;const a=Math.floor(lo/st)*st,b=Math.ceil(hi/st)*st,t=[];for(let v=a;v<=b+1e-9;v+=st)t.push(+v.toFixed(3));return{min:a,max:b,ticks:t}}
+$('#t2Pick').innerHTML=T2.map(m=>`<button type="button" data-k="${m.k}">${esc(m.n)}</button>`).join('');
+S.seg('t2Pick',k=>{const m=T2.find(x=>x.k===k),ax=nice(Math.min(m.a[1],m.b[1]),Math.max(m.a[2],m.b[2])),u=m.u?' '+m.u:'';
+  const row=(name,v,ref)=>`<span class="c-name">${name}</span>${S.gauge({...ax,band:[v[1],v[2]],pts:[{v:v[0],ref,label:`${name} 중앙값 ${v[0]}${u}, 사분위 범위 ${v[1]}~${v[2]}`}]},`${m.n} ${name} 중앙값 ${v[0]}${u}`)}<span class="c-val">${ref?v[0]:`<b>${v[0]}</b>`}${u}<br>(${v[1]}~${v[2]})</span>`;
+  $('#t2Out').innerHTML=`<div class="cmp">${row('비우울군',m.a,1)}${row('우울 증상군',m.b,0)}</div>`;
+  $('#t2Note').textContent=`${m.n}: ${T2TIP[k]} 두 집단 비교(맨-휘트니 U 검정) ${m.p}.`;
+},KEY+':t2');
+
+/* 3) 표 3: 보정 오즈비 */
+const T3=[
+ {n:'평균 심박수',u:'1 bpm',or:1.023,lo:1.010,hi:1.036,p:'p < 0.001'},
+ {n:'SDNN',u:'1 ms',or:0.987,lo:0.977,hi:0.997,p:'p = 0.009'},
+ {n:'RMSSD',u:'1 ms',or:0.992,lo:0.984,hi:1.000,p:'p = 0.038'},
+ {n:'LnTP',u:'1(자연로그 단위)',or:0.757,lo:0.627,hi:0.915,p:'p = 0.004'},
+ {n:'LnVLF',u:'1(자연로그 단위)',or:0.831,lo:0.726,hi:0.953,p:'p = 0.008'},
+ {n:'LnLF',u:'1(자연로그 단위)',or:0.748,lo:0.630,hi:0.888,p:'p = 0.001'},
+ {n:'LnHF',u:'1(자연로그 단위)',or:0.809,lo:0.676,hi:0.967,p:'p = 0.020'}];
+const FX0=.55,FX1=1.1,fx=v=>((v-FX0)/(FX1-FX0)*100).toFixed(2)+'%';
+$('#fp').innerHTML=T3.map((r,i)=>`<button type="button" class="fp-row" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r.n)}</span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${fx(1)}"></span><span class="fp-ci" style="left:${fx(r.lo)};width:calc(${fx(r.hi)} - ${fx(r.lo)})"></span><span class="fp-dot" style="left:${fx(r.or)}"></span></span><span class="fp-val">${r.or.toFixed(3)} (${r.lo.toFixed(3)}~${r.hi.toFixed(3)})</span></button>`).join('');
+$('#fpTicks').innerHTML=[.6,.7,.8,.9,1,1.1].map(t=>`<span style="left:${fx(t)}">${t.toFixed(1)}</span>`).join('');
+function fpPick(i){const r=T3[i];
+  document.querySelectorAll('.fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  const dir=r.or>1?'높았습니다':'낮았습니다',pct=Math.abs((r.or-1)*100).toFixed(1);
+  $('#fpOut').innerHTML=`<b>${esc(r.n)}</b> 값이 ${esc(r.u)} 클수록 우울 증상이 있을 오즈가 ${r.or.toFixed(3)}배, 곧 약 ${pct}% ${dir}(계산값). 95% 신뢰구간 ${r.lo.toFixed(3)}~${r.hi.toFixed(3)}, ${r.p}.`;
+  S.store.set(KEY+':t3',i)}
+document.querySelectorAll('.fp-row').forEach(b=>b.onclick=()=>fpPick(+b.dataset.i));
+fpPick(S.store.get(KEY+':t3',0));
+
+/* 4) SHAP 순서(그림 2D) */
+const SH=[['흡연 여부','demo'],['성별','demo'],['동반 질환','demo'],['평균 심박수','hrv'],['LF(로그)','hrv'],['나이','demo'],['체질량지수','demo'],['SDNN','hrv'],['pNN50','hrv'],['RMSSD','hrv']];
+const SHT={all:'위의 세 자리는 모두 인구학 정보입니다. 10개 가운데 절반이 심박 지표, 절반이 인구학 정보입니다.',demo:'흡연, 성별, 동반 질환이 1~3위입니다. 그레이디언트 부스팅, XGBoost, SVM은 특히 흡연에 크게 기댔고, 로지스틱 회귀는 특징을 비교적 고르게 썼습니다.',hrv:'심박 지표 가운데서는 평균 심박수(4위)와 LF(5위)가 앞섰습니다. 하나하나는 상위 세 인구학 정보보다 약하지만, 더해졌을 때 성능을 조금 끌어올렸습니다.'};
+const KD={demo:'인구학 정보',hrv:'심박 지표'};
+S.seg('shapSeg',k=>{$('#shapList').innerHTML=SH.map(([n,t],i)=>`<li class="${k==='all'?'':(t===k?'on':'dim')}"><span class="rk">${i+1}</span><span class="nm">${esc(n)}</span><span class="kd">${KD[t]}</span></li>`).join('');$('#shapOut').textContent=SHT[k]},KEY+':shap');
+
+/* 5) 표 4: 하위집단 */
+const T4={
+ age:[['15–24세',7.7,.66,.68,.39],['25–34세',13.7,.67,.65,.32],['35–49세',14.5,.69,.67,.47],['50–54세',9.6,.68,.65,.32],['55–59세',10.7,.67,.63,.32],['60–64세',12.5,.70,.58,.29],['65–69세',14.5,.73,.52,.29],['70세 이상',16.9,.68,.47,.25]],
+ bmi:[['저체중(18.5 미만)',3.0,.65,.66,.31],['정상(18.5–24.9)',59.5,.61,.50,.24],['과체중(25.0–29.9)',31.2,.67,.58,.31],['비만(30.0 이상)',6.3,.91,.90,.65]],
+ sex:[['남성',35.1,.62,.53,.27],['여성',64.9,.68,.60,.32]],
+ smk:[['비흡연',88.1,.63,.51,.24],['흡연',11.9,.76,.81,.51]],
+ com:[['동반 질환 없음',70.2,.67,.57,.29],['동반 질환 있음',29.8,.63,.60,.34]]};
+const MI={auroc:2,auprc:3,mcc:4};let cat='age',met='mcc';
+function t4(){const rows=T4[cat],j=MI[met];
+  $('#t4Bars').innerHTML=rows.map(r=>`<div class="bar${r[4]>=.5?' hi':''}"><span class="bn">${esc(r[0])}<small>${r[1].toFixed(1)}%</small></span><span class="bt" role="img" aria-label="${esc(r[0])} ${met.toUpperCase()} ${r[j]}"><span class="bf" style="width:${(r[j]*100).toFixed(1)}%"></span></span><span class="bv">${r[j].toFixed(2)}</span></div>`).join('');
+  $('#t4Ticks').innerHTML=[0,.25,.5,.75,1].map(t=>`<span style="left:${t*100}%">${t}</span>`).join('')}
+S.seg('t4Cat',k=>{cat=k;t4()},KEY+':t4cat');
+S.seg('t4Met',k=>{met=k;t4()},KEY+':t4met');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 우울 증상군을 나눈 기준은 무엇이었나요?',o:['PHQ-9 5점 이상','정신과 진단을 받았는지','HADS-D 8점 이상'],a:0,e:'진단 횡단 연구라서 진단명이 아니라 PHQ-9 점수로 나눴고, 5점 이상인 559명이 우울 증상군이었습니다. HADS-D는 집단 특성을 설명하는 데만 썼습니다.'},
+ {q:'심박변이도만 넣은 모델과 인구학 정보를 함께 넣은 모델 가운데 어느 쪽이 나았나요?',o:['심박변이도만 넣은 모델','둘을 합친 모델','차이가 없었다'],a:1,e:'심박변이도만으로는 예측력이 매우 약했고, 인구학 정보만 쓴 모델이 그보다 나았으며, 둘을 합친 모델이 가장 좋았습니다.'},
+ {q:'모델에 가장 큰 영향을 준 세 특징은 무엇이었나요?',o:['흡연, 성별, 동반 질환','평균 심박수, SDNN, RMSSD','나이, 체질량지수, LF'],a:0,e:'SHAP 분석에서 1~3위는 모두 인구학 정보였습니다. 상위 10개 가운데 절반은 심박 지표였습니다.'},
+ {q:'모델을 조정하는 기준을 AUROC가 아니라 MCC로 정한 까닭은 무엇인가요?',o:['AUROC에 맞추면 모든 사람을 비우울로 예측했기 때문','MCC 계산이 더 빨라서','심박변이도에는 AUROC를 쓸 수 없어서'],a:0,e:'우울 증상군이 더 적은 자료에서 AUROC에 맞추면 모두를 비우울로 예측하는 모델이 나왔습니다. MCC에 맞추자 우울 증상군을 찾아내는 쪽으로 보정되었습니다.'},
+ {q:'평균 심박수의 보정 오즈비 1.023은 무엇을 뜻하나요?',o:['평균 심박수가 1 bpm 높을 때마다 우울 증상이 있을 오즈가 약 2.3% 높다','심박수가 높으면 우울증이 생긴다','우울 증상이 있을 확률이 23% 높다'],a:0,e:'나이, 성별, 흡연, 동반 질환, 체질량지수를 보정한 관련성입니다. 논문은 이 모델이 예측 모델이며 원인을 말하지 않는다고 적습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

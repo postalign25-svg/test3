@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전민 연구 기록</title>
+<meta name="description" content="전남대학교 의과대학 정신건강의학교실 전민의 논문을 측정 기록지처럼 엮은 연구 아카이브. 논문들이 반복해서 묻는 질문, 네 시기, 논문 전체 목록과 해설.">
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* 홈에만 쓰는 규칙. 토큰은 site.css */
+.core{display:grid;grid-template-columns:3fr 9fr;gap:24px;padding:48px 0 36px}
+.core .lab{font-size:14px;color:var(--meta);padding-top:10px;border-top:1px solid var(--ink)}
+.core h1{font-size:clamp(26px,3.4vw,44px);line-height:1.32;max-width:22em;padding-top:4px}
+.core p{margin:20px 0 0;font-size:17px;line-height:1.75;color:var(--ink-2);max-width:42em}
+#homeScene{margin:0 0 56px}
+
+/* 기록지 표식: 색은 토큰으로만, 테마가 바뀌면 그대로 따라온다 */
+.trace .m-base{stroke:var(--line-2)}
+.trace .m-dot{fill:none;stroke:var(--ink);stroke-width:1.4}
+.trace .m-dot.led{fill:var(--ink)}
+.trace .m-trace{fill:none;stroke:var(--signal);stroke-width:1.8;stroke-linejoin:round}
+.trace .m-led{fill:var(--ink)}
+.trace .m-guide{stroke:var(--meta);stroke-dasharray:3 3}
+.trace .m-sel{fill:none;stroke:var(--ink);stroke-width:1.5}
+.trace .m-selbar{stroke:var(--ink);stroke-width:1}
+.trace .m-br{fill:none;stroke:var(--ink);stroke-width:1}
+.trace .m-br.now{stroke:var(--signal);stroke-width:1.6}
+.trace .m-br.par{stroke:var(--meta);stroke-dasharray:4 3}
+
+/* 네 시기 */
+.phases{display:grid;grid-template-columns:repeat(4,1fr)}
+.ph{padding:18px 18px 20px;border-left:1px solid var(--line);border-top:2px solid transparent;display:flex;flex-direction:column}
+.ph:first-of-type{border-left:0}
+.ph.now{border-top-color:var(--signal)}
+.ph .yr{font-family:var(--num);font-size:14px;color:var(--meta)}
+.ph h3{font-size:18px;line-height:1.4;margin:6px 0 12px;min-height:3.2em}
+.ph dl{margin:0 0 14px;font-size:14px;line-height:1.55}
+.ph dt{color:var(--meta);font-size:12.5px;margin-top:10px}
+.ph dd{margin:2px 0 0}
+.ph .go{margin-top:auto;font-size:14px}
+.parallel{display:grid;grid-template-columns:3fr 9fr;gap:8px 24px;margin-top:14px;padding:12px 0 0;border-top:1px dashed var(--line-2);color:var(--ink-2);font-size:14.5px}
+.parallel .yr{font-family:var(--num);font-size:13.5px;color:var(--meta)}
+.parallel p{margin:0}
+
+/* 질문과 색인 */
+.view-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 8px}
+.view-bar .note{margin:0}
+.qt{width:100%;border-collapse:collapse}
+.qt th,.qt td{text-align:left;vertical-align:top;padding:16px 16px 16px 0;border-top:1px solid var(--line)}
+.qt th{width:25%;font-weight:600;font-size:18px;line-height:1.4}
+.qt th small{display:block;font-weight:400;font-size:13px;color:var(--meta);margin-bottom:2px}
+.qt td{font-size:15.5px;color:var(--ink-2);line-height:1.7}
+.qt tr.with th{font-size:16px;font-weight:500}
+.qt tr.with td{font-size:14.5px}
+.qt tr.sep th,.qt tr.sep td{border-top:1px solid var(--ink);padding-top:20px}
+.qt td.n{width:90px;font-family:var(--num);font-size:13px;color:var(--meta);text-align:right;padding-right:0}
+.qt details{margin-top:8px}
+.qt summary{cursor:pointer;font-size:14px;color:var(--ink)}
+.qt ul{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--line)}
+.qt li{padding:7px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.5;color:var(--ink)}
+.qt li .y{font-family:var(--num);font-size:12.5px;color:var(--meta);margin-right:8px}
+.led{color:var(--signal-ink);font-size:12.5px;margin-left:6px;white-space:nowrap}
+
+/* 논문 전체 */
+.filters{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px;align-items:end;margin-bottom:12px}
+.filters .reset{height:38px;justify-content:center}
+.count{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13.5px;color:var(--meta);margin:4px 0 8px}
+.count button{border:0;background:none;padding:0;text-decoration:underline;text-underline-offset:3px;color:var(--ink-2);font-size:13.5px}
+.pt{width:100%;border-collapse:collapse}
+.pt th{font-size:12.5px;font-weight:400;color:var(--meta);text-align:left;padding:8px 16px 8px 0;border-bottom:1px solid var(--ink)}
+.pt td{padding:13px 16px 13px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:14.5px}
+.pt td.y{font-family:var(--num);font-size:14px;width:64px}
+.pt td.t{font-weight:500;font-size:16px;line-height:1.45}
+.pt td.t .en{display:block;font-weight:400;font-size:13.5px;color:var(--ink-2);margin-top:3px;line-height:1.5}
+.pt td.t .kind{font-weight:400;font-size:12.5px;color:var(--meta);margin-left:8px;white-space:nowrap}
+.pt td.j{width:210px;color:var(--ink-2)}
+.pt td.r{width:130px}
+.pt td.r .led{margin:0;font-size:14px}
+.pt .doi{font-size:13px;font-weight:400;margin-left:8px;white-space:nowrap}
+.more-row{margin-top:16px}
+.p-empty{padding:24px 0;color:var(--ink-2)}
+
+/* 소개 */
+.about{display:grid;grid-template-columns:3fr 9fr;gap:24px}
+.about p{margin:0 0 6px;font-size:15.5px;color:var(--ink-2)}
+.about b{color:var(--ink);font-weight:600}
+
+@media (max-width:1000px){
+  .phases{grid-template-columns:1fr 1fr}
+  .ph:nth-of-type(3){border-left:0}
+  .ph:nth-of-type(n+3){border-top:1px solid var(--line)}
+  .ph.now{border-top:2px solid var(--signal)}
+  .filters{grid-template-columns:repeat(3,1fr)}
+  .filters .search{grid-column:1/-1}
+}
+@media (max-width:640px){
+  .core,.parallel,.about{grid-template-columns:1fr;gap:8px}
+  .core{padding:28px 0 28px}
+  .core .lab{border-top:0;padding-top:0}
+  .core h1{border-top:1px solid var(--ink);padding-top:12px}
+  #homeScene{margin-bottom:40px}
+  .phases{grid-template-columns:1fr}
+  .ph{border-left:0!important;border-top:1px solid var(--line)}
+  .ph:first-of-type{border-top:0}
+  .ph.now{border-top:2px solid var(--signal)}
+  .ph h3{min-height:0}
+  .qt,.qt tbody,.qt tr,.qt th,.qt td{display:block;width:auto}
+  .qt th{padding:14px 0 4px}
+  .qt td{border-top:0;padding:0 0 12px}
+  .qt td.n{text-align:left;padding-bottom:14px}
+  .qt tr.sep td{border-top:0;padding-top:0}
+  .filters{grid-template-columns:1fr 1fr}
+  .pt thead{display:none}
+  .pt tr{display:grid;grid-template-columns:48px minmax(0,1fr);border-bottom:1px solid var(--line);padding:12px 0}
+  .pt td{border:0;padding:0;width:auto!important}
+  .pt td.y{grid-row:1/4}
+  .pt td.j,.pt td.r{grid-column:2;font-size:13px;margin-top:4px}
+  .pt td.t{font-size:15.5px}
+}
+</style>
+</head>
+<body>
+<header class="top" data-root=""></header>
+
+<main>
+<div class="wrap">
+
+  <section class="panel form" aria-label="기록 머리"><span class="cx"></span>
+    <div><small>연구자</small><b>전민 Min Jhon</b></div>
+    <div class="wide"><small>소속</small><b>전남대학교 의과대학 정신건강의학교실</b></div>
+    <div><small>기록 기간</small><b class="v" id="fPeriod">2016–2026</b></div>
+    <div><small>논문</small><b class="v" id="fTotal"></b></div>
+    <div><small>주도 논문(제1, 교신저자)</small><b class="v" id="fLed"></b></div>
+  </section>
+
+  <section class="core" aria-labelledby="coreQ">
+    <div class="lab" id="coreLabel">논문들이 반복해서 묻는 것</div>
+    <div>
+      <!-- CORE.text(themes.json core_question)를 읽기 쉽게 줄인 문장. 질문이 바뀌면 함께 고친다 -->
+      <h1 id="coreQ">현장에서 정신질환의 위험과 경과를 더 일찍, 더 적은 부담으로 가려내려면 어떤 지표가 필요하고, 임상에서 믿고 쓰려면 무엇을 갖춰야 하는가</h1>
+      <p>처음에는 혈액과 척도로 한 시점의 값을 쟀다. 2023년부터는 걸음 수, 심박변이도, 목소리, 일상 언어처럼 몸과 생활이 계속 내보내는 신호를 읽는다. 아래 기록지는 그 이동을 논문 한 편 단위로 그린 것이다.</p>
+    </div>
+  </section>
+
+  <section id="homeScene" aria-label="이런 상황이라면"></section>
+
+  <section class="panel sheet" id="sheet" aria-labelledby="sheet-title"><span class="cx"></span>
+    <div class="sheet-head">
+      <h2 id="sheet-title">연구 기록지, 2016–2026</h2>
+      <p>점 하나, 박동 하나가 논문 한 편. 누르면 그 논문이 아래에 나온다</p>
+    </div>
+    <div class="trace-frame paper-grid" id="traceFrame">
+      <svg class="trace" id="trace" tabindex="0" role="img" aria-describedby="traceDesc"></svg>
+    </div>
+    <p class="vh" id="traceDesc"></p>
+    <div class="readout empty" id="readout" aria-live="polite"></div>
+    <div class="legend">
+      <span><i class="d0"></i>혈액, 척도, 설문 지표 논문</span>
+      <span><i class="d1"></i>그중 전민 주도(제1, 교신저자)</span>
+      <span><i class="tr"></i>디지털 신호 논문(박동 하나가 한 편, 높은 박동은 전민 주도)</span>
+      <span><i class="pm"></i>병행 줄기</span>
+    </div>
+    <details><summary>연도별 수를 표로 보기</summary><div class="scroll-x"><table class="ytable" id="ytable"></table></div></details>
+  </section>
+
+  <section class="sec" id="phases" aria-labelledby="phases-h">
+    <div class="sec-head"><h2 id="phases-h">네 시기</h2><p>시기마다 무엇을 쟀는지. 재는 대상이 한 시점의 검체에서 계속 흐르는 신호로 옮겨 간다.</p></div>
+    <div class="panel phases" id="phaseCards"><span class="cx"></span></div>
+    <div class="parallel" id="parallel"></div>
+  </section>
+
+  <section class="sec" id="questions" aria-labelledby="questions-h">
+    <div class="sec-head"><h2 id="questions-h">질문</h2><p>논문을 묻는 것으로 묶으면 다섯 질문이 나온다. 셋은 전민의 질문, 둘은 연구실과 함께한 질문이다. 시기별, 주제별로도 묶어 볼 수 있다.</p></div>
+    <div class="view-bar">
+      <div class="seg" id="viewSeg" role="group" aria-label="색인 보기"><button data-k="q">질문별</button><button data-k="p">시기별</button><button data-k="t">주제별</button></div>
+    </div>
+    <table class="qt" id="indexView"></table>
+  </section>
+
+  <section class="sec" id="papers" aria-labelledby="papers-h">
+    <div class="sec-head"><h2 id="papers-h">논문 전체</h2><p>제목이나 학술지로 찾고, 주제와 연도, 역할, 시기, 방법으로 좁힐 수 있다. 해설 글이 있는 논문은 해설로, 요약이 있는 논문은 요약 페이지로 이어진다.</p></div>
+    <div class="filters" role="search">
+      <label class="field search">찾기<input type="search" id="fq" placeholder="제목, 학술지, 연도" autocomplete="off"></label>
+      <label class="field">주제<select id="fTopic"></select></label>
+      <label class="field">연도<select id="fYear"></select></label>
+      <label class="field">역할<select id="fRole"></select></label>
+      <label class="field">시기<select id="fPhase"></select></label>
+      <label class="field">방법<select id="fMethod"></select></label>
+    </div>
+    <div class="count"><span id="pcount" aria-live="polite"></span><button type="button" id="freset">조건 지우기</button></div>
+    <table class="pt">
+      <thead><tr><th>연도</th><th>제목</th><th>학술지</th><th>전민의 역할</th></tr></thead>
+      <tbody id="plist"></tbody>
+    </table>
+    <p class="p-empty" id="pempty" hidden>조건에 맞는 논문이 없습니다. 조건을 하나씩 지워 보세요.</p>
+    <div class="more-row"><button type="button" class="btn" id="pmore" hidden></button></div>
+  </section>
+
+  <section class="sec" id="about" aria-labelledby="about-h">
+    <div class="sec-head"><h2 id="about-h">소개</h2><p></p></div>
+    <div class="about">
+      <div></div>
+      <div>
+        <p><b>전민</b> 정신건강의학과 전문의</p>
+        <p>전남대학교 의과대학 정신건강의학교실, 화순전남대학교병원 정신건강의학과</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer class="site"><div class="wrap"><span>전민 연구 기록, 전남대학교 의과대학 정신건강의학교실</span><span>논문 목록은 2026년 10월 기준</span></div></footer>
+
+<script src="assets/catalog.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const C=window.CATALOG, S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const P=C.PAPERS, byId=Object.fromEntries(P.map(p=>[p.id,p]));
+const titleOf=p=>p.title_ko||p.title||'';
+const rank=(a,b)=>((a.tier==='A'&&a.slug?0:a.tier==='A'?1:a.tier==='B'?2:3)-(b.tier==='A'&&b.slug?0:b.tier==='A'?1:b.tier==='B'?2:3))||(b.led-a.led)||((b.year||0)-(a.year||0));
+const linkFor=p=>{const h=S.href(p,'');return h?`<a href="${esc(h)}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>${esc(titleOf(p))}</a>`:esc(titleOf(p))};
+const dash=s=>String(s||'').replace(/-/g,'–');
+
+/* ---------- 머리 숫자 ---------- */
+const years=P.map(p=>p.year).filter(Boolean);
+$('#fPeriod').textContent=Math.min(...years)+'–'+Math.max(...years);
+$('#fTotal').textContent=C.STATS.total;
+$('#fLed').textContent=C.STATS.led;
+
+/* ---------- 이런 상황이라면?: 해설 글 하나에서 ---------- */
+const sp=C.POSTS.find(p=>p.need);
+if(sp) S.scene(sp,$('#homeScene'),{more:`<a href="posts/${esc(sp.slug)}.html">이 장면에서 출발한 연구 읽기: ${esc(sp.short)}</a>`});
+else $('#homeScene').remove();
+
+/* ---------- 연구 기록지 ----------
+   점 = 혈액, 척도, 설문 지표 논문(P4가 아닌 논문). 박동 = 디지털 신호 논문(P4, 2023년부터).
+   채운 점과 높은 박동 = 전민 주도. 연도 미상 논문은 그릴 수 없어 뺀다. */
+const isSig=p=>p.phase==='P4';
+const dated=P.filter(p=>p.year);
+const Y0=Math.min(...years),Y1=Math.max(...years),YEARS=[];for(let y=Y0;y<=Y1;y++)YEARS.push(y);
+const ord=(a,b)=>(b.led-a.led)||rank(a,b);
+const DOTS={},BEATS={};YEARS.forEach(y=>{DOTS[y]=[];BEATS[y]=[]});
+dated.forEach(p=>(isSig(p)?BEATS:DOTS)[p.year].push(p));
+YEARS.forEach(y=>{DOTS[y].sort(ord);BEATS[y].sort(ord)});
+const undated=P.length-dated.length;
+const firstSig=Math.min(...YEARS.filter(y=>BEATS[y].length));
+const BR=[['P1',2016,2019],['P2',2020,2022],['P3',2020,2026],['P4',2023,2026],['P_parallel',2023,2026]];
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a,txt)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e};
+let marks=[],sel=-1,lastW=0;
+const svg=$('#trace'),frame=$('#traceFrame');
+
+$('#traceDesc').textContent=`연도별 논문 기록. ${YEARS.map(y=>`${y}년 ${DOTS[y].length+BEATS[y].length}편${BEATS[y].length?`(디지털 신호 ${BEATS[y].length}편)`:''}`).join(', ')}. 연도 미상 ${undated}편은 그리지 않았다. 왼쪽, 오른쪽 화살표로 논문을 하나씩 고를 수 있다.`;
+svg.setAttribute('aria-label','연구 기록지: '+P.length+'편 가운데 연도가 있는 '+dated.length+'편');
+
+function draw(){
+  const FW=frame.clientWidth; if(!FW)return;
+  const W=Math.max(FW,300), narrow=W<760; lastW=FW;
+  const L=narrow?14:170,R=narrow?14:24,cw=(W-L-R)/YEARS.length;
+  const r=cw<44?2.8:narrow?4:5, step=r*2+3, perRow=Math.max(2,Math.min(3,Math.floor((cw-8)/step)));
+  const maxN=Math.max(...YEARS.map(y=>DOTS[y].length)), rows=Math.ceil(maxN/perRow);
+  const c1Top=narrow?30:28, c1Base=c1Top+rows*step+8;
+  const c2Top=c1Base+(narrow?42:36), c2H=narrow?96:130, c2Base=c2Top+c2H*0.62;
+  const axisY=c2Top+c2H+18, phTop=axisY+(narrow?34:36), phStep=narrow?32:24;
+  const H=phTop+BR.length*phStep+(narrow?2:6);
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);svg.style.width=W+'px';
+  svg.textContent='';marks=[];
+  const x0=y=>L+(y-Y0)*cw;
+  const lab=(t,sub,y)=>{if(narrow){svg.append(el('text',{x:L,y:y,class:'t-strong'},t+', '+sub))}else{svg.append(el('text',{x:14,y:y+4,class:'t-strong'},t));svg.append(el('text',{x:14,y:y+21},sub))}};
+  lab('검체와 척도','혈액, 골밀도, 설문',narrow?c1Top-14:c1Top+8);
+  lab('연속 신호','걸음, 심박, 목소리, 언어',narrow?c2Top-10:c2Top+8);
+  /* 채널 1: 쌓인 점 */
+  svg.append(el('line',{x1:L,x2:W-R,y1:c1Base+.5,y2:c1Base+.5,class:'m-base'}));
+  YEARS.forEach(y=>{const span=(perRow-1)*step,cx0=x0(y)+cw/2-span/2;
+    DOTS[y].forEach((p,i)=>{const cx=cx0+(i%perRow)*step,cy=c1Base-6-Math.floor(i/perRow)*step;
+      svg.append(el('circle',{cx,cy,r,class:'m-dot'+(p.led?' led':'')}));marks.push({x:cx,y:cy,p,r})})});
+  /* 채널 2: 첫 디지털 논문 전에는 평탄선, 이후 논문마다 박동 하나 */
+  let d=`M ${L} ${c2Base} L ${x0(firstSig)} ${c2Base}`;const amp=c2H*0.55;
+  YEARS.filter(y=>y>=firstSig).forEach(y=>{const n=BEATS[y].length,gx=x0(y);
+    if(!n){d+=` L ${gx+cw} ${c2Base}`;return}
+    const g=cw/n;
+    BEATS[y].forEach((p,i)=>{const bx=gx+g*i,mid=bx+g/2,w=Math.min(g*.34,narrow?6:9),h=(p.led?1:.62)*amp;
+      d+=` L ${mid-w*1.6} ${c2Base} Q ${mid-w*1.25} ${c2Base-4} ${mid-w} ${c2Base}`;
+      d+=` L ${mid-w*.45} ${c2Base+5} L ${mid} ${c2Base-h} L ${mid+w*.5} ${c2Base+h*.22} L ${mid+w} ${c2Base}`;
+      d+=` Q ${mid+w*1.8} ${c2Base-7} ${Math.min(bx+g,mid+w*2.6)} ${c2Base}`;
+      if(p.led)svg.append(el('circle',{cx:mid,cy:c2Base-h-6,r:narrow?2.2:2.6,class:'m-led'}));
+      marks.push({x:mid,y:c2Base-h*.6,p,r:4})})});
+  d+=` L ${W-R} ${c2Base}`;
+  svg.append(el('path',{d,class:'m-trace'}));
+  const xs=x0(firstSig);
+  svg.append(el('line',{x1:xs,x2:xs,y1:c1Top-6,y2:axisY-12,class:'m-guide'}));
+  svg.append(el('text',{x:xs+6,y:c2Top-(narrow?24:6),class:'t-meta'},firstSig+', 신호를 재기 시작'));
+  /* 축: 연도와 그해 논문 수 */
+  YEARS.forEach(y=>{const tx=x0(y)+cw/2;
+    svg.append(el('text',{x:tx,y:axisY,'text-anchor':'middle',class:'t-num'},cw<44?"'"+String(y).slice(2):y));
+    svg.append(el('text',{x:tx,y:axisY+16,'text-anchor':'middle',class:'t-num t-meta'},DOTS[y].length+BEATS[y].length))});
+  if(!narrow){svg.append(el('text',{x:14,y:axisY},'연도'));svg.append(el('text',{x:14,y:axisY+16},'논문 수'))}
+  /* 시기 괄호 */
+  BR.forEach(([id,a,b],i)=>{const y=phTop+i*phStep+(narrow?12:8),xa=x0(a)+4,xb=x0(b)+cw-4;
+    const cls='m-br'+(id==='P4'?' now':id==='P_parallel'?' par':'');
+    svg.append(el('path',{d:`M ${xa} ${y-5} L ${xa} ${y} L ${xb} ${y} L ${xb} ${y-5}`,class:cls}));
+    const name=id==='P_parallel'?'병행 줄기':S.phaseShort[id];
+    if(narrow){svg.append(el('text',{x:L,y:y-8,'font-size':'11',class:id==='P_parallel'?'t-meta':''},`${a}–${b} ${name}`))}
+    else{svg.append(el('text',{x:14,y:y+3,class:id==='P_parallel'?'t-meta':''},`${a}–${b}`));svg.append(el('text',{x:xa+6,y:y-7,'font-size':'11.5',class:id==='P_parallel'?'t-meta':''},name))}});
+  const g=el('g',{id:'selLayer'});svg.append(g);
+  if(sel>=0)mark(sel,false);
+}
+function mark(i,announce=true){
+  sel=i;const g=$('#selLayer');if(!g)return;g.textContent='';
+  const m=marks[i];if(!m)return;
+  g.append(el('circle',{cx:m.x,cy:m.y,r:m.r+4,class:'m-sel'}));
+  const p=m.p,h=S.href(p,''),role=S.roleKo(p.role);
+  const ro=$('#readout');ro.classList.remove('empty');
+  const go=!h?'':p.tier==='A'&&p.slug?'해설 읽기':(p.tier==='A'||p.tier==='B')?'요약 보기':'원문(DOI)';
+  ro.innerHTML=`<span class="r-year">${p.year}</span><span class="r-title">${esc(titleOf(p))}<span class="r-meta">${esc([p.venue,role].filter(Boolean).join(', '))}${p.led?' <span class="led">전민 주도</span>':''}</span></span>${h?`<a class="r-go" href="${esc(h)}"${h.startsWith('http')?' target="_blank" rel="noopener"':''}>${go}</a>`:'<span></span>'}`;
+}
+function nearest(ev){
+  const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;
+  const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+  let best=-1,bd=1e9;marks.forEach((m,i)=>{const dd=Math.hypot((m.x-q.x)*1.4,(m.y-q.y)*.6);if(dd<bd){bd=dd;best=i}});
+  return bd<34?best:-1;
+}
+svg.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const i=nearest(e);if(i>=0&&i!==sel)mark(i)});
+svg.addEventListener('click',e=>{const i=nearest(e);if(i>=0)mark(i)});
+svg.addEventListener('keydown',e=>{
+  const order=marks.map((m,i)=>i).sort((a,b)=>marks[a].x-marks[b].x||marks[b].y-marks[a].y);
+  const k=order.indexOf(sel);
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=k<0?0:(k+(e.key==='ArrowRight'?1:-1)+order.length)%order.length;mark(order[n])}
+  if(e.key==='Enter'&&sel>=0){const a=$('#readout a');if(a)a.click()}
+});
+$('#readout').textContent='점이나 박동을 누르면(마우스는 올리면) 그 논문이 여기에 나온다. 키보드로는 기록지에서 왼쪽, 오른쪽 화살표.';
+draw();
+let raf=0;addEventListener('resize',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{if(frame.clientWidth!==lastW)draw()})});
+$('#ytable').innerHTML=`<thead><tr><th>연도</th><th>검체와 척도</th><th>디지털 신호</th><th>전민 주도</th></tr></thead><tbody>${YEARS.map(y=>`<tr><td>${y}</td><td>${DOTS[y].length}</td><td>${BEATS[y].length}</td><td>${DOTS[y].concat(BEATS[y]).filter(p=>p.led).length}</td></tr>`).join('')}<tr><td>미상</td><td colspan="3">${undated}편, 기록지에서 뺌</td></tr></tbody>`;
+
+/* ---------- 네 시기 ---------- */
+const MEASURED={P1:'골밀도, 혈청 철, 오메가-3 지방산, 음주 선별 척도',P2:'재난 시기의 고통과 불안 척도, 암 환자의 우울과 생존',P3:'혈청 IL-1β, IL-6, TNF-α, BDNF, 그렐린과 사회심리 맥락',P4:'걸음 수, 얼굴 영상 심박변이도, 자서전적 서사, 일상 언어'};
+const PH=Object.fromEntries(C.PHASES.map(p=>[p.id,p]));
+const ledN=ids=>ids.filter(i=>byId[i]&&byId[i].led).length;
+$('#phaseCards').insertAdjacentHTML('beforeend',['P1','P2','P3','P4'].map(id=>{const ph=PH[id];
+  return `<article class="ph${id==='P4'?' now':''}"><div class="yr">${dash(ph.years)}</div><h3>${esc(S.phaseShort[id])}</h3>
+  <dl><dt>잰 것</dt><dd>${esc(MEASURED[id])}</dd><dt>논문</dt><dd><span class="v">${ph.ids.length}</span>편, 전민 주도 <span class="v">${ledN(ph.ids)}</span>편</dd></dl>
+  <a class="go" href="#p=${id}">이 시기 논문 보기</a></article>`}).join(''));
+const par=PH.P_parallel;
+$('#parallel').innerHTML=`<span><span class="yr">${dash(par.years)}</span> 병행 줄기</span><p>같은 시기에 조기개입, 자살 정책, 신체질환과 외상, 노년의 정신건강 연구도 이어진다. 논문 <span class="v">${par.ids.length}</span>편, 전민 주도 <span class="v">${ledN(par.ids)}</span>편. <a href="#p=P_parallel">논문 보기</a></p>`;
+
+/* ---------- 질문, 시기, 주제 색인 ---------- */
+const papersOf=ids=>ids.map(i=>byId[i]).filter(Boolean).sort(rank);
+const rowList=ids=>`<details><summary>논문 ${ids.length}편 보기</summary><ul>${papersOf(ids).map(p=>`<li><span class="y">${p.year||''}</span>${linkFor(p)}${p.led?'<span class="led">전민 주도</span>':''}</li>`).join('')}</ul></details>`;
+function indexView(k){
+  let rows=[];
+  if(k==='q'){
+    const core=C.QUESTIONS.filter(q=>q.kind==='core'),shared=C.QUESTIONS.filter(q=>q.kind!=='core');
+    rows=core.map(q=>`<tr id="row-${q.id}"><th><small>${q.id}</small>${esc(q.short)}</th><td>${esc(S.tidy(q.q))}${rowList(q.ids)}</td><td class="n">${q.ids.length}편</td></tr>`)
+      .concat(shared.map((q,i)=>`<tr id="row-${q.id}" class="with${i===0?' sep':''}"><th><small>${q.id}, ${esc(q.kind_label)}</small>${esc(q.short)}</th><td>${esc(S.tidy(q.q))}${rowList(q.ids)}</td><td class="n">${q.ids.length}편</td></tr>`));
+  }else if(k==='p'){
+    rows=C.PHASES.map(ph=>`<tr id="row-${ph.id}"${ph.id==='P_parallel'?' class="with sep"':''}><th><small>${dash(ph.years)}</small>${esc(ph.id==='P_parallel'?'병행 줄기':S.phaseShort[ph.id])}</th><td>${esc(S.tidy(ph.label_ko))}${rowList(ph.ids)}</td><td class="n">${ph.ids.length}편</td></tr>`);
+  }else{
+    rows=C.TOPICS.map(t=>`<tr id="row-${t.id}"><th><small>주제</small>${esc(S.topicShort[t.id]||t.name_ko)}</th><td>${esc(S.tidy(t.name_ko))}${rowList(t.ids)}</td><td class="n">${t.ids.length}편</td></tr>`);
+  }
+  $('#indexView').innerHTML='<tbody>'+rows.join('')+'</tbody>';
+}
+S.seg('viewSeg',indexView,'home-view');
+
+/* ---------- 논문 전체: 찾기와 거르기 ---------- */
+const opt=(v,t)=>`<option value="${esc(v)}">${esc(t)}</option>`;
+$('#fTopic').innerHTML=opt('','모든 주제')+C.TOPICS.map(t=>opt(t.id,S.topicShort[t.id]||t.name_ko)).join('');
+$('#fYear').innerHTML=opt('','모든 연도')+[...new Set(years)].sort((a,b)=>b-a).map(y=>opt(y,y)).join('')+(undated?opt('none','연도 미상'):'');
+$('#fRole').innerHTML=opt('','모든 역할')+opt('led','전민 주도')+['first','co-first','corresponding','co-corresponding','co-author'].filter(r=>P.some(p=>p.role===r)).map(r=>opt(r,S.roleKo(r))).join('');
+$('#fPhase').innerHTML=opt('','모든 시기')+C.PHASES.map(ph=>opt(ph.id,`${dash(ph.years)} ${ph.id==='P_parallel'?'병행 줄기':S.phaseShort[ph.id]}`)).join('');
+$('#fMethod').innerHTML=opt('','모든 방법')+C.METHODS.map(m=>opt(m.id,m.name_ko)).join('');
+const F={q:$('#fq'),topic:$('#fTopic'),year:$('#fYear'),role:$('#fRole'),phase:$('#fPhase'),method:$('#fMethod')};
+const norm=s=>String(s||'').toLowerCase().normalize('NFKC');
+const hay=Object.fromEntries(P.map(p=>[p.id,norm([p.title,p.title_ko,p.venue,p.year,p.short,p.post_title].join(' '))]));
+const sorted=P.slice().sort((a,b)=>((b.year||0)-(a.year||0))||rank(a,b));
+let shown=40;
+function row(p){
+  const h=S.href(p,''),role=S.roleKo(p.role);
+  const kind=p.tier==='A'&&p.slug?'해설 글':'';
+  const title=h&&!h.startsWith('http')?`<a href="${esc(h)}">${esc(titleOf(p))}</a>`:esc(titleOf(p));
+  const doi=(!h||h.startsWith('http'))&&p.doi?`<a class="doi" href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">DOI</a>`:'';
+  return `<tr><td class="y">${p.year||''}</td><td class="t">${title}${kind?`<span class="kind">${kind}</span>`:''}${doi}${p.title_ko&&p.title?`<span class="en">${esc(p.title)}</span>`:''}</td><td class="j">${esc(p.venue||'')}</td><td class="r">${p.led?`<span class="led">${esc(role)}</span>`:esc(role)}</td></tr>`;
+}
+function apply(){
+  const q=norm(F.q.value.trim()),v=k=>F[k].value;
+  const terms=q.split(/\s+/).filter(Boolean);
+  const out=sorted.filter(p=>
+    terms.every(t=>hay[p.id].includes(t))&&
+    (!v('topic')||p.topics.includes(v('topic')))&&
+    (!v('year')||(v('year')==='none'?!p.year:String(p.year)===v('year')))&&
+    (!v('role')||(v('role')==='led'?p.led:p.role===v('role')))&&
+    (!v('phase')||p.phase===v('phase'))&&
+    (!v('method')||(p.methods_tag||[]).includes(v('method'))));
+  $('#plist').innerHTML=out.slice(0,shown).map(row).join('');
+  $('#pempty').hidden=out.length>0;
+  const any=terms.length||['topic','year','role','phase','method'].some(v);
+  $('#pcount').textContent=any?`${P.length}편 가운데 ${out.length}편`:`${P.length}편, 최근 것부터`;
+  $('#freset').hidden=!any;
+  const m=$('#pmore');m.hidden=out.length<=shown;m.textContent=`${Math.min(40,out.length-shown)}편 더 보기 (남은 ${out.length-shown}편)`;
+}
+Object.values(F).forEach(e=>e.addEventListener(e.tagName==='INPUT'?'input':'change',()=>{shown=40;apply()}));
+$('#pmore').onclick=()=>{shown+=40;apply()};
+$('#freset').onclick=()=>{Object.values(F).forEach(e=>e.value='');shown=40;apply()};
+apply();
+
+/* ---------- 주소의 상태: #q=Q1(질문 색인 열기), #p=P4(시기로 거르기), #t=T5(주제로 거르기) ---------- */
+function fromHash(){
+  const m=location.hash.match(/^#([pqt])=([\w-]+)$/);if(!m)return;
+  const [,k,id]=m;
+  if(k==='q'){const b=document.querySelector('#viewSeg [data-k="q"]');if(b)b.click();
+    const r=document.getElementById('row-'+id);if(r){const d=r.querySelector('details');if(d)d.open=true;r.scrollIntoView({block:'start'})}return}
+  Object.values(F).forEach(e=>e.value='');
+  if(k==='p')F.phase.value=id; else F.topic.value=id;
+  shown=40;apply();$('#papers').scrollIntoView({block:'start'});
+}
+addEventListener('hashchange',fromHash);fromHash();
+})();
+</script>
+</body>
+</html>
