@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>고위험군 적혈구 지방산과 증상 - 전민 연구 기록</title>
+<meta name="description" content="항정신병약물을 쓴 적 없는 정신증 초고위험군 80명에서 적혈구막 지방산 구성과 증상, 특히 음성증상의 관계를 살핀 비엔나 오메가-3 연구(PLoS One, 2016)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 11px;font-size:13.5px;border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pick button small{font-family:var(--num);font-size:11.5px;margin-left:4px;color:inherit;opacity:.8}
+.out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+/* 지방산 이름 읽기: 탄소 사슬 */
+.chain{display:block;width:100%;height:120px;background:var(--bg)}
+.chain .c-bond{stroke:var(--ink);stroke-width:1.6;fill:none}
+.chain .c-dbl{stroke:var(--signal);stroke-width:1.6}
+.chain .c-atom{fill:var(--ink)}
+.chain .c-end{font-size:12px;fill:var(--meta)}
+.chain .c-omega{font-size:12px;fill:var(--signal-ink)}
+.chain .c-tick{stroke:var(--signal);stroke-width:1;stroke-dasharray:3 3}
+.parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:12px}
+.parts div{padding:8px 10px 10px 0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.parts div+div{padding-left:10px;border-left:1px solid var(--line)}
+.parts b{display:block;font-family:var(--num);font-weight:500;font-size:18px;color:var(--ink)}
+/* 편상관 막대 */
+.cr{display:grid;border-top:1px solid var(--line)}
+.cr-row{display:grid;grid-template-columns:168px minmax(0,1fr) 70px;gap:10px;align-items:center;padding:4px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;width:100%;border-radius:var(--r)}
+.cr-row:hover .cr-name{text-decoration:underline;text-underline-offset:3px}
+.cr-row[aria-pressed="true"]{background:var(--tint)}
+.cr-name small{font-family:var(--num);font-size:11.5px;color:var(--meta);margin-left:4px}
+.cr-track{position:relative;height:16px}
+.cr-zero{position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid var(--meta)}
+.cr-bar{position:absolute;top:3px;height:10px;background:var(--line-2);transition:width .3s ease-out,left .3s ease-out}
+.cr-row.sig .cr-bar{background:var(--signal)}
+.cr-val{font-family:var(--num);font-size:12.5px;text-align:right;color:var(--ink-2);white-space:nowrap}
+.cr-row.sig .cr-val{color:var(--signal-ink)}
+.cr-axis{display:grid;grid-template-columns:168px minmax(0,1fr) 70px;gap:10px}
+.cr-ticks{position:relative;height:20px}
+.cr-ticks span{position:absolute;top:3px;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta)}
+.cr-dir{display:flex;justify-content:space-between;font-size:12.5px;color:var(--meta)}
+/* 세 집단 비교 */
+.cmp{display:grid;grid-template-columns:118px minmax(0,1fr) 120px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px;line-height:1.35}
+.cmp .c-name small{display:block;font-family:var(--num);font-size:11.5px;color:var(--meta)}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.gaf-cap{margin:12px 0 0}
+.more-pick{margin:0 0 14px;max-width:340px}
+/* 집단 나누기 */
+.sliders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;margin:0 0 14px}
+.sliders label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-2)}
+.sliders label b{font-family:var(--num);font-weight:500;color:var(--ink);font-size:16px}
+.sliders input[type="range"]{width:100%;accent-color:var(--ink)}
+.verdict{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;font-size:15.5px;line-height:1.7}
+.verdict b{font-weight:600}
+.verdict .vd{font-family:var(--num);font-weight:500}
+.prof{width:100%;border-collapse:collapse;font-size:14px;margin-top:12px}
+.prof th,.prof td{border-bottom:1px solid var(--line);padding:7px 8px 7px 0;text-align:right;font-weight:400}
+.prof th{color:var(--meta);font-size:13px}
+.prof td{font-family:var(--num);font-size:13px}
+.prof th:first-child,.prof td:first-child{text-align:left;font-family:var(--sans);font-size:13.5px}
+.prof tr.on td{background:var(--tint)}
+.prof tr.on td:first-child{font-weight:600}
+@media (max-width:640px){
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+  .cr-row,.cr-axis{grid-template-columns:100px minmax(0,1fr) 64px;gap:8px;font-size:13px}
+  .cr-name small{display:block;margin-left:0}
+  .cr-val{font-size:11.5px}
+  .cmp{grid-template-columns:84px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .sliders{grid-template-columns:1fr}
+  .parts b{font-size:16px}
+  .parts div{font-size:12.5px}
+  .prof th,.prof td{padding:6px 4px 6px 0;font-size:12px}
+  .prof th:first-child,.prof td:first-child{font-size:12.5px}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 조기 정신증, 생체 지표</p>
+  <h1>혈액 속 적혈구 막의 지방산은, 정신증 위험이 높은 청소년의 증상과 어떤 관계가 있을까요?</h1>
+  <p class="lede">우리 몸의 세포는 기름으로 된 얇은 막에 싸여 있고, 그 막을 이루는 지방산의 구성은 사람마다 조금씩 다릅니다. 조현병 환자에게서는 몇몇 지방산이 부족하다는 보고가 쌓여 왔지만, 약물과 병의 경과가 지방산을 바꿀 수 있어 해석이 어려웠습니다. 이 연구는 아직 정신증이 생기지 않았고 항정신병약물을 쓴 적도 없는 <span class="term" data-tip="Ultra-high risk. 약한 정신병적 증상, 잠깐 나타났다 사라진 정신병적 증상, 또는 유전적 위험과 기능 저하가 있어 정신증으로 넘어갈 위험이 높다고 보는 상태.">정신증 초고위험군</span> 80명의 적혈구 막 지방산을 재고, 증상의 정도와 함께 살펴보았습니다.</p>
+  <p class="meta">원문: Kim S-W, Jhon M 외. PLoS One 11(3):e0151417, 2016<br>읽는 데 약 11분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>오스트리아 비엔나 의대의 정신증 조기발견 클리닉에서 오메가-3 임상시험에 참여한 13~25세 초고위험군 가운데, 시작 시점에 적혈구 막 지방산을 잰 <b>80명</b>을 분석했습니다.</li>
+    <li>나이, 성별, 흡연, 대마 사용을 보정하자 <b>음성증상</b>이 심할수록 에이코세노산, 에루크산 같은 ω-9 지방산과 감마리놀렌산, 도코사디엔산 같은 ω-6 지방산이 높았고, 미리스트산, 마르가르산, 네르본산, 그리고 ω-3 지방산인 DPA는 낮았습니다.</li>
+    <li>양성증상은 네르본산 하나와만 관련이 있었고, 우울 증상(MADRS)은 어떤 지방산과도 관련이 없었습니다.</li>
+    <li>음성증상이 앞서는 집단은 양성증상이 앞서는 집단보다 <b>ω-6:ω-3 비율</b>이 높고(5.94 대 5.13) ω-3 지방산 합계가 낮았습니다(5.00 대 5.77). 논문은 막 지방산이 조현병 초기 단계의 생물학적 지표가 될 수 있다고 봅니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>80명</b><span>지방산을 잰 초고위험군(항정신병약물 미복용)</span></div>
+  <div class="stat"><b>0.478</b><span>에이코세노산과 음성증상의 편상관계수</span></div>
+  <div class="stat"><b>5.94</b><span>음성증상 우세군의 ω-6:ω-3 비율(양성증상 우세군 5.13)</span></div>
+  <div class="stat"><b>5.00</b><span>음성증상 우세군의 ω-3 합계, mol%(양성증상 우세군 5.77)</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 초고위험 단계였을까요</a></li>
+    <li><a href="#how">무엇을 어떻게 쟀을까요</a></li>
+    <li><a href="#corr">어떤 지방산이 어떤 증상과 함께 움직였을까요</a></li>
+    <li><a href="#groups">증상의 모양에 따라 나눠 보면</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 초고위험 단계였을까요</h2>
+<p>조현병은 대개 청소년기나 성인 초기에 시작합니다. 증상은 흔히 두 갈래로 나눕니다. 망상이나 환청 같은 <span class="term" data-tip="정상적인 경험에 무언가가 더해진 증상. 망상, 환청, 사고의 혼란 등.">양성증상</span>은 비교적 오르내리는 편이고, 감정 표현이 줄고 사람과 일에서 물러나는 <span class="term" data-tip="정상적인 기능이 줄거나 빠진 증상. 감정 표현의 둔화, 의욕 저하, 사회적 위축 등.">음성증상</span>은 더 오래 머물며 일상 기능을 더 크게 떨어뜨립니다.</p>
+<p>지방산이 여기에 등장하는 까닭은 뇌의 재료이기 때문입니다. <span class="term" data-tip="Polyunsaturated fatty acid. 사슬 안에 이중결합이 둘 이상 있는 지방산. ω-3과 ω-6 계열이 대표적이다.">다가불포화지방산</span>은 신경세포와 수초의 막을 이루고, 신경세포의 이동, 시냅스 정리, 시냅스 가소성에도 관여합니다. 동물 연구에서는 ω-3 지방산이 크게 부족하면 도파민과 세로토닌 신경전달이 달라졌습니다. 또 ω-3 지방산은 염증 물질을 억누르는 쪽으로, ω-6 지방산은 그렇지 않은 쪽으로 작용합니다.</p>
+<p>조현병 환자에게 핵심 다가불포화지방산이 부족하다는 근거는 쌓여 왔습니다. 하지만 어떤 지방산이 바뀌는지, 그 변화가 어떤 증상과 이어지는지는 분명하지 않았습니다. 음성증상과 관련이 있다는 연구도, 그렇지 않다는 연구도 있었습니다. 게다가 항정신병약물과 병의 진행이 지방산 수치를 바꿀 수 있어서, 논문은 정신증이 생기기 전 단계인 초고위험군을 보는 것이 지방산의 역할을 밝히는 데 더 도움이 된다고 보았습니다.</p>
+<div class="callout"><p><b>비유:</b> 집의 벽돌이 조금 다른 재료로 바뀌어 있다는 걸 알았다고 해 봅시다. 이미 수리를 여러 번 한 집에서는 그 차이가 원래부터였는지, 수리 탓인지 가리기 어렵습니다. 아직 수리를 한 번도 하지 않은 집을 보면 원래 재료에 더 가깝게 볼 수 있습니다. 항정신병약물을 쓴 적 없는 초고위험군이 그런 집에 해당합니다.</p></div>
+
+<h2 id="how">2. 무엇을 어떻게 쟀을까요</h2>
+<p>참여자는 오메가-3 지방산 보충제의 무작위 대조 임상시험(비엔나 오메가-3 연구, NCT00396643)에 참여한 13~25세 초고위험군입니다. 비엔나 의대의 정신증 조기발견 클리닉에서 모집했고, 이 논문은 보충제를 먹기 전인 시작 시점의 자료를 썼습니다. 논문이 인용한 기준에 따르면 이런 조건을 갖춘 사람이 12개월 안에 정신증으로 넘어갈 위험은 40%에 이를 수 있습니다.</p>
+<ul class="flow" aria-label="참여자와 측정 흐름">
+  <li><b>81명</b><span>항정신병약물을 쓴 적 없는 초고위험군 모집. 이전 정신병적 장애, 물질 유발 정신증, 지능지수 70 미만, 8주 안에 오메가-3 보충제를 먹은 사람 등은 제외</span></li>
+  <li><b>80명</b><span>시작 시점에 적혈구 막 지방산을 잰 사람</span></li>
+  <li><b>혈액</b><span>적혈구 막의 <span class="term" data-tip="Phosphatidylethanolamine. 세포막을 이루는 인지질의 한 종류. 막의 안쪽 면에 많고, 뇌에서 막 안쪽의 가장 흔한 인지질이다.">포스파티딜에탄올아민(PE)</span> 분획을 분리하고, 가스 크로마토그래피로 지방산 19가지를 전체 지방산 대비 몰 백분율(mol%)로 정량</span></li>
+  <li><b>척도</b><span><span class="term" data-tip="Positive and Negative Syndrome Scale. 정신병적 증상을 면담으로 평가하는 척도. 양성, 음성, 일반 정신병리의 세 하위척도로 이뤄진다.">PANSS</span>(총점과 양성, 음성, 일반 정신병리), 우울 척도 <span class="term" data-tip="Montgomery–Asberg Depression Rating Scale. 임상가가 우울 증상의 심각도를 평가하는 척도.">MADRS</span>, 전반적 기능 척도 <span class="term" data-tip="Global Assessment of Functioning. 사회적, 직업적, 심리적 기능을 0~100점으로 평가한다. 점수가 높을수록 기능이 좋다.">GAF</span>. 훈련받은 임상가가 평가했고 평가자 간 일치도(급내상관계수)는 0.92보다 높았습니다</span></li>
+</ul>
+<p>왜 적혈구일까요. 적혈구 막 인지질의 구성은 신경세포 막과 가깝게 닮아 있어서, 쉽게 얻을 수 있는 뇌 인지질의 지표로 쓰입니다. 그중 PE 분획을 고른 것은, 정신병적 질환에서 짐작되는 지방산의 산화 손상이 특히 막의 안쪽 면에 생기고 PE가 바로 그 안쪽 면에 많은 인지질이기 때문입니다.</p>
+<p>분석은 두 가지였습니다. 먼저 나이, 성별, 흡연, 대마 사용의 영향을 뺀 <span class="term" data-tip="두 변수 사이의 상관을 구할 때, 함께 영향을 줄 수 있는 다른 변수(여기서는 나이, 성별, 흡연, 대마 사용)의 몫을 빼고 계산한 상관계수. -1~1.">편상관</span>으로 지방산과 각 척도의 관계를 보았습니다. 다음으로 참여자를 증상의 모양에 따라 세 집단으로 나눠 지방산 수치를 <span class="term" data-tip="세 집단 이상의 평균을 한꺼번에 비교하는 분산분석(ANOVA) 뒤에, 어느 두 집단이 다른지 여러 번 비교한 만큼 기준을 엄격하게 고쳐 확인하는 사후 검정.">본페로니 사후 검정</span>까지 비교했습니다.</p>
+
+<p>지방산의 이름표부터 읽어 두면 뒤의 결과가 쉬워집니다. 논문은 지방산을 <span class="num">20:1n-9</span> 같은 기호로 적습니다. 아래에서 지방산을 골라 보세요.</p>
+
+<div class="panel figure" id="nameFig"><span class="cx"></span>
+  <div class="fig-head"><h3>지방산 이름 읽기</h3><span class="note">빨간 선: 이중결합</span></div>
+  <div class="pick" id="faPick" role="group" aria-label="지방산 고르기"></div>
+  <svg class="chain" id="chain" role="img" aria-label="고른 지방산의 탄소 사슬 개념 그림"></svg>
+  <div class="parts" id="faParts"></div>
+  <p class="out" id="faText" aria-live="polite"></p>
+  <p class="fig-note">사슬 그림은 기호를 읽는 법을 보여 주는 개념 그림입니다. 실제 분자의 입체 모양을 나타내지 않습니다. 계열 구분은 논문의 분류를 따랐습니다.</p>
+</div>
+
+<h2 id="corr">3. 어떤 지방산이 어떤 증상과 함께 움직였을까요</h2>
+<p>결과의 중심은 음성증상이었습니다. 음성증상 점수가 높을수록 ω-9 계열의 에이코세노산과 에루크산, ω-6 계열의 감마리놀렌산과 도코사디엔산이 높았습니다. 반대로 포화지방산인 미리스트산과 마르가르산, ω-9 계열의 네르본산, ω-3 계열의 DPA는 낮았습니다. ω-6:ω-3 비율은 음성증상과 PANSS 총점이 높을수록 높았고, ω-3 지방산 합계는 음성증상이 높을수록 낮았습니다.</p>
+<p>양성증상과 관련된 지방산은 네르본산 하나였습니다. 우울 증상을 잰 MADRS는 어떤 지방산과도 관련이 없었습니다. 논문은 이 점을 들어, 음성증상과 우울은 겉모습이 겹치지만 지방산과 음성증상의 관련이 우울로 인한 것은 아니라고 해석합니다. 척도를 바꿔 가며 직접 확인해 보세요.</p>
+
+<div class="panel figure" id="t1"><span class="cx"></span>
+  <div class="fig-head"><h3>지방산과 증상 척도의 편상관(표 1)</h3><span class="note">빨간 막대: p &lt; 0.05</span></div>
+  <div class="ctrl">
+    <div class="seg" id="t1Col" role="group" aria-label="척도 고르기"><button data-k="2">음성증상</button><button data-k="0">PANSS 총점</button><button data-k="1">양성증상</button><button data-k="3">일반 정신병리</button><button data-k="4">MADRS</button><button data-k="5">GAF</button></div>
+    <div class="seg" id="t1Fam" role="group" aria-label="지방산 계열"><button data-k="all">모두</button><button data-k="sat">포화</button><button data-k="w9">ω-9</button><button data-k="w6">ω-6</button><button data-k="w3">ω-3</button><button data-k="sum">합계와 비율</button></div>
+  </div>
+  <div class="cr" id="crRows" role="group" aria-label="지방산별 편상관계수"></div>
+  <div class="cr-axis" aria-hidden="true"><span></span><div><div class="cr-ticks" id="crTicks"></div><div class="cr-dir"><span>척도 점수가 높을수록 적음</span><span>많음</span></div></div><span></span></div>
+  <p class="out" id="crOut" aria-live="polite"></p>
+  <p class="fig-note">나이, 성별, 흡연, 대마 사용을 보정한 편상관계수, 80명. 줄을 누르면 그 값을 문장으로 읽어 줍니다. GAF는 점수가 높을수록 기능이 좋다는 점에 유의해 읽어 주세요.</p>
+</div>
+
+<p>몇 가지는 논문이 따로 짚습니다. 네르본산은 수초 막의 주요 성분으로 백질의 온전함을 지키는 데 관여하는데, 이 연구에서 PANSS 총점과 세 하위척도 모두와 음의 상관을 보였습니다. 에이코세노산은 대규모 대사체 연구에서 조현병의 주요 지표로 보고된 바 있고, 항정신병약물 치료 전 환자의 혈청에서 건강한 대조군보다 높았습니다. 논문은 이번 결과가 그런 대사 변화가 조현병 이전의 초고위험 단계에서, 특히 음성증상과 관련해 나타난다는 것을 보여 준다고 적습니다.</p>
+
+<h2 id="groups">4. 증상의 모양에 따라 나눠 보면</h2>
+<p>연구팀은 PANSS의 양성 하위척도와 음성 하위척도 점수를 견줘 참여자를 세 집단으로 나눴습니다. 양성 점수가 음성 점수보다 2점 이상 높으면 양성증상 우세군, 음성 점수가 2점 이상 높으면 음성증상 우세군, 차이가 -1에서 1 사이면 혼합형입니다. 점수를 움직여 어느 집단에 들어가는지 확인해 보세요.</p>
+
+<div class="panel figure" id="cls"><span class="cx"></span>
+  <div class="fig-head"><h3>세 집단으로 나누는 규칙과 집단의 모습(표 2)</h3><span class="note">점수는 가상 예시</span></div>
+  <div class="sliders">
+    <label for="sPos">PANSS 양성 하위척도 <b id="vPos">14</b><input type="range" id="sPos" min="7" max="49" step="1" value="14"></label>
+    <label for="sNeg">PANSS 음성 하위척도 <b id="vNeg">12</b><input type="range" id="sNeg" min="7" max="49" step="1" value="12"></label>
+  </div>
+  <p class="verdict" id="verdict" aria-live="polite"></p>
+  <div id="gafG"></div>
+  <div class="scroll-x"><table class="prof" id="prof">
+    <thead><tr><th scope="col">집단</th><th scope="col">인원</th><th scope="col">나이 평균</th><th scope="col">MADRS 평균</th><th scope="col">GAF 평균</th><th scope="col">정신증 전환</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="fig-note">표의 값은 평균(표준편차)이고 정신증 전환은 사람 수입니다. 세 집단은 나이, 성별, 음주, 대마, 흡연, 약물 사용, MADRS, 정신증 전환에서 유의한 차이가 없었습니다. GAF만 음성증상 우세군이 양성증상 우세군보다 유의하게 낮았습니다(사후 검정 p = 0.004).</p>
+</div>
+
+<p>이제 세 집단의 지방산을 비교합니다. 음성증상 우세군은 양성증상 우세군보다 ω-6:ω-3 비율, 단일불포화지방산 합계, 에이코세노산, 에루크산, 감마리놀렌산, 도코사디엔산이 높았고, ω-3 지방산 합계와 마르가르산은 낮았습니다. 지방산을 골라 세 집단의 평균을 견줘 보세요.</p>
+
+<div class="panel figure" id="t3"><span class="cx"></span>
+  <div class="fig-head"><h3>세 집단의 지방산 평균(표 3)</h3><span class="note">빨간 점: 음성증상 우세군, 속 빈 점: 다른 두 집단</span></div>
+  <div class="pick" id="t3Pick" role="group" aria-label="세 집단에서 차이가 난 지방산"></div>
+  <label class="field more-pick" for="t3Sel">다른 지방산 보기<select id="t3Sel"></select></label>
+  <div id="t3Out"></div>
+  <p class="out" id="t3Note" aria-live="polite"></p>
+  <p class="fig-note">값은 전체 지방산 대비 몰 백분율(mol%)의 평균(표준편차)입니다. 비율은 단위가 없습니다. 위의 버튼은 분산분석에서 p &lt; 0.05였던 항목입니다.</p>
+</div>
+
+<h2 id="meaning">5. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>논문에 따르면 이 연구는 항정신병약물을 쓴 적 없는 초고위험군에서 막 지방산과 증상의 심각도 사이의 관계를 보여 준 첫 연구입니다. 결과는 조현병 환자를 대상으로 한 앞선 연구들과 비슷한 방향입니다. 음성증상이 주로 나타나는 환자에게서 적혈구 ω-3 지방산이 낮았다는 보고, ω-6:ω-3 비율이 높았다는 보고가 있었습니다.</p>
+<p>논문은 그 배경으로 몇 가지 경로를 듭니다. 전전두엽의 도파민 기능 저하는 음성증상과 인지 저하에 관여한다고 여겨지는데, 동물 연구에서 ω-3 지방산이 부족하면 전두엽의 도파민과 D2 수용체가 줄었습니다. 높은 ω-6:ω-3 비율은 염증 쪽으로 기운 상태를 뜻할 수 있습니다. 다가불포화지방산은 백질의 온전함과도 관련이 있습니다.</p>
+<p>음성증상은 조현병이 시작되기 전부터 나타나는 경우가 많고, 조현병 환자의 장애와 장기 경과에 크게 관여하지만, 항정신병약물에 잘 듣지 않고 아직 음성증상만을 위한 치료가 없습니다. 그래서 논문은 막 지방산과 음성증상의 관련이 조현병을 이해하고 초고위험군과 환자를 위한 치료를 개발하는 데 도움이 될 수 있다고 봅니다. 또 이 결과가, 같은 집단에서 오메가-3 보충이 효과적이고 오래가는 예방 치료가 될 수 있다는 관찰과도 맞아떨어진다고 적습니다.</p>
+<div class="callout"><p><b>다음 질문:</b> 논문은 ω-3 지방산 보충에 가장 잘 반응하는 증상의 종류가 무엇인지 더 연구해야 한다고 적습니다. 막 지방산이 초기 단계의 생물학적 지표로, 또 예방적 개입의 대상으로 실제 쓰일 수 있는지도 앞으로 확인할 몫입니다.</p></div>
+<div class="callout"><p><b>함께 읽기:</b> 같은 시기에 정신증 위험을 일찍 알아보려 한 다른 연구도 있습니다. <a data-paper="kpq16_validation_2018">대학생 대상 한국판 PQ-16 타당화</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>표본이 비교적 작고 살펴본 지방산이 많아, 1종 오류와 2종 오류의 위험이 모두 있습니다. 그래서 이 결과는 탐색적인 것으로 보아야 합니다.</li>
+  <li>지방산 변화와 증상의 관련이 조현병 스펙트럼의 신경생물학 같은 일차 요인 때문인지, 병과 관련해 바뀐 식습관 같은 이차 요인 때문인지는 알 수 없습니다. 초고위험군을 대상으로 한 것이 이 혼란을 어느 정도 줄여 줍니다.</li>
+  <li>표본에 대해서는, 약 2년 동안 의뢰된 사람을 연속으로 모두 고려했기 때문에 초고위험군을 대표한다고 논문은 봅니다.</li>
+</ul>
+
+<h2 id="quiz">6. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Kim S-W, Jhon M, Kim J-M, Smesny S, Rice S, Berk M, Klier CM, McGorry PD, Schäfer MR, Amminger GP. Relationship between Erythrocyte Fatty Acid Composition and Psychopathology in the Vienna Omega-3 Study. PLoS One. 2016;11(3):e0151417. doi:10.1371/journal.pone.0151417</p>
+  <p>DOI <a href="https://doi.org/10.1371/journal.pone.0151417" target="_blank" rel="noopener">10.1371/journal.pone.0151417</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/26963912/" target="_blank" rel="noopener">26963912</a><br>
+  원문은 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">크리에이티브 커먼즈 저작자표시(CC BY)</a> 라이선스로 공개되었습니다(© 2016 Kim et al.). 이 페이지는 원문의 표를 그대로 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1~3에서 가져왔습니다.</p>
+  <p>전민은 이 논문의 저자 10명 가운데 두 번째 저자(공저자)로, 자료 해석과 원고 작성에 참여했습니다. 교신저자는 김성완 교수와 Amminger 교수입니다.</p>
+  <p>지방산 사슬 그림은 개념 그림이고, 집단 나누기의 점수는 규칙을 보여 주려고 넣은 가상 예시입니다. 이 연구는 진단 도구를 만든 것이 아니며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='omega3-fatty-acids';
+
+/* 표 1과 표 3의 지방산. f: 계열(논문 분류), c: 표 1 편상관[총점, 양성, 음성, 일반, MADRS, GAF](별표는 유의수준), g: 표 3 [양성 우세 평균, SD, 혼합 평균, SD, 음성 우세 평균, SD, p, 사후 검정] */
+const FA=[
+ {n:'미리스트산',s:'14:0',f:'sat',c:['-.305**','-.085','-.301**','-.297**','-.177','.176'],g:[.59,.21,.54,.16,.48,.15,'0.102','']},
+ {n:'팔미트산',s:'16:0',f:'sat',c:['-.167','-.082','-.196','-.120','-.027','-.017'],g:[23.64,3.16,23.97,2.04,22.45,2.41,'0.168','']},
+ {n:'마르가르산',s:'17:0',f:'sat',c:['-.260*','.058','-.333**','-.249*','.051','.069'],g:[2.50,.55,2.27,.67,1.94,.50,'0.004','양성 우세군 > 음성 우세군']},
+ {n:'스테아르산',s:'18:0',f:'sat',c:['.085','-.083','.101','.119','.008','-.085'],g:[12.04,2.36,12.99,2.52,12.14,1.85,'0.278','']},
+ {n:'올레산',s:'18:1n-9',f:'w9',c:['-.029','.047','.030','.010','.106','.023'],g:[22.96,2.58,23.08,2.56,24.07,3.57,'0.366','']},
+ {n:'에이코세노산',s:'20:1n-9',f:'w9',c:['.378***','.128','.478***','.268*','-.004','-.193'],g:[.76,.31,.92,.38,1.24,.40,'< 0.001','양성 우세군 < 음성 우세군, 혼합형 < 음성 우세군']},
+ {n:'미드산',s:'20:3n-9',f:'w9',c:['.198','.052','.205','.187','.124','-.043'],g:[.11,.50,.12,.47,.13,.40,'0.313','']},
+ {n:'에루크산',s:'22:1n-9',f:'w9',c:['.395***','.158','.446***','.314**','.072','-.182'],g:[.65,.91,1.04,1.01,1.38,.78,'0.017','양성 우세군 < 음성 우세군']},
+ {n:'네르본산',s:'24:1n-9',f:'w9',c:['-.339**','-.231*','-.277*','-.316**','-.185','.108'],g:[.06,.02,.05,.02,.05,.15,'0.219','']},
+ {n:'리놀레산',s:'18:2n-6',f:'w6',c:['-.019','-.063','.006','-.012','-.012','.044'],g:[6.26,.69,5.91,.79,6.69,2.26,'0.142','']},
+ {n:'감마리놀렌산',s:'18:3n-6',f:'w6',c:['.332**','.109','.383***','.268*','.160','-.139'],g:[.33,.13,.41,.16,.45,.14,'0.008','양성 우세군 < 음성 우세군']},
+ {n:'디호모감마리놀렌산',s:'20:3n-6',f:'w6',c:['-.029','-.128','.081','-.066','-.108','.202'],g:[1.61,.42,1.62,.43,1.70,.34,'0.722','']},
+ {n:'아라키돈산',s:'20:4n-6',f:'w6',c:['-.030','.046','-.036','-.049','-.080','.073'],g:[15.95,2.11,14.95,2.04,15.35,2.02,'0.180','']},
+ {n:'도코사디엔산',s:'22:2n-6',f:'w6',c:['.388***','.118','.428***','.336**','.096','-.247*'],g:[.06,.05,.10,.04,.11,.04,'< 0.001','양성 우세군 < 음성 우세군, 양성 우세군 < 혼합형']},
+ {n:'아드렌산',s:'22:4n-6',f:'w6',c:['.104','.104','.108','.061','-.088','-.082'],g:[4.69,.71,4.61,1.10,4.78,.82,'0.824','']},
+ {n:'알파리놀렌산',s:'18:3n-3',f:'w3',c:['-.074','-.131','-.079','-.015','-.157','.126'],g:[.19,.05,.21,.08,.19,.43,'0.543','']},
+ {n:'EPA',s:'20:5n-3',f:'w3',c:['-.085','.004','-.149','-.040','.144','.039'],g:[.50,.17,.49,.17,.43,.13,'0.270','']},
+ {n:'DPA',s:'22:5n-3',f:'w3',c:['-.215','-.052','-.267*','-.165','-.088','.199'],g:[2.25,.36,2.18,.53,2.02,.37,'0.150','']},
+ {n:'DHA',s:'22:6n-3',f:'w3',c:['-.075','.072','-.173','-.031','.058','.070'],g:[2.83,.80,2.51,.73,2.36,.50,'0.050','']},
+ {n:'단일불포화지방산 합계',s:'',f:'sum',c:['.184','.098','.220','.125','.100','-.051'],g:[26.45,3.01,27.13,2.98,28.78,3.11,'0.027','양성 우세군 < 음성 우세군']},
+ {n:'다가불포화지방산 합계',s:'',f:'sum',c:['-.028','.031','-.035','-.039','-.078','.103'],g:[34.79,3.30,33.10,3.48,34.22,2.42,'0.138','']},
+ {n:'ω-6 합계',s:'',f:'sum',c:['.022','.028','.051','-.013','-.102','.069'],g:[28.90,2.72,27.60,2.80,29.09,2.19,'0.113','']},
+ {n:'ω-3 합계',s:'',f:'sum',c:['-.146','.021','-.239*','-.089','.017','.133'],g:[5.77,1.09,5.39,1.31,5.00,.76,'0.043','양성 우세군 > 음성 우세군']},
+ {n:'ω-6:ω-3 비율',s:'',f:'sum',c:['.232*','.057','.305**','.165','.052','-.189'],g:[5.13,.80,5.38,1.23,5.94,1.00,'0.018','양성 우세군 < 음성 우세군'],ratio:1}];
+const FAM={sat:'포화지방산',w9:'ω-9 계열',w6:'ω-6 계열',w3:'ω-3 계열',sum:'합계와 비율'};
+const label=x=>x.n+(x.s?` (${x.s})`:'');
+
+/* 1) 지방산 이름 읽기 */
+const NAME=[5,0,4,8,10,13,16,18];
+$('#faPick').innerHTML=NAME.map(i=>`<button type="button" data-k="${i}">${esc(FA[i].n)}<small>${esc(FA[i].s)}</small></button>`).join('');
+function parse(s){const m=s.match(/^(\d+):(\d+)(?:n-(\d+))?$/);return{c:+m[1],d:+m[2],w:m[3]?+m[3]:0}}
+function drawChain(p){
+  const W=Math.max(280,$('#chain').clientWidth||600),x0=36,dx=(W-2*x0)/23,y=[62,82],X=i=>x0+i*dx,Y=i=>y[i%2];
+  $('#chain').setAttribute('viewBox',`0 0 ${W} 120`);
+  /* 이중결합 위치: 메틸(ω) 끝에서 w번째 탄소부터 3칸 간격. 왼쪽(카복실 끝) 기준 번호로 바꾼다 */
+  const dbl=new Set();for(let k=0;k<p.d;k++){const w=p.w+3*k;dbl.add(p.c-w-1)}
+  let s='';
+  for(let i=0;i<p.c-1;i++){
+    s+=`<line class="c-bond" x1="${X(i)}" y1="${Y(i)}" x2="${X(i+1)}" y2="${Y(i+1)}"/>`;
+    if(dbl.has(i)){const ax=X(i),ay=Y(i),bx=X(i+1),by=Y(i+1),vx=bx-ax,vy=by-ay,L=Math.hypot(vx,vy);let nx=-vy/L,ny=vx/L;if(ny<0){nx=-nx;ny=-ny}
+      const o=5,t=.18;s+=`<line class="c-dbl" x1="${(ax+vx*t+nx*o).toFixed(1)}" y1="${(ay+vy*t+ny*o).toFixed(1)}" x2="${(bx-vx*t+nx*o).toFixed(1)}" y2="${(by-vy*t+ny*o).toFixed(1)}"/>`}
+  }
+  for(let i=0;i<p.c;i++)s+=`<circle class="c-atom" cx="${X(i)}" cy="${Y(i)}" r="2.6"/>`;
+  s+=`<text class="c-end" x="${X(0)-8}" y="40" text-anchor="start">카복실 끝</text>`;
+  s+=`<text class="c-end" x="${X(p.c-1)+8}" y="108" text-anchor="end">메틸(ω) 끝</text>`;
+  if(p.w){const i=p.c-p.w-1,mx=(X(i)+X(i+1))/2;s+=`<line class="c-tick" x1="${mx}" y1="20" x2="${mx}" y2="${Math.min(Y(i),Y(i+1))-8}"/><text class="c-omega" x="${mx}" y="15" text-anchor="middle">ω-${p.w}</text>`}
+  return s}
+let faCur=null;
+addEventListener('resize',()=>{if(faCur)$('#chain').innerHTML=drawChain(faCur)});
+S.seg('faPick',k=>{const x=FA[+k],p=parse(x.s);faCur=p;
+  $('#chain').innerHTML=drawChain(p);
+  $('#faParts').innerHTML=`<div><b>${p.c}</b>탄소 수</div><div><b>${p.d}</b>이중결합 수</div><div><b>${p.w?'n-'+p.w:'없음'}</b>메틸 끝에서 첫 이중결합</div>`;
+  const kind=p.d===0?'이중결합이 없는 포화지방산입니다':p.d===1?'이중결합이 하나인 단일불포화지방산입니다':'이중결합이 여럿인 다가불포화지방산입니다';
+  $('#faText').innerHTML=`<b>${esc(x.n)}</b>(<span class="num">${esc(x.s)}</span>)은 탄소 ${p.c}개 사슬에 ${kind}.${p.w?` 메틸 끝에서 ${p.w}번째 탄소에 첫 이중결합이 있어 ω-${p.w} 계열(n-${p.w})로 묶습니다.`:''} 논문의 분류로는 ${FAM[x.f]}에 속합니다.`;
+},KEY+':name');
+
+/* 2) 표 1: 편상관 */
+const COLS=['PANSS 총점','PANSS 양성증상','PANSS 음성증상','PANSS 일반 정신병리','MADRS','GAF'];
+const R=.55,cx=v=>50+v/R*50;
+const pv=s=>({v:parseFloat(s),st:(s.match(/\*/g)||[]).length});
+const stars={1:'p < 0.05',2:'p < 0.01',3:'p < 0.001'};
+let col=2,fam='all',sel=null;
+$('#crTicks').innerHTML=[-.5,-.25,0,.25,.5].map(t=>`<span style="left:${cx(t).toFixed(2)}%">${t}</span>`).join('');
+function crDraw(){
+  const rows=FA.map((x,i)=>({x,i,...pv(x.c[col])})).filter(r=>fam==='all'||r.x.f===fam);
+  if(sel==null||!rows.some(r=>r.i===sel)){const top=rows.slice().sort((a,b)=>Math.abs(b.v)-Math.abs(a.v))[0];sel=top.i}
+  $('#crRows').innerHTML=rows.map(r=>{const l=Math.min(cx(0),cx(r.v)),w=Math.abs(cx(r.v)-cx(0));
+    return `<button type="button" class="cr-row${r.st?' sig':''}" data-i="${r.i}" aria-pressed="${r.i===sel}"><span class="cr-name">${esc(r.x.n)}${r.x.s?`<small>${esc(r.x.s)}</small>`:''}</span><span class="cr-track" aria-hidden="true"><span class="cr-zero"></span><span class="cr-bar" style="left:${l.toFixed(2)}%;width:${w.toFixed(2)}%"></span></span><span class="cr-val">${r.v.toFixed(3)}${'*'.repeat(r.st)}</span></button>`}).join('');
+  document.querySelectorAll('.cr-row').forEach(b=>b.onclick=()=>{sel=+b.dataset.i;S.store.set(KEY+':t1row',sel);crDraw()});
+  crSay()}
+function crSay(){const x=FA[sel],r=pv(x.c[col]),c=COLS[col];
+  const nsig=FA.filter(y=>pv(y.c[col]).st).length;
+  let t;
+  if(!r.st)t=`<b>${esc(label(x))}</b>과 ${c}의 편상관은 ${r.v.toFixed(3)}로, 통계적으로 유의하지 않았습니다.`;
+  else{const up=r.v>0;
+    const meaning=col===5?(up?'기능이 좋을수록(GAF가 높을수록) 이 지방산이 많은':'기능이 좋을수록(GAF가 높을수록) 이 지방산이 적은'):(up?`${c} 점수가 높을수록 이 지방산이 많은`:`${c} 점수가 높을수록 이 지방산이 적은`);
+    t=`<b>${esc(label(x))}</b>: ${meaning} 경향이 있었습니다(편상관 ${r.v.toFixed(3)}, ${stars[r.st]}).`}
+  $('#crOut').innerHTML=t+` 이 척도에서 유의했던 항목은 24개 가운데 ${nsig}개입니다.`}
+const r0=S.store.get(KEY+':t1row',null);if(r0!=null&&FA[r0])sel=r0;
+S.seg('t1Col',k=>{col=+k;crDraw()},KEY+':t1col');
+S.seg('t1Fam',k=>{fam=k;crDraw()},KEY+':t1fam');
+
+/* 3) 집단 나누기와 표 2 */
+const GR=[
+ {k:'a',n:'양성증상 우세군',N:38,age:'16.6 (2.2)',mad:'16.0 (8.2)',gaf:65.0,gsd:11.4,tr:4},
+ {k:'b',n:'혼합형',N:23,age:'16.6 (2.7)',mad:'20.9 (9.8)',gaf:58.3,gsd:13.4,tr:4},
+ {k:'c',n:'음성증상 우세군',N:19,age:'16.1 (1.3)',mad:'19.2 (7.9)',gaf:54.0,gsd:10.5,tr:5}];
+const sPos=$('#sPos'),sNeg=$('#sNeg');
+const st0=S.store.get(KEY+':cls',null);if(st0&&st0.p&&st0.n){sPos.value=st0.p;sNeg.value=st0.n}
+function cls(){const p=+sPos.value,n=+sNeg.value,d=p-n;
+  $('#vPos').textContent=p;$('#vNeg').textContent=n;
+  const g=d>=2?GR[0]:d<=-2?GR[2]:GR[1];
+  const rule=d>=2?'양성 점수가 음성 점수보다 2점 이상 높으므로':d<=-2?'음성 점수가 양성 점수보다 2점 이상 높으므로':'두 점수의 차이가 -1에서 1 사이이므로';
+  $('#verdict').innerHTML=`양성 − 음성 = <span class="vd">${d}</span>. ${rule} <b>${g.n}</b>입니다. 이 연구에서 이 집단은 80명 가운데 <span class="vd">${g.N}</span>명이었습니다.`;
+  $('#gafG').innerHTML=`<p class="note gaf-cap">세 집단의 GAF 평균(높을수록 기능이 좋음). 빨간 점이 지금 고른 집단입니다.</p>`+S.gauge({min:40,max:80,ticks:[40,50,60,70,80],pts:GR.map(x=>({v:x.gaf,ref:x!==g,label:`${x.n} GAF 평균 ${x.gaf.toFixed(1)} (표준편차 ${x.gsd})`}))},`세 집단의 GAF 평균, ${g.n} 강조`);
+  $('#prof tbody').innerHTML=GR.map(x=>`<tr class="${x===g?'on':''}"><td>${esc(x.n)}</td><td>${x.N}</td><td>${x.age}</td><td>${x.mad}</td><td>${x.gaf.toFixed(1)} (${x.gsd})</td><td>${x.tr}명</td></tr>`).join('');
+  S.store.set(KEY+':cls',{p,n})}
+sPos.addEventListener('input',cls);sNeg.addEventListener('input',cls);cls();
+
+/* 4) 표 3: 세 집단의 지방산 평균 */
+const SIG=FA.map((x,i)=>i).filter(i=>/^0\.0[0-4]|^< /.test(FA[i].g[6]));
+$('#t3Pick').innerHTML=SIG.map(i=>`<button type="button" data-k="${i}">${esc(FA[i].n)}</button>`).join('');
+const OTHER=FA.map((x,i)=>i).filter(i=>!SIG.includes(i));
+$('#t3Sel').innerHTML='<option value="">고르기</option>'+OTHER.map(i=>`<option value="${i}">${esc(label(FA[i]))}</option>`).join('');
+function nice(lo,hi){const span=hi-lo||1,st=[.01,.02,.05,.1,.2,.25,.5,1,2,5,10].find(s=>span/s<=5)||10;const a=Math.floor(lo/st)*st,b=Math.ceil(hi/st)*st,t=[];for(let v=a;v<=b+1e-9;v+=st)t.push(+v.toFixed(3));return{min:+a.toFixed(3),max:+b.toFixed(3),ticks:t}}
+function t3(i){const x=FA[i],g=x.g,m=[g[0],g[2],g[4]],sd=[g[1],g[3],g[5]];
+  const lo=Math.min(...m),hi=Math.max(...m),pad=(hi-lo||hi*.2)*.35;
+  const ax=nice(Math.max(0,lo-pad),hi+pad),u=x.ratio?'':' mol%';
+  const dp=2;
+  const row=(j)=>{const ref=j!==2;return `<span class="c-name">${GR[j].n}<small>${GR[j].N}명</small></span>${S.gauge({...ax,pts:[{v:m[j],ref,label:`${GR[j].n} ${x.n} 평균 ${m[j].toFixed(dp)}${u}, 표준편차 ${sd[j].toFixed(2)}`}]},`${GR[j].n} ${x.n} 평균 ${m[j].toFixed(dp)}${u}`)}<span class="c-val">${ref?m[j].toFixed(dp):`<b>${m[j].toFixed(dp)}</b>`} (${sd[j].toFixed(2)})</span>`};
+  $('#t3Out').innerHTML=`<div class="cmp">${row(0)}${row(1)}${row(2)}</div>`;
+  $('#t3Note').innerHTML=`<b>${esc(label(x))}</b>: 분산분석 p ${g[6].startsWith('<')?g[6]:'= '+g[6]}.`+(g[7]?` 본페로니 사후 검정에서 유의한 차이: ${esc(g[7])}.`:' 세 집단 사이에 유의한 차이는 없었습니다.');
+  document.querySelectorAll('#t3Pick button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.k===i)));
+  $('#t3Sel').value=SIG.includes(i)?'':String(i);
+  S.store.set(KEY+':t3',i)}
+document.querySelectorAll('#t3Pick button').forEach(b=>b.onclick=()=>t3(+b.dataset.k));
+$('#t3Sel').addEventListener('change',e=>{if(e.target.value!=='')t3(+e.target.value)});
+const t30=S.store.get(KEY+':t3',null);t3(t30!=null&&FA[t30]?t30:FA.length-1);
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구의 참여자는 어떤 사람들이었나요?',o:['항정신병약물을 쓴 적 없는 정신증 초고위험군','조현병으로 진단받고 치료 중인 환자','정신과 병력이 없는 건강한 청소년'],a:0,e:'오메가-3 임상시험에 참여한 13~25세 초고위험군이고, 시작 시점에 지방산을 잰 80명을 분석했습니다. 약물과 병의 진행이 지방산을 바꿀 수 있다는 혼란을 줄이려는 선택이었습니다.'},
+ {q:'지방산과 가장 많이 관련된 증상 척도는 무엇이었나요?',o:['PANSS 양성증상','PANSS 음성증상','MADRS 우울 점수'],a:1,e:'음성증상은 여러 지방산과 관련이 있었고, 양성증상은 네르본산 하나와만, MADRS는 어떤 지방산과도 관련이 없었습니다.'},
+ {q:'음성증상과 가장 큰 양의 편상관을 보인 지방산은 무엇인가요?',o:['DHA(22:6n-3)','에이코세노산(20:1n-9)','아라키돈산(20:4n-6)'],a:1,e:'에이코세노산과 음성증상의 편상관은 0.478(p < 0.001)이었습니다. 이어서 에루크산이 0.446이었습니다.'},
+ {q:'음성증상 우세군과 양성증상 우세군을 비교했을 때 맞는 것은 무엇인가요?',o:['음성증상 우세군의 ω-6:ω-3 비율이 더 높았다','음성증상 우세군의 ω-3 합계가 더 높았다','두 집단의 지방산에는 차이가 없었다'],a:0,e:'ω-6:ω-3 비율은 5.94 대 5.13으로 높았고, ω-3 합계는 5.00 대 5.77 mol%로 낮았습니다.'},
+ {q:'논문이 스스로 밝힌 한계는 무엇인가요?',o:['표본이 작고 지방산이 많아 결과를 탐색적으로 보아야 한다','참여자가 모두 항정신병약물을 먹고 있었다','증상을 자기보고 설문으로만 쟀다'],a:0,e:'1종과 2종 오류의 위험이 모두 있어 탐색적 결과로 보아야 하고, 지방산 변화가 신경생물학 때문인지 식습관 변화 때문인지는 알 수 없다고 적었습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>우울증 치료 중 차별 경험과 결과 - 전민 연구 기록</title>
+<meta name="description" content="우울증 치료를 시작한 환자 230명에게서 치료 첫해에 겪은 차별과 예상한 차별을 무엇이 예측하고, 그 차별이 2년 동안의 치료 결과와 어떻게 이어지는지 살핀 연구(Journal of Affective Disorders, 2021)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.tl{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:4px 0 14px}
+.tl::before{content:"";position:absolute;left:16.66%;right:16.66%;top:21px;height:1px;background:var(--ink)}
+.tl button{position:relative;border:0;background:none;padding:0 4px 8px;text-align:center;border-radius:var(--r);color:var(--ink-2)}
+.tl .dot{display:block;width:15px;height:15px;margin:14px auto 8px;border-radius:50%;background:var(--surface);border:1.5px solid var(--ink)}
+.tl button[aria-pressed="true"] .dot{background:var(--signal);border-color:var(--signal)}
+.tl button[aria-pressed="true"] .tl-name{color:var(--ink);font-weight:600}
+.tl .tl-t{display:block;font-family:var(--num);font-size:12px;color:var(--meta)}
+.tl .tl-name{display:block;font-size:14.5px;line-height:1.4}
+.tl button:hover .tl-name{text-decoration:underline;text-underline-offset:3px}
+.tl-out{border-top:1px solid var(--line);padding-top:12px}
+.tl-out h4{margin:0 0 6px;font-size:15.5px;font-weight:600}
+.tl-out ul{margin:0;padding-left:20px}
+.tl-out li{font-size:15px;line-height:1.7}
+.sub-out{margin-top:6px}
+.sub-out .s-desc{margin:0 0 10px;font-size:15.5px;line-height:1.75}
+.sub-out .s-row{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:4px 16px;align-items:center}
+.sub-out .s-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.sub-out .s-val b{color:var(--signal-ink);font-weight:500;font-size:16px}
+.sub-out .gauge{margin:4px 0 6px}
+.share{display:grid;grid-template-columns:120px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:14px;margin-top:10px}
+.share .bt{position:relative;height:16px;background:var(--tint)}
+.share .bf{position:absolute;left:0;top:0;bottom:0;background:var(--signal);transition:width .3s ease-out}
+.share .bv{font-family:var(--num);font-size:13px;text-align:right;color:var(--signal-ink)}
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:130px minmax(0,1fr) 132px;gap:12px;align-items:center;padding:6px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-row.ns .fp-dot{background:var(--surface);border:1.5px solid var(--ink)}
+.fp-axis{display:grid;grid-template-columns:130px minmax(0,1fr) 132px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-out,.cg-out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.cg{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr));gap:4px;align-items:stretch}
+.cg .cg-h{font-size:12.5px;color:var(--meta);line-height:1.35;padding:0 2px 4px;align-self:end}
+.cg .cg-h small{display:block;font-family:var(--num);font-size:11px}
+.cg .cg-n{font-size:14px;align-self:center;line-height:1.35}
+.cg .cg-n small{display:block;font-size:12px;color:var(--meta)}
+.cg button{border:1px solid var(--line);background:var(--surface);padding:8px 4px;font-family:var(--num);font-size:13.5px;color:var(--meta);border-radius:var(--r);text-align:center}
+.cg button:hover{border-color:var(--ink)}
+.cg button.s1{border:1px dashed var(--ink-2);color:var(--ink)}
+.cg button.s2{background:var(--signal-soft);color:var(--signal-ink);font-weight:500;border-color:var(--signal-soft)}
+.cg button[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:-2px}
+.cg-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:13px;color:var(--ink-2)}
+.cg-key i{display:inline-block;width:16px;height:12px;vertical-align:-1px;margin-right:6px;border:1px solid var(--line)}
+.cg-key .k2{background:var(--signal-soft);border-color:var(--signal-soft)}
+.cg-key .k1{border:1px dashed var(--ink-2)}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+@media (max-width:640px){
+  .fp-row,.fp-axis{grid-template-columns:84px minmax(0,1fr) 96px;gap:8px;font-size:13px}
+  .fp-row .fp-val{font-size:11px}
+  .share{grid-template-columns:84px minmax(0,1fr) 48px;gap:8px;font-size:13px}
+  .sub-out .s-row{grid-template-columns:minmax(0,1fr);gap:0}
+  .sub-out .s-val{text-align:left;margin-bottom:6px}
+  .cg{grid-template-columns:72px repeat(3,minmax(0,1fr));gap:3px}
+  .cg .cg-h{font-size:11.5px}
+  .cg button{font-size:12.5px;padding:8px 1px}
+  .cg .cg-n{font-size:13px}
+  .tl .tl-name{font-size:13.5px}
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 낙인과 차별, 우울증 치료 결과</p>
+  <h1>우울증 치료를 받는 동안 겪은 차별은, 2년 동안의 회복과 어떻게 이어질까요?</h1>
+  <p class="lede">우울증 치료는 진료실 안에서만 일어나지 않습니다. 약을 먹으며 회사에 다니고, 가족을 만나고, 사람들 사이에서 지냅니다. 그 사이에 정신과 치료를 받는다는 이유로 부당한 대우를 받기도 하고, 그런 일이 생길까 봐 하고 싶은 일을 스스로 접기도 합니다. 이 연구는 전남대병원에서 항우울제 치료를 시작한 환자 230명을 2년 동안 따라가며, 누가 이런 차별을 더 겪는지, 그리고 차별이 치료 결과와 어떻게 이어지는지 살폈습니다.</p>
+  <p class="meta">원문: Jhon M, Stewart R 외. Journal of Affective Disorders 294:761–768, 2021<br>읽는 데 약 11분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>우울장애로 항우울제 치료를 시작한 외래 환자 <b>230명</b>을 모집해, 치료 1년 시점에 지난 12개월 동안의 차별을 한국어판 차별과 낙인 척도(DISC 12-K)로 물었습니다. 197명(82%)이 2년을 마쳤습니다.</li>
+    <li>230명 가운데 <b>91%</b>가 적어도 한 영역에서 차별을 경험했고, <b>42%</b>는 차별이 예상되어 스스로 무언가를 멈춘 적이 있었습니다.</li>
+    <li>경험한 차별은 <b>과거 우울증 병력</b>과 <b>낮은 친화성</b>(성격 특성)이, 예상한 차별은 높은 교육 수준, 비혼 상태, 높은 기능 장애가 독립적으로 예측했습니다.</li>
+    <li>경험한 차별이 많을수록 치료 1년 뒤 우울, 불안, 중증도, 기능, 장애, 삶의 질 <b>여섯 척도 모두</b>에서 호전이 적었고, 2년 뒤에도 삶의 질을 뺀 다섯 척도에서 관련이 남았습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>230명</b><span>치료를 시작한 우울장애 환자(2년 완료 197명)</span></div>
+  <div class="stat"><b>91%</b><span>치료 첫해에 차별을 경험한 환자(209명)</span></div>
+  <div class="stat"><b>42%</b><span>예상한 차별 때문에 스스로 멈춘 적이 있는 환자(96명)</span></div>
+  <div class="stat"><b>1.69</b><span>과거 우울증 병력의 발생률비(경험한 차별, 다변량)</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 이 연구가 필요했을까요</a></li>
+    <li><a href="#how">2년 동안 무엇을 쟀을까요</a></li>
+    <li><a href="#much">차별은 얼마나 흔했을까요</a></li>
+    <li><a href="#who">누가 차별을 더 겪고, 더 예상했을까요</a></li>
+    <li><a href="#out">차별은 치료 결과와 어떻게 이어졌을까요</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 이 연구가 필요했을까요</h2>
+<p>우울증은 세계적으로 흔하고, 장애와 질병 부담의 큰 원인입니다. <span class="term" data-tip="어떤 집단에 붙는 부정적인 꼬리표. 그 집단에 대한 편견과, 실제로 불리하게 대하는 행동(차별)으로 이어진다.">낙인</span>과 차별은 정신질환을 가진 사람의 이환을 크게 늘리지만, 이 분야의 연구는 대부분 조현병을 다뤘습니다. 최근 우울증과 관련된 낙인 연구가 늘면서, 우울증에서도 낙인이 흔하다는 것이 드러났습니다.</p>
+<p>그런데 무엇이 차별을 예측하는지 시간을 두고 따라가 본 연구는 없었습니다. 낙인이 치료 반응을 거쳐 우울증의 장애에 영향을 줄 수 있다는 단서는 있었습니다. 이중 진단을 받은 남성 84명을 1년 동안 본 연구와, 우울장애가 있는 중국계 이민자 190명을 6개월 동안 본 연구입니다. 하지만 두 연구 모두 추적 기간이 비교적 짧고, 우울증 결과를 좁게 쟀고, 표본이 작았으며, 대표성이 불확실한 일부 집단을 대상으로 했습니다. 또 이전 연구들은 낙인을 가상 상황에 대한 태도 설문으로 재는 경우가 많았습니다.</p>
+<p>그래서 이 연구는 실제로 겪은 차별 행동을 묻는 척도로, 약물치료를 받는 우울장애 환자에게서 <span class="term" data-tip="치료 중에 다른 사람에게서 실제로 부당한 대우를 받은 경험. 이 연구에서는 DISC 12의 Unfair Treatment 하위척도로 쟀다.">경험한 차별</span>과 <span class="term" data-tip="부당한 대우를 받을까 봐 하고 싶은 일을 스스로 하지 않은 경험. 이 연구에서는 DISC 12의 Stopping Self 하위척도로 쟀다.">예상한 차별</span>을 무엇이 예측하는지, 그리고 차별이 여러 치료 결과와 어떻게 이어지는지 앞을 내다보며 조사했습니다.</p>
+<div class="callout"><p><b>비유:</b> 같은 비가 내려도 우산을 잃어버린 경험이 있는 사람과 처음 비를 맞는 사람은 다르게 젖습니다. 이 연구가 나눈 두 차별도 비슷합니다. 하나는 실제로 맞은 비(다른 사람에게 받은 부당한 대우)이고, 다른 하나는 비가 올까 봐 나가지 않은 날(스스로 접은 일)입니다. 연구는 이 둘을 따로 재고, 각각 무엇과 이어지는지 보았습니다.</p></div>
+
+<h2 id="how">2. 2년 동안 무엇을 쟀을까요</h2>
+<p>이 연구는 항우울제 치료 반응을 예측하는 지표를 찾으려는 <span class="term" data-tip="MAKE Biomarker discovery for Enhancing anTidepressant Treatment Effect and Response. 전남대병원에서 진행한 우울장애 외래 환자 전향 코호트 연구 프로그램.">MAKE BETTER</span> 프로그램의 한 부분입니다. 2013년 11월부터 2017년 8월까지 전남대병원 정신건강의학과 외래를 찾은 환자를 차례로 모집했습니다. 정해진 시점에 평가하는 것 말고는, 약의 종류와 용량을 환자와 의사가 실제 진료처럼 고르는 <span class="term" data-tip="실험처럼 치료를 정해 주지 않고, 실제 진료에서처럼 치료를 고르게 하면서 정해 둔 시점에만 평가하는 연구 방식.">자연주의적 전향 연구</span>였습니다.</p>
+<p>치료는 지침에 따라 항우울제로 시작해 3주 뒤 효과와 견딜 만한지를 보고, 호전이 부족하거나 부작용을 견디기 어려우면 환자가 지금 단계에 머물지, 약을 바꾸거나 더하거나 함께 쓰는 다음 단계로 갈지를 골랐습니다. 아래에서 시점을 눌러 각 시점에 무엇을 쟀는지 보세요.</p>
+
+<div class="panel figure" id="design"><span class="cx"></span>
+  <div class="fig-head"><h3>연구의 세 시점</h3><span class="note">시점을 눌러 보세요</span></div>
+  <div class="tl" id="tlSeg" role="group" aria-label="측정 시점">
+    <button data-k="0"><span class="dot"></span><span class="tl-t">−1년</span><span class="tl-name">치료 시작(기저)</span></button>
+    <button data-k="1"><span class="dot"></span><span class="tl-t">0</span><span class="tl-name">1년(차별 평가일)</span></button>
+    <button data-k="2"><span class="dot"></span><span class="tl-t">+1년</span><span class="tl-name">2년(종료)</span></button>
+  </div>
+  <div class="tl-out" id="tlOut" aria-live="polite"></div>
+  <p class="fig-note">차별은 1년 시점 한 번만, 지난 12개월 동안의 일을 물었습니다. 치료 결과를 보는 여섯 척도는 세 시점 모두에서 쟀습니다.</p>
+</div>
+
+<p>차별은 <span class="term" data-tip="Discrimination and Stigma Scale 12. 정신질환이 있는 사람이 일, 결혼, 자녀 양육, 주거, 여가, 종교 활동 같은 일상에서 겪은 차별을 묻는 구조화 면담. 32문항, 하위척도 4개. DISC 12-K는 한국어판이다.">DISC 12-K</span>로 쟀습니다. 32문항이 네 하위척도로 묶이고, 각 문항은 0(전혀 없음)부터 3(많음)까지 답합니다. 하위척도 점수는 1, 2, 3으로 답한 문항의 개수입니다. 이 한국어판은 MAKE BETTER 연구 안에서 번역하고 타당성을 확인한 것입니다.</p>
+<p>치료 결과는 한 가지 숫자로 보지 않았습니다. 여섯 척도로 증상, 기능, 삶의 질을 함께 보았습니다.</p>
+<ul class="flow" aria-label="여섯 결과 척도">
+  <li><b>HAMD</b><span><span class="term" data-tip="Hamilton Rating Scale for Depression. 임상가가 면담으로 매기는 우울 증상 척도. 높을수록 심하다.">해밀턴 우울 척도</span>: 임상가가 평가한 우울 증상</span></li>
+  <li><b>HADS-A</b><span><span class="term" data-tip="Hospital Anxiety and Depression Scale의 불안 하위척도. 신체 증상보다 인지 증상에 초점을 둔 자기보고 척도. 높을수록 심하다.">병원 불안 우울 척도의 불안 부분</span>: 스스로 답한 불안 증상</span></li>
+  <li><b>CGI-S</b><span><span class="term" data-tip="Clinical Global Impression-Severity. 임상가가 전반적인 병의 심한 정도를 한 번에 매기는 척도. 높을수록 심하다.">임상 전반 인상 중증도</span>: 전반적인 병의 심한 정도</span></li>
+  <li><b>SOFAS</b><span><span class="term" data-tip="Social and Occupational Functioning Assessment Scale. 사회와 직업 기능을 0~100으로 매기는 척도. 높을수록 기능이 좋다.">사회 직업 기능 평가 척도</span>: 일과 관계에서의 기능</span></li>
+  <li><b>SDS</b><span><span class="term" data-tip="Sheehan Disability Scale. 일, 사회생활, 가정생활에서 증상 때문에 겪는 지장을 묻는 척도. 높을수록 장애가 크다.">시핸 장애 척도</span>: 일상의 장애 정도</span></li>
+  <li><b>EQ-5D</b><span><span class="term" data-tip="EuroQol-5 Dimension. 건강 관련 삶의 질을 다섯 차원으로 묻고 하나의 효용 지수로 나타낸다. 높을수록 좋다.">유로큐올 5차원</span>: 건강 관련 삶의 질</span></li>
+</ul>
+<p>기저 시점에는 이 밖에도 나이, 성별, 교육 연수, 결혼, 동거, 종교, 직업, 소득, 과거 우울증과 입원 병력, 가족력, 자살 시도 병력, 생활 스트레스 사건, 지각된 스트레스, 회복탄력성, 사회적 지지, 그리고 다섯 가지 성격 특성을 열 문항으로 묻는 <span class="term" data-tip="Big Five Inventory-10 한국어판. 외향성, 성실성, 신경증, 친화성, 개방성 다섯 성격 특성을 특성마다 두 문항씩 묻는다. 높을수록 그 특성이 강하다.">BFI-K-10</span>을 쟀습니다.</p>
+
+<h2 id="much">3. 차별은 얼마나 흔했을까요</h2>
+<p>참여자의 평균 나이는 54.1세였고 70%가 여성이었습니다. 87%가 주요우울장애였고, 55%는 전에도 우울증을 앓은 적이 있었습니다. 기저 HAMD 평균은 20.27점으로, 급성 우울 삽화에 해당하는 범위였습니다.</p>
+<p>치료 1년 시점에 물었을 때, 230명 가운데 209명(91%)이 적어도 한 영역에서 차별을 경험했고, 96명(42%)은 차별이 예상되어 무언가를 스스로 멈춘 적이 있었습니다. 같은 척도를 쓴 다른 연구들에서는 이 비율이 대략 80%였다고 논문은 적습니다. DISC 12-K의 네 하위척도를 눌러 보세요.</p>
+
+<div class="panel figure" id="disc"><span class="cx"></span>
+  <div class="fig-head"><h3>DISC 12-K의 네 하위척도와 1년 시점 점수</h3></div>
+  <div class="ctrl"><div class="seg" id="subSeg" role="group" aria-label="하위척도"><button data-k="ut">부당한 대우</button><button data-k="ss">스스로 멈춤</button><button data-k="os">낙인 극복</button><button data-k="pt">긍정적 대우</button></div></div>
+  <div class="sub-out" id="subOut" aria-live="polite"></div>
+  <p class="fig-note">눈금의 끝(문항 수만큼의 최고점)은 하위척도의 문항 수로 정한 계산값입니다. 빨간 점은 230명의 평균입니다.</p>
+</div>
+
+<h2 id="who">4. 누가 차별을 더 겪고, 더 예상했을까요</h2>
+<p>차별 점수는 몇 개의 문항에 해당했는지를 세는 개수 자료라서 <span class="term" data-tip="결과가 0, 1, 2처럼 개수로 나오고 흩어짐이 클 때 쓰는 회귀 모형.">음이항 회귀</span>로 분석했습니다. 먼저 기저 특성을 하나씩 넣어 보고, 의미 있게 관련된 것을 함께 넣은 다변량 모형을 만들었습니다. 서로 강하게 얽힌 변수는 하나만 남겼습니다. 예를 들어 나이는 교육 연수와 상관이 커서 다변량 모형에서 뺐습니다.</p>
+<p>결과는 <span class="term" data-tip="Incidence rate ratio. 개수 자료에서 한 조건일 때의 기대 개수가 다른 조건의 몇 배인지 나타낸다. 1보다 크면 많아지고, 작으면 줄어든다.">발생률비(IRR)</span>로 읽습니다. 1이면 관련이 없고, 1보다 크면 차별 점수가 높아지는 쪽입니다. 경험한 차별과 예상한 차별을 바꿔 보고, 줄을 눌러 뜻을 읽어 보세요.</p>
+
+<div class="panel figure" id="pred"><span class="cx"></span>
+  <div class="fig-head"><h3>다변량 모형의 발생률비와 95% 신뢰구간(표 2, 표 3)</h3><span class="note">점선: 발생률비 1(관련 없음), 빨간 점: p ≤ 0.042</span></div>
+  <div class="ctrl"><div class="seg" id="predSeg" role="group" aria-label="차별의 종류"><button data-k="exp">경험한 차별</button><button data-k="ant">예상한 차별</button></div></div>
+  <div class="fp" id="fp" role="group" aria-label="예측 요인별 발생률비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="fpTicks"></div><span></span></div>
+  <p class="fp-out" id="fpOut" aria-live="polite"></p>
+  <p class="fig-note" id="fpNote"></p>
+</div>
+
+<p>두 차별의 예측 요인은 서로 달랐습니다. 하나씩 넣어 본 분석에서 경험한 차별은 교육 연수, 지각된 스트레스, 과거 우울증 병력과는 같은 방향으로, 나이와 친화성과는 반대 방향으로 관련되었습니다. 이들을 함께 넣자 <b>과거 우울증 병력</b>과 <b>낮은 친화성</b>만 독립적으로 남았습니다. 예상한 차별은 남성, 교육 연수, 비혼, 취업, 자살 시도 병력, 지각된 스트레스, 불안, 장애 점수와 같은 방향으로 관련되었고, 함께 넣자 <b>교육 연수</b>, <b>비혼 상태</b>, <b>기저 장애 점수(SDS)</b>가 남았습니다.</p>
+
+<h2 id="out">5. 차별은 치료 결과와 어떻게 이어졌을까요</h2>
+<p>이번에는 차별 점수와 여섯 척도의 변화가 어떻게 함께 움직이는지 보았습니다. 다른 요인의 영향을 뺀 <span class="term" data-tip="두 변수 사이의 상관을, 다른 변수들의 영향을 통계적으로 뺀 뒤에 구한 값. -1~1.">편상관</span>을 구했고, 변화는 앞 시점 점수에서 뒤 시점 점수를 빼서 계산했습니다. 여러 번 검정한 것을 고려해 <span class="term" data-tip="Benjamini-Hochberg 방법. 여러 가설을 한꺼번에 검정할 때 우연히 유의하게 나오는 결과의 비율(거짓 발견율)을 조절한다. 이 연구는 p ≤ 0.042를 기준으로 썼다.">거짓 발견율 보정</span> 기준(p ≤ 0.042)을 함께 적용했습니다.</p>
+<div class="callout"><p><b>부호 읽는 법:</b> HAMD, HADS-A, CGI-S, SDS는 높을수록 나쁘고, SOFAS와 EQ-5D는 높을수록 좋습니다. 변화를 '앞 점수 빼기 뒤 점수'로 셌기 때문에, 앞의 네 척도에서는 <b>음의 상관</b>이, 뒤의 두 척도에서는 <b>양의 상관</b>이 같은 뜻입니다. 차별이 많을수록 호전이 적었다는 뜻입니다. 아래 칸을 누르면 이 풀이가 자동으로 붙습니다.</p></div>
+
+<div class="panel figure" id="corr"><span class="cx"></span>
+  <div class="fig-head"><h3>차별 점수와 결과 척도 변화의 편상관(표 4)</h3><span class="note">칸을 눌러 보세요</span></div>
+  <div class="ctrl"><div class="seg" id="cgSeg" role="group" aria-label="차별의 종류"><button data-k="exp">경험한 차별</button><button data-k="ant">예상한 차별</button></div></div>
+  <div class="cg" id="cg" role="group" aria-label="결과 척도와 기간별 편상관"></div>
+  <div class="cg-key" aria-hidden="true"><span><i class="k2"></i>거짓 발견율 보정 뒤에도 유의</span><span><i class="k1"></i>p &lt; 0.05</span><span><i></i>유의하지 않음</span></div>
+  <p class="cg-out" id="cgOut" aria-live="polite"></p>
+  <p class="fig-note" id="cgNote"></p>
+</div>
+
+<p>경험한 차별이 많을수록 1년 뒤 여섯 척도 모두에서 호전이 적었습니다. 2년 뒤에도 HAMD, HADS-A, SOFAS, CGI-S, SDS에서 결과가 더 나빴고, HADS-A를 뺀 척도에서는 이 관련이 치료 첫해에 더 강했습니다. 1년에서 2년 사이의 변화는 두 차별 어느 쪽과도 관련이 없었습니다. 예상한 차별은 1년 시점에 HAMD, HADS-A, SOFAS에서 호전이 적은 쪽과 관련되었는데, HAMD는 보정 기준을 넘지 못했고, 2년까지 유의하게 남은 것은 SOFAS뿐이었습니다.</p>
+
+<h2 id="meaning">6. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>친화성이 낮은 사람은 이기적으로 행동하고 공감이 부족하기 쉬워 대인 관계가 손상될 수 있고, 낙인찍힌 집단에 대한 편견을 갖거나 다른 사람을 부정적으로 평가하는 경향이 있습니다. 논문은 그래서 이들이 자신을 향한 차별에도 더 민감할 수 있다고 봅니다. 과거 우울증 병력은 이전 연구와 같이 강한 예측 요인이었는데, 이미 차별을 겪어 본 사람이라 더 민감할 수 있다는 해석입니다.</p>
+<p>교육 수준이 높은 사람은 자신과 남에게 기대가 커서 정신질환을 털어놓지 않을 수 있고, 한국에서 비혼 상태는 때로 실패처럼 여겨져 정신질환으로 존중을 더 잃을까 하는 두려움을 키울 수 있으며, 기능 장애가 큰 사람은 일터와 사회에서의 부정적 경험 때문에 차별에 더 민감할 수 있다고 논문은 해석합니다.</p>
+<p>경험한 차별만 결과와 이어진 까닭으로, 논문은 두 하위척도가 '자기 의지'를 담는지에서 다르다고 짚습니다. 예상한 차별은 스스로 내린 결정이라 결과를 미리 내다보고 준비할 수 있지만, 다른 사람에게서 오는 차별은 예측하기 어려워 심리적 충격이 더 클 수 있습니다.</p>
+<p>이 결과에서 논문은 우울증의 이환을 줄일 두 길을 봅니다. 첫째, 치료를 받고 있는 환자에게서도 차별을 꼭 살펴야 합니다. 둘째, 인구 수준에서 우울증 환자에 대한 차별을 줄이는 개입과 함께 더 나은 공공 복지, 보건의료, 주거, 안전 정책이 필요합니다. 차별을 예상하는 사람을 위한 개인 수준의 접근과, 인구 전체를 위한 공공 교육이 함께 필요하다고도 적습니다.</p>
+<p>91%라는 높은 비율은 한국의 사회경제적, 문화적 특성을 반영할 수 있다고 논문은 봅니다. 인간개발지수가 매우 높은 나라에서 차별 보고가 더 많았다는 이전 연구, 오랜 문화적 동질성, 그리고 선진국 가운데 가장 높은 한국의 자살률을 함께 언급하며, 우울증 관련 차별을 다루는 개입이 이환과 사망(자살)을 줄이는 데 도움이 될 수 있다고 적습니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 같은 MAKE BETTER 외래 코호트에서, 3주마다 치료를 다시 정하는 단계적 약물치료가 1년 동안의 관해와 어떻게 이어졌는지 본 연구도 있습니다. <a data-paper="stepwise_outcomes_jad_2020">단계적 약물치료와 우울장애의 관해</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>모든 환자를 한 기관에서 모집했습니다. 평가와 치료의 일관성은 높였지만 일반화는 제한될 수 있고, 모두 한국인이어서 다른 인종과 민족 집단의 평가가 필요합니다.</li>
+  <li>기저 시점과 치료 둘째 해의 차별은 재지 않았습니다. 그래서 기저 차별이 1년 시점 차별을 예측하는지, 둘째 해의 차별이 결과에 어떤 영향을 주는지는 볼 수 없었습니다.</li>
+  <li>항우울제가 성격 특성에 주는 영향을 완전히 배제할 수 없습니다. BFI-K-10은 특성마다 두 문항뿐이고, 요인분석이 아니라 기존 BFI-10을 번역해 만들었습니다. 다만 65세 이상 한국인에서 좋은 신뢰도와 타당도를 보였습니다.</li>
+  <li>친화성이 낮은 환자가 2년 추적에서 더 많이 탈락해, 차별과 2년 결과 사이의 관련은 실제보다 작게 추정되었을 가능성이 큽니다.</li>
+  <li>차별과 우울은 서로 영향을 줄 수 있습니다. 논문은 실제 행동과 경험을 직접 묻는 척도를 쓰고 여러 혼란 변수를 통제해 우울 증상이 차별 보고를 바꿨을 가능성은 낮다고 보지만, 실험적 조작이 없으므로 역인과를 완전히 배제할 수는 없다고 적습니다.</li>
+</ul>
+<h3>다음 질문</h3>
+<p>논문은 차별과 우울증의 관련을 매개하는 요인을 밝혀, 효과적인 예방 개입을 설계하고 평가하는 연구가 필요하다고 맺습니다. 대중의 태도를 바꾸는 개입이 짧은 기간의 변화만 낳았다는 최근 검토를 들며, 효과적인 개입에 대한 연구가 더 필요하다고도 적습니다.</p>
+
+<h2 id="quiz">7. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Jhon M, Stewart R, Kim J-W, Kang H-J, Lee J-Y, Kim S-W, Shin I-S, Kim J-M. Predictors and outcomes of experienced and anticipated discrimination in patients treated for depression: A 2-year longitudinal study. J Affect Disord. 2021;294:761-768. doi:10.1016/j.jad.2021.07.049</p>
+  <p>DOI <a href="https://doi.org/10.1016/j.jad.2021.07.049" target="_blank" rel="noopener">10.1016/j.jad.2021.07.049</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/34375201/" target="_blank" rel="noopener">34375201</a><br>
+  원문의 저작권은 Elsevier B.V.에 있습니다(© 2021 Elsevier B.V. All rights reserved). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1~4에서 가져왔습니다.</p>
+  <p>눈금의 최고점처럼 직접 계산한 값은 그 자리에 계산값이라고 적었습니다. 이 연구의 결과는 집단에서 본 관련성이며 개인의 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='depression-discrimination';
+
+/* 1) 연구의 세 시점 */
+const TL=[
+ {h:'치료 시작(기저, −1년): 230명 등록',li:['항우울제 치료를 시작하며 인구학 정보(나이, 성별, 교육 연수, 결혼, 동거, 종교, 직업, 소득)를 모았습니다.','임상 정보: 진단, 과거 우울증과 입원 병력, 우울증 가족력, 자살 시도 병력.','심리 정보: 생활 스트레스 사건, 지각된 스트레스(PSS), 회복탄력성(CDRS), 사회적 지지 결핍, 성격(BFI-K-10).','결과 척도 여섯 가지(HAMD, HADS-A, CGI-S, SOFAS, SDS, EQ-5D)의 출발점.']},
+ {h:'1년(차별 평가일, 0): 지난 12개월의 차별',li:['DISC 12-K로 치료를 받은 지난 12개월 동안의 차별을 물었습니다.','부당한 대우(Unfair Treatment) 점수를 경험한 차별로, 스스로 멈춤(Stopping Self) 점수를 예상한 차별로 썼습니다.','결과 척도 여섯 가지를 다시 쟀습니다(230명).']},
+ {h:'2년(종료, +1년): 197명(82%) 완료',li:['결과 척도 여섯 가지를 마지막으로 쟀습니다.','33명이 중간에 그만두었습니다. 치료 효과 부족 12명, 다른 병원으로 옮김 3명, 견디기 어려운 부작용 1명, 몸 상태 2명, 연락 끊김 15명.','중도 탈락은 낮은 친화성 점수와 관련되었습니다.']}];
+S.seg('tlSeg',k=>{const t=TL[+k];$('#tlOut').innerHTML=`<h4>${esc(t.h)}</h4><ul>${t.li.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`},KEY+':tl');
+
+/* 2) DISC 12-K 하위척도. 평균(SD)은 본문 3.1, 비율은 본문 3.1 */
+const SUB={
+ ut:{n:'부당한 대우(Unfair Treatment)',items:'1~21번, 21문항',d:'다른 사람에게서 실제로 부당한 대우를 받은 경험을 묻습니다. 이 연구에서 경험한 차별의 점수입니다.',max:21,m:3.86,sd:2.98,pct:91,cnt:209,pl:'차별을 경험한 환자'},
+ ss:{n:'스스로 멈춤(Stopping Self)',items:'22~25번, 4문항',d:'차별받을까 봐 하고 싶은 일을 스스로 하지 않은 경험을 묻습니다. 이 연구에서 예상한 차별의 점수입니다.',max:4,m:1.30,sd:2.12,pct:42,cnt:96,pl:'스스로 멈춘 적이 있는 환자'},
+ os:{n:'낙인 극복(Overcoming Stigma)',items:'26~27번, 2문항',d:'차별을 이겨 내려고 쓴 대처 방법을 묻습니다. 이 논문의 분석은 앞의 두 하위척도를 썼습니다.'},
+ pt:{n:'긍정적 대우(Positive Treatment)',items:'28~32번, 5문항',d:'정신건강 문제 때문에 오히려 더 좋은 대우를 받았는지를 묻습니다. 이 논문의 분석은 앞의 두 하위척도를 썼습니다.'}};
+S.seg('subSeg',k=>{const s=SUB[k];let h=`<p class="s-desc"><b>${esc(s.n)}</b>, ${esc(s.items)}. ${esc(s.d)}</p>`;
+  if(s.max){const step=s.max>10?3:1,ticks=[];for(let v=0;v<=s.max;v+=step)ticks.push(v);if(ticks[ticks.length-1]!==s.max)ticks.push(s.max);
+    h+=`<div class="s-row">${S.gauge({min:0,max:s.max,ticks,pts:[{v:s.m,label:`평균 ${s.m.toFixed(2)}점(표준편차 ${s.sd.toFixed(2)}), 0~${s.max}점`}]},`${s.n} 평균 ${s.m.toFixed(2)}점`)}<span class="s-val"><b>${s.m.toFixed(2)}</b>점<br>(SD ${s.sd.toFixed(2)}, 0~${s.max}점)</span></div>`;
+    h+=`<div class="share"><span>${esc(s.pl)}</span><span class="bt" role="img" aria-label="${esc(s.pl)} ${s.pct}%"><span class="bf" style="width:${s.pct}%"></span></span><span class="bv">${s.pct}%</span></div><p class="note" style="margin:6px 0 0">230명 가운데 ${s.cnt}명</p>`}
+  $('#subOut').innerHTML=h},KEY+':sub');
+
+/* 3) 다변량 발생률비(표 2, 표 3) */
+const PR={
+ exp:[
+  {n:'과거 우울증 병력',u:'있을 때',irr:1.69,lo:1.25,hi:2.28,p:'0.001',s:1},
+  {n:'친화성(BFI-K-10)',u:'1점 높을 때',irr:0.91,lo:0.84,hi:0.99,p:'0.042',s:1},
+  {n:'교육 연수',u:'1년 길 때',irr:1.03,lo:0.99,hi:1.06,p:'0.082',s:0},
+  {n:'지각된 스트레스(PSS)',u:'1점 높을 때',irr:1.02,lo:Math.exp(-0.004),hi:Math.exp(0.042),p:'0.110',s:0,calc:1}],
+ ant:[
+  {n:'교육 연수',u:'1년 길 때',irr:1.11,lo:1.05,hi:1.17,p:'< 0.001',s:1},
+  {n:'비혼 상태',u:'비혼일 때',irr:1.86,lo:1.14,hi:3.03,p:'0.014',s:1},
+  {n:'장애(SDS)',u:'1점 높을 때',irr:1.04,lo:1.01,hi:1.07,p:'0.032',s:1},
+  {n:'남성',u:'남성일 때',irr:0.98,lo:0.62,hi:1.55,p:'0.932',s:0},
+  {n:'종교 있음',u:'있을 때',irr:0.91,lo:0.61,hi:1.37,p:'0.659',s:0},
+  {n:'취업',u:'일하고 있을 때',irr:0.76,lo:0.47,hi:1.23,p:'0.264',s:0},
+  {n:'월 소득 2,000달러 초과',u:'초과일 때',irr:1.28,lo:0.82,hi:1.97,p:'0.274',s:0},
+  {n:'자살 시도 병력',u:'있을 때',irr:1.08,lo:0.54,hi:2.13,p:'0.836',s:0},
+  {n:'지각된 스트레스(PSS)',u:'1점 높을 때',irr:1.03,lo:0.99,hi:1.07,p:'0.169',s:0},
+  {n:'회복탄력성(CDRS)',u:'1점 높을 때',irr:0.99,lo:0.98,hi:1.01,p:'0.896',s:0},
+  {n:'외향성(BFI-K-10)',u:'1점 높을 때',irr:0.97,lo:0.86,hi:1.09,p:'0.581',s:0},
+  {n:'친화성(BFI-K-10)',u:'1점 높을 때',irr:0.94,lo:0.84,hi:1.06,p:'0.317',s:0}]};
+const PRNOTE={exp:'다변량 모형에 함께 넣은 변수: 교육 연수, 과거 우울증 병력, 지각된 스트레스, 친화성. 지각된 스트레스의 신뢰구간 막대는 회귀계수의 95% 신뢰구간(−0.004~0.042)을 지수로 바꾼 계산값입니다.',ant:'다변량 모형에 함께 넣은 변수: 위의 12개. 불안(HADS-A)은 지각된 스트레스와, 삶의 질(EQ-5D)은 장애 점수와 상관이 커서 넣지 않았습니다.'};
+const L0=Math.log(0.4),L1=Math.log(3.2),fx=v=>((Math.log(v)-L0)/(L1-L0)*100).toFixed(2)+'%';
+$('#fpTicks').innerHTML=(innerWidth<640?[0.5,1,1.5,2,3]:[0.5,0.75,1,1.5,2,3]).map(t=>`<span style="left:${fx(t)}">${t}</span>`).join('');
+let kind='exp';
+function fpPick(i){const r=PR[kind][i];if(!r)return;
+  document.querySelectorAll('#fp .fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  const what=kind==='exp'?'경험한 차별':'예상한 차별',pct=Math.abs((r.irr-1)*100).toFixed(0),dir=r.irr>1?'높았습니다':'낮았습니다';
+  const ci=`95% 신뢰구간 ${r.lo.toFixed(2)}~${r.hi.toFixed(2)}${r.calc?'(계산값)':''}`;
+  $('#fpOut').innerHTML=r.s?`<b>${esc(r.n)}</b>: ${esc(r.u)} ${what} 점수의 기대값이 ${r.irr.toFixed(2)}배, 곧 약 ${pct}% ${dir}(계산값). ${ci}, p ${r.p.startsWith('<')?'':'= '}${esc(r.p)}.`
+    :`<b>${esc(r.n)}</b>: 발생률비 ${r.irr.toFixed(2)}, ${ci}, p ${r.p.startsWith('<')?'':'= '}${esc(r.p)}. 다른 변수와 함께 넣었을 때 ${what}과 독립적인 관련은 보이지 않았습니다.`;
+  S.store.set(KEY+':fp:'+kind,i)}
+function fpDraw(){const rows=PR[kind];
+  $('#fp').innerHTML=rows.map((r,i)=>`<button type="button" class="fp-row${r.s?'':' ns'}" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r.n)}</span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${fx(1)}"></span><span class="fp-ci" style="left:${fx(r.lo)};width:calc(${fx(r.hi)} - ${fx(r.lo)})"></span><span class="fp-dot" style="left:${fx(r.irr)}"></span></span><span class="fp-val">${r.irr.toFixed(2)} (${r.lo.toFixed(2)}~${r.hi.toFixed(2)})</span></button>`).join('');
+  document.querySelectorAll('#fp .fp-row').forEach(b=>b.onclick=()=>fpPick(+b.dataset.i));
+  $('#fpNote').textContent=PRNOTE[kind];
+  const i0=S.store.get(KEY+':fp:'+kind,0);fpPick(i0<rows.length?i0:0)}
+S.seg('predSeg',k=>{kind=k;fpDraw()},KEY+':pred');
+
+/* 4) 표 4 편상관. s: 2=굵은 글씨(거짓 발견율 보정 뒤 유의), 1=p<0.05, 0=유의하지 않음 */
+const OUT=[{n:'HAMD',d:'우울 증상',hi:0},{n:'HADS-A',d:'불안 증상',hi:0},{n:'SOFAS',d:'사회 직업 기능',hi:1},{n:'CGI-S',d:'전반적 중증도',hi:0},{n:'EQ-5D',d:'삶의 질',hi:1},{n:'SDS',d:'장애',hi:0}];
+const PER=[{n:'기저~1년',N:230},{n:'1년~2년',N:197},{n:'기저~2년',N:197}];
+const CR={
+ exp:[[[-0.302,2],[0.046,0],[-0.191,2]],[[-0.273,2],[-0.031,0],[-0.283,2]],[[0.274,2],[-0.065,0],[0.163,2]],[[-0.220,2],[0.015,0],[-0.168,2]],[[0.177,2],[-0.120,0],[0.110,0]],[[-0.269,2],[-0.006,0],[-0.245,2]]],
+ ant:[[[-0.137,1],[0.000,0],[-0.098,0]],[[-0.139,2],[0.053,0],[-0.074,0]],[[0.168,2],[0.047,0],[0.201,2]],[[-0.098,0],[0.025,0],[-0.090,0]],[[-0.016,0],[-0.024,0],[0.000,0]],[[-0.117,0],[-0.051,0],[-0.141,0]]]};
+const ADJ={exp:'성별, 교육, 결혼, 취업, 과거 우울증 병력, 기저 지각된 스트레스, 친화성',ant:'성별, 교육, 결혼, 종교, 취업, 월 소득, 자살 시도 병력, 기저 지각된 스트레스, 회복탄력성, 외향성, 친화성'};
+let ck='exp',cell=[0,0];
+const fmt=v=>(v<0?'−':'')+Math.abs(v).toFixed(3);
+function cgPick(o,p){cell=[o,p];const [v,s]=CR[ck][o][p],m=OUT[o],per=PER[p],what=ck==='exp'?'경험한 차별':'예상한 차별';
+  document.querySelectorAll('#cg button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.o===o&&+b.dataset.p===p)));
+  const worse=m.hi?v>0:v<0;
+  let t=`<b>${esc(m.n)}(${esc(m.d)})</b>, ${esc(per.n)} 변화(${per.N}명): ${what}과의 편상관 r = ${fmt(v)}. `;
+  if(s===2)t+=`${what}이 많을수록 이 기간 ${esc(m.d)}의 호전이 ${worse?'적었습니다':'컸습니다'}. 거짓 발견율 보정 뒤에도 유의했습니다.`;
+  else if(s===1)t+=`${what}이 많을수록 호전이 적은 쪽이었고(p &lt; 0.05), 거짓 발견율 보정 기준(p ≤ 0.042)은 넘지 못했습니다.`;
+  else t+='이 기간에는 통계적으로 유의한 관련이 보이지 않았습니다.';
+  $('#cgOut').innerHTML=t;S.store.set(KEY+':cg',cell)}
+function cgDraw(){
+  let h='<span class="cg-h">결과 척도</span>'+PER.map(p=>`<span class="cg-h">${p.n}<small>N=${p.N}</small></span>`).join('');
+  OUT.forEach((m,o)=>{h+=`<span class="cg-n">${esc(m.n)}<small>${esc(m.d)}</small></span>`+CR[ck][o].map(([v,s],p)=>`<button type="button" class="s${s}" data-o="${o}" data-p="${p}" aria-pressed="false" aria-label="${esc(m.n)} ${PER[p].n} r ${fmt(v)}">${fmt(v)}</button>`).join('')});
+  $('#cg').innerHTML=h;
+  document.querySelectorAll('#cg button').forEach(b=>b.onclick=()=>cgPick(+b.dataset.o,+b.dataset.p));
+  $('#cgNote').textContent=`보정 변수: ${ADJ[ck]}. 변화는 앞 시점 점수에서 뒤 시점 점수를 뺀 값입니다.`;
+  const c=S.store.get(KEY+':cg',[0,0]);cgPick(Math.min(+c[0]||0,5),Math.min(+c[1]||0,2))}
+S.seg('cgSeg',k=>{ck=k;cgDraw()},KEY+':cgk');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 경험한 차별은 DISC 12-K의 어느 하위척도로 쟀나요?',o:['부당한 대우(Unfair Treatment)','스스로 멈춤(Stopping Self)','긍정적 대우(Positive Treatment)'],a:0,e:'부당한 대우 하위척도(21문항)를 경험한 차별로, 스스로 멈춤 하위척도(4문항)를 예상한 차별로 썼습니다.'},
+ {q:'다변량 분석에서 경험한 차별을 독립적으로 예측한 기저 특성은 무엇이었나요?',o:['과거 우울증 병력과 낮은 친화성','높은 교육 수준과 비혼 상태','높은 신경증과 낮은 외향성'],a:0,e:'과거 우울증 병력의 발생률비는 1.69, 친화성은 1점당 0.91이었습니다. 교육 수준과 비혼 상태는 예상한 차별의 예측 요인이었습니다.'},
+ {q:'예상한 차별과 2년 뒤까지 유의한 관련이 남은 결과 척도는 무엇이었나요?',o:['SOFAS(사회 직업 기능)','HAMD(우울 증상)','EQ-5D(삶의 질)'],a:0,e:'예상한 차별은 1년 시점 HAMD, HADS-A, SOFAS의 호전과 관련되었지만, 2년까지 유의하게 남은 것은 SOFAS뿐이었습니다.'},
+ {q:'1년에서 2년 사이의 결과 변화는 차별과 어떤 관련이 있었나요?',o:['두 차별 어느 쪽과도 관련이 없었다','여섯 척도 모두와 관련되었다','우울 증상과만 관련되었다'],a:0,e:'차별은 지난 12개월, 곧 치료 첫해의 경험을 물었고, 관련은 첫해의 변화와 기저에서 2년까지의 변화에서 보였습니다.'},
+ {q:'91%라는 숫자는 무엇을 뜻하나요?',o:['230명 가운데 209명이 치료 첫해에 적어도 한 영역에서 차별을 경험했다','91%가 차별 때문에 치료를 그만두었다','91%가 차별을 예상해 스스로 무언가를 멈췄다'],a:0,e:'예상한 차별 때문에 스스로 멈춘 적이 있는 환자는 42%(96명)였습니다. 2년 추적은 197명(82%)이 마쳤습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

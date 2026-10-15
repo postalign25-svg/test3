@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>항정신병약물 복용 환자의 성별 골밀도 위험요인 - 전민 연구 기록</title>
+<meta name="description" content="항정신병약물을 복용하는 정신증 환자 285명에서 낮은 골밀도와 관련된 요인을 남녀별로 찾은 연구(Human Psychopharmacology, 2018)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.slider{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:14px;align-items:center;margin:4px 0 0}
+.slider input[type=range]{width:100%;accent-color:var(--ink);margin:0}
+.slider output{font-family:var(--num);font-size:20px;color:var(--signal-ink);text-align:right}
+.tclass{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line-2);margin:14px 0 0}
+.tclass div{padding:9px 10px;border-left:1px solid var(--line-2);font-size:13.5px;line-height:1.45;color:var(--ink-2);background:var(--surface)}
+.tclass div:first-child{border-left:0}
+.tclass div b{display:block;font-weight:600;color:var(--ink)}
+.tclass div small{display:block;font-family:var(--num);font-size:12px;color:var(--meta)}
+.tclass div.on{background:var(--ink);color:var(--bg)}
+.tclass div.on b,.tclass div.on small{color:var(--bg)}
+.t-out{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.bars{display:grid;gap:8px;margin-top:4px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 112px;gap:10px;align-items:center;font-size:14px}
+.bar .bn small{display:block;font-size:12px;color:var(--meta);font-family:var(--num)}
+.bar .bt{position:relative;height:16px;background:var(--tint)}
+.bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.bar.hi .bf{background:var(--signal)}
+.bar .bv{font-family:var(--num);font-size:13px;text-align:right}
+.bar.hi .bv{color:var(--signal-ink)}
+.bar-ticks{display:grid;grid-template-columns:150px minmax(0,1fr) 112px;gap:10px;margin-top:2px}
+.bar-ticks div{position:relative;height:16px}
+.bar-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta)}
+.b-out{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.cmp{display:grid;grid-template-columns:130px minmax(0,1fr) 150px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-name small{display:block;font-size:12px;color:var(--meta)}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.cmp .c-sep{grid-column:1/-1;height:1px;background:var(--line);margin:6px 0}
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:132px minmax(0,1fr) 128px;gap:12px;align-items:center;padding:6px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%;color:var(--ink)}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-row.ns .fp-dot{background:var(--surface);border:1.5px solid var(--ink)}
+.fp-axis{display:grid;grid-template-columns:132px minmax(0,1fr) 128px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+@media (max-width:640px){
+  .slider{grid-template-columns:minmax(0,1fr) 64px;gap:10px}
+  .slider output{font-size:17px}
+  .tclass div{font-size:12px;padding:8px 6px}
+  .bar,.bar-ticks{grid-template-columns:92px minmax(0,1fr) 84px;gap:8px;font-size:13px}
+  .bar .bv{font-size:12px}
+  .cmp{grid-template-columns:84px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .fp-row,.fp-axis{grid-template-columns:78px minmax(0,1fr) 88px;gap:8px;font-size:13px}
+  .fp-row .fp-val{font-size:11px}
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 조현병의 신체 건강, 골밀도</p>
+  <h1>항정신병약물을 먹는 환자의 뼈, 남자와 여자는 무엇이 다를까요?</h1>
+  <p class="lede">조현병 같은 <span class="term" data-tip="현실을 판단하는 능력이 흔들려 환청이나 망상 같은 증상이 나타나는 상태. 조현병과 정신병적 증상을 동반한 기분장애를 함께 이른다.">정신증</span>을 앓는 사람은 오랫동안 약을 먹으며 지냅니다. 체중과 혈당은 자주 재지만, 뼈는 부러지기 전까지 잘 드러나지 않습니다. 이 연구는 광주의 정신건강복지센터에 다니는 환자 285명의 허리뼈 <span class="term" data-tip="Bone mineral density. 뼈에 무기질이 얼마나 촘촘히 들어 있는지를 나타내는 값. 낮을수록 뼈가 약하고 부러지기 쉽다.">골밀도</span>를 재고, 골밀도가 낮은 사람에게서 어떤 요인이 함께 나타나는지 남녀를 나눠 살폈습니다.</p>
+  <p class="meta">원문: Jhon M, Yoo T 외. Human Psychopharmacology: Clinical and Experimental 33:e2648, 2018<br>읽는 데 약 10분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>광주 지역사회 정신건강 검진 연구에 참여한 60세 이하 정신증 환자 <b>285명</b>의 허리뼈(L1~L4) 골밀도를 이중에너지 X선 흡수계측법으로 쟀습니다.</li>
+    <li>58명(<b>20.4%</b>)이 골밀도가 낮았습니다(골감소증 52명, 골다공증 6명). 남성이 26.3%로 여성(12.8%)보다 많았습니다.</li>
+    <li>여러 요인을 함께 고려하자 전체에서는 남성, 세로토닌계 항우울제 복용이 낮은 골밀도와, 높은 체질량지수와 긴 치료 기간은 반대 방향으로 관련되었습니다.</li>
+    <li>남녀를 나누면 요인이 달랐습니다. 남성은 체질량지수와 치료 기간, 여성은 체질량지수, 프로락틴, 낮은 비타민 D, <b>세로토닌계 항우울제</b>였습니다. 논문은 위험요인을 성별에 맞춰 관리하고, 뼈에 영향을 주는 약은 신중히 처방하자고 제안합니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>20.4%</b><span>낮은 골밀도(285명 가운데 58명)</span></div>
+  <div class="stat"><b>26.3%</b><span>남성의 낮은 골밀도 비율(여성 12.8%)</span></div>
+  <div class="stat"><b>3.0</b><span>남성의 보정 오즈비(전체 모형)</span></div>
+  <div class="stat"><b>34</b><span>여성에서 세로토닌계 항우울제의 보정 오즈비</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 뼈를 보았을까요</a></li>
+    <li><a href="#how">누구를, 어떻게 쟀을까요</a></li>
+    <li><a href="#rate">누구에게서 골밀도가 낮았을까요</a></li>
+    <li><a href="#model">함께 따져 본 위험요인</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 뼈를 보았을까요</h2>
+<p>조현병이 있는 사람의 기대수명은 12~15년 짧습니다. 비만, 운동 부족, 흡연, 자기 돌봄의 어려움이 그 이유로 꼽힙니다. 그래서 논문은 정신증 환자의 신체 건강이 매우 중요하다고 말합니다.</p>
+<p><span class="term" data-tip="뼈의 양이 줄고 미세 구조가 약해져 작은 충격에도 쉽게 부러지는 상태.">골다공증</span>은 그 가운데서도 잘 보이지 않는 동반 질환입니다. 논문이 인용한 메타분석(19개 연구, 조현병 환자 2,905명)에서 낮은 골량(골감소증과 골다공증)의 비율은 51.7%였고, 아시아 환자 1,814명에서는 58.4%였습니다. 일반 인구보다 낮은 골량 위험이 거의 두 배였습니다.</p>
+<p>원인은 병 자체, 치료, 생활습관이 얽혀 있습니다. 항정신병약물이 <span class="term" data-tip="뇌하수체에서 나오는 호르몬. 젖 분비를 돕는다. 도파민을 막는 항정신병약물 가운데 일부는 이 호르몬을 높인다.">프로락틴</span>을 높이면 성호르몬이 줄어 뼈가 약해질 수 있다는 설명이 있지만, 관련이 없었다는 연구도 있어 근거가 엇갈립니다. 항우울제, 특히 <span class="term" data-tip="Selective serotonin reuptake inhibitor. 세로토닌이 신경세포로 다시 흡수되는 것을 막아 우울을 치료하는 약.">SSRI</span>가 골밀도를 낮출 수 있다는 연구도 대부분 정신증이 없는 노인을 대상으로 했습니다. 그리고 한 리뷰는 성별에 따라 다른 위험요인을 고려해야 한다고 주장했습니다.</p>
+<p>그래서 이 연구는 지역사회에 사는 정신증 성인에게서 <b>고칠 수 있는 위험요인</b>을 찾고, 그것이 남녀에서 다른지 확인하려 했습니다.</p>
+<div class="callout"><p><b>비유:</b> 같은 비에도 지붕마다 새는 곳이 다릅니다. 집 전체에 방수 칠을 한 번 하는 것보다, 어느 집은 처마를, 어느 집은 굴뚝 둘레를 고치는 편이 낫습니다. 이 연구는 남성 환자와 여성 환자의 '새는 곳'이 다른지 살폈습니다.</p></div>
+
+<h2 id="how">2. 누구를, 어떻게 쟀을까요</h2>
+<p>이 연구는 광주의 지역사회 정신건강복지센터에서 치료받는 환자의 신체 건강을 살핀 '광주 정신질환자 종합건강검진 연구'의 하위 연구입니다. 나이가 들면서 생기는 골다공증을 빼려고 60세 이하만 포함했습니다.</p>
+<ul class="flow" aria-label="참여자 흐름">
+  <li><b>386명</b><span>모 연구에 참여한 정신질환자</span></li>
+  <li><b>285명</b><span>60세 이하 정신증 환자로 최종 분석(남성 160명, 여성 125명, 평균 40세)</span></li>
+  <li><b>241명</b><span>조현병(84.6%)</span></li>
+  <li><b>44명</b><span>정동성 정신증(15.4%)</span></li>
+</ul>
+<p>허리뼈(L1~L4) 골밀도는 <span class="term" data-tip="Dual-energy X-ray absorptiometry. 에너지가 다른 두 X선이 뼈를 얼마나 통과하는지로 골밀도를 재는 표준 검사.">이중에너지 X선 흡수계측법</span>으로 쟀습니다. 결과는 젊은 성인 평균과 비교한 <span class="term" data-tip="젊은 성인 평균 골밀도에서 표준편차 몇 개만큼 떨어져 있는지를 나타낸 값. 0이면 평균, -1이면 표준편차 하나만큼 낮다.">T 점수</span>로 나타냅니다. 이 연구는 세계보건기구 기준에 따라 T 점수가 -1 미만이면 낮은 골밀도로 보았습니다.</p>
+
+<div class="panel figure" id="tscore"><span class="cx"></span>
+  <div class="fig-head"><h3>T 점수로 나누는 세 구간</h3><span class="note">막대를 움직여 보세요</span></div>
+  <div class="slider"><input type="range" id="tRange" min="-4" max="2" step="0.1" value="-1.5" aria-label="T 점수"><output id="tVal" for="tRange">-1.5</output></div>
+  <div id="tGauge"></div>
+  <div class="tclass" id="tClass">
+    <div data-c="0"><b>정상</b><small>T ≥ -1</small><small>227명</small></div>
+    <div data-c="1"><b>골감소증</b><small>-2.5 &lt; T &lt; -1</small><small>52명</small></div>
+    <div data-c="2"><b>골다공증</b><small>T ≤ -2.5</small><small>6명</small></div>
+  </div>
+  <p class="t-out" id="tOut" aria-live="polite"></p>
+  <p class="fig-note">구간 기준과 인원(285명 가운데 정상 227명, 골감소증 52명, 골다공증 6명)은 논문에서 가져왔습니다. 막대의 T 점수는 구간을 보여 주려는 가상 예시이며 실제 참여자의 값이 아닙니다.</p>
+</div>
+
+<p>함께 잰 것도 많습니다. 의무기록과 사례관리자에게서 진단, 치료 기간, 처방 약과 용량, 의료보장 종류를 얻었습니다. 키와 몸무게로 <span class="term" data-tip="Body mass index. 몸무게(kg)를 키(m)의 제곱으로 나눈 값. 이 연구에서는 23 초과를 과체중으로 보았다.">체질량지수</span>를 계산했고, 공복 혈액으로 프로락틴과 비타민 D를 쟀습니다. 비타민 D는 중앙값(전체 14.3 ng/ml, 남성 15.3, 여성 14.0)을 기준으로 낮은 군과 높은 군으로 나눴습니다. 신체활동, 우울 증상, 유제품 섭취와 균형 잡힌 식사도 설문으로 물었습니다.</p>
+<p>약은 이렇게 묶었습니다. 아리피프라졸, 쿠에티아핀, 클로자핀, 올란자핀만 먹는 사람을 <span class="term" data-tip="프로락틴을 비교적 덜 올리는 항정신병약물. 이 연구에서는 아리피프라졸, 쿠에티아핀, 클로자핀, 올란자핀만 복용한 사람을 이 군으로 보았다.">프로락틴 비상승 약물군</span>으로 보았고, 용량은 <span class="term" data-tip="서로 다른 항정신병약물의 용량을 리스페리돈으로 환산해 견줄 수 있게 한 값.">리스페리돈 등가용량</span>으로 환산했습니다. 항우울제 가운데 SSRI, 미르타자핀, 트라조돈을 <span class="term" data-tip="이 연구에서는 SSRI, 미르타자핀, 트라조돈을 묶었다(42명). 부프로피온, 티아넵틴, 삼환계 항우울제(18명)는 넣지 않았다.">세로토닌계 항우울제</span>로 묶었습니다(42명).</p>
+<p>분석은 두 단계였습니다. 먼저 골밀도가 낮은 사람과 그렇지 않은 사람을 남녀별로 비교했고, 그다음 <span class="term" data-tip="여러 요인을 한꺼번에 넣어, 다른 요인을 고려한 뒤에도 각 요인이 결과(여기서는 낮은 골밀도)와 관련되는지 보는 통계 방법.">로지스틱 회귀분석</span>으로 여러 요인을 함께 따졌습니다. 단변량 비교에서 p &lt; 0.1이던 요인과 이미 알려진 위험요인(나이, 프로락틴, 낮은 비타민 D)을 모형에 넣었습니다. 공식 우울 척도가 없어서, 세로토닌계 항우울제를 볼 때는 현재의 자살 사고를 우울 증상의 지표로 함께 넣었습니다.</p>
+
+<h2 id="rate">3. 누구에게서 골밀도가 낮았을까요</h2>
+<p>참여자의 치료 기간 중앙값은 13년이었고, 평균 체질량지수는 26.0이어서 70.9%가 과체중이었습니다. 낮은 골밀도는 남성, 체질량지수가 낮은 사람, 치료 기간이 짧은 사람, 의료급여를 받는 사람, 세로토닌계 항우울제를 먹는 사람에게서 더 흔했습니다. 기준을 골라 집단별 비율을 견주어 보세요.</p>
+
+<div class="panel figure" id="rates"><span class="cx"></span>
+  <div class="fig-head"><h3>집단별 낮은 골밀도 비율(표 1, 표 2)</h3><span class="note">빨간 막대: 두 집단의 차이가 p &lt; 0.05</span></div>
+  <div class="ctrl">
+    <div class="seg" id="rFac" role="group" aria-label="나눌 기준"><button data-k="sex">성별</button><button data-k="ad">세로토닌계 항우울제</button><button data-k="vd">비타민 D</button><button data-k="ins">의료보장</button><button data-k="smk">흡연</button></div>
+    <div class="seg" id="rGrp" role="group" aria-label="대상"><button data-k="t">전체</button><button data-k="m">남성</button><button data-k="f">여성</button></div>
+  </div>
+  <div class="bars" id="rBars"></div>
+  <div class="bar-ticks" aria-hidden="true"><span></span><div id="rTicks"></div><span></span></div>
+  <p class="b-out" id="rOut" aria-live="polite"></p>
+  <p class="fig-note">막대 오른쪽은 낮은 골밀도인 사람 수와 그 집단 안에서의 비율(%)입니다. 성별은 전체에서만 나눌 수 있습니다. <span class="term" data-tip="저소득층에게 국가가 의료비를 지원하는 제도. 논문의 Medicaid. 그 밖의 참여자는 건강보험(Medicare)으로 분류했다.">의료급여</span>는 논문의 Medicaid, 건강보험은 Medicare를 옮긴 말입니다.</p>
+</div>
+
+<p>숫자로 재는 값도 비교해 보았습니다. 남녀 모두 골밀도가 낮은 사람의 체질량지수가 더 낮았습니다. 남성에서는 치료 기간이 짧은 쪽이, 여성에서는 프로락틴이 높고 나이가 많은 쪽으로 기울었습니다(여성의 이 두 차이는 p &lt; 0.1). 값을 골라 보세요.</p>
+
+<div class="panel figure" id="cont"><span class="cx"></span>
+  <div class="fig-head"><h3>골밀도가 정상인 사람과 낮은 사람, 남녀별 비교(표 2)</h3><span class="note">속 빈 점: 정상 골밀도, 빨간 점: 낮은 골밀도, 회색 띠: 퍼진 범위</span></div>
+  <div class="ctrl"><div class="seg" id="cVar" role="group" aria-label="비교할 값"><button data-k="bmi">체질량지수</button><button data-k="dur">치료 기간</button><button data-k="prl">프로락틴</button><button data-k="age">나이</button></div></div>
+  <div id="cOut"></div>
+  <p class="fig-note" id="cNote"></p>
+</div>
+
+<h2 id="model">4. 함께 따져 본 위험요인</h2>
+<p>한 가지 요인만 보면 다른 요인이 섞여 들어갑니다. 예를 들어 남성이 더 마른 편이라면, 남성의 위험처럼 보이는 것이 사실은 체질량지수의 몫일 수 있습니다. 그래서 여러 요인을 한 모형에 함께 넣고, 각 요인의 <span class="term" data-tip="한 집단에서 결과가 생길 오즈를 다른 집단과 견준 비. 1보다 크면 그 요인이 있을 때 결과(낮은 골밀도)가 더 흔하고, 1보다 작으면 덜 흔하다. 여기서는 다른 요인을 함께 고려한 보정 오즈비.">보정 오즈비</span>와 <span class="term" data-tip="참값이 들어 있을 것으로 보는 범위. 95% 신뢰구간이 1을 지나지 않으면 통계적으로 의미 있는 관련으로 본다.">95% 신뢰구간</span>을 구했습니다.</p>
+<p>전체에서는 남성(3.0)과 세로토닌계 항우울제(2.5)가 낮은 골밀도 쪽으로, 체질량지수(0.8)와 치료 기간(0.7)이 반대쪽으로 관련되었습니다. 남녀를 나누자 그림이 달라졌습니다. 탭을 바꾸고 줄을 눌러 보세요.</p>
+
+<div class="panel figure" id="t3"><span class="cx"></span>
+  <div class="fig-head"><h3>낮은 골밀도의 보정 오즈비(표 3)</h3><span class="note">빨간 점: p &lt; 0.05, 속 빈 점: 그 밖, 점선: 오즈비 1</span></div>
+  <div class="ctrl"><div class="seg" id="fpGrp" role="group" aria-label="모형"><button data-k="t">전체(285명)</button><button data-k="m">남성(160명)</button><button data-k="f">여성(125명)</button></div></div>
+  <div class="fp" id="fp" role="group" aria-label="요인별 보정 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="fpTicks"></div><span></span></div>
+  <p class="fp-out" id="fpOut" aria-live="polite"></p>
+  <p class="fig-note">가로축은 로그 눈금입니다(1의 왼쪽은 낮은 골밀도와 반대 방향, 오른쪽은 같은 방향). 각 모형에는 표 3에 값이 있는 요인만 들어갔습니다. 연속 변수 가운데 분산이 같다고 볼 수 없는 것은 로그로 변환해 넣었다고 논문은 적습니다.</p>
+</div>
+
+<p>여성 모형의 두 값이 눈에 띕니다. 낮은 비타민 D군의 보정 오즈비는 12.5(95% 신뢰구간 1.9~84.6), 세로토닌계 항우울제는 34(3.8~306.6)였습니다. 논문은 이 연구가 정신증이 있는 성인 여성에서 세로토닌계 항우울제를 낮은 골밀도의 독립적인 위험요인으로 처음 밝힌 연구라고 적습니다. 남성에서는 프로락틴이 관련되지 않았고, 짧은 치료 기간과 낮은 체질량지수가 남았습니다.</p>
+
+<h2 id="meaning">5. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p><b>남성이 세 배.</b> 흔히 여성이 골밀도 저하에 더 취약하다고 알려져 있지만, 이 연구에서는 남성 환자가 낮은 골밀도를 보일 가능성이 세 배 높았습니다. 항정신병약물을 먹는 남성의 골밀도가 더 낮았다는 다른 연구도 있습니다. 남성의 흡연과 음주가 이유로 거론되지만 이 연구에서 흡연은 남성의 낮은 골밀도와 관련되지 않았고, 비타민 D와 운동도 성별로 다르지 않았습니다. 논문은 왜 남성 정신증 환자에게서 더 흔한지는 더 연구해야 한다고 적습니다.</p>
+<p><b>체중의 두 얼굴.</b> 남녀 모두 골밀도가 낮은 사람의 체질량지수가 더 낮았습니다. 몸무게가 뼈에 주는 기계적 부하, 지방 조직의 에스트로겐이 뼈를 지키는 쪽으로 작용한다고 알려져 있습니다. 남성에서 치료 기간이 짧을수록 골밀도가 낮았던 것도, 치료 중 늘어난 체중이 뼈를 지켰을 가능성을 간접적으로 시사한다고 논문은 해석합니다. 항정신병약물을 먹는 환자에게 높은 체질량지수는 대사증후군과, 낮은 체질량지수는 낮은 골밀도와 관련된다는 점을 함께 보아야 합니다.</p>
+<p><b>여성의 프로락틴.</b> 프로락틴은 여성에서 더 높았고(중앙값 33.4 대 20 ng/ml), 여성에서만 낮은 골밀도와 독립적으로 관련되었습니다. 논문은 고프로락틴혈증의 영향이 성별로 달라서 그동안 연구 결과가 엇갈렸을 수 있다고 봅니다. 다만 프로락틴 비상승 약물만 먹는 것이 이 연구에서 낮은 골밀도를 막아 주지는 않았고, 도파민 D2 수용체를 막는 약이 다른 경로로 뼈에 영향을 줄 수 있다는 설명도 덧붙입니다.</p>
+<p><b>비타민 D.</b> 참여자의 비타민 D 중앙값 14.3 ng/ml은 서구에서 제시한 부족 기준(20 ng/ml)보다 낮았습니다. 낮은 비타민 D는 여성에서 낮은 골밀도와 관련되었습니다.</p>
+<p><b>세로토닌계 항우울제.</b> 논문이 꼽은 위험요인 가운데 가장 쉽게 조절할 수 있는 것입니다. 이 연구에서 약 20%가 항우울제를 함께 먹고 있었습니다. 세로토닌은 뼈를 만드는 세포와 허무는 세포 모두에 작용하는 것으로 알려져 있습니다. 2009년 조현병 치료 권고(PORT)는 조현병의 우울 증상에 항우울제를 쓰라는 이전 권고를 근거 부족으로 바꾸었습니다. 논문은 세로토닌계 항우울제를 신중히 처방하고 대안을 고려하자고 말합니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 정신질환을 겪는 사람이 몸과 사회에서 함께 짊어지는 부담을 다른 각도에서 본 연구도 있습니다. <a data-paper="discrimination_depression_jad_2021">우울증 치료 환자가 겪고 예상하는 차별</a>.</p></div>
+<h3>다음 질문</h3>
+<ul>
+  <li>비타민 D 보충이 뼈에 도움이 되는지, 특히 세로토닌계 항우울제와 프로락틴을 높이는 항정신병약물을 함께 먹는 여성 환자에게서 확인하는 연구가 필요하다고 논문은 적습니다.</li>
+  <li>프로락틴과 도파민 신호를 함께 고려해 항정신병약물과 골량의 관계를 살피는 연구, 그리고 남성 정신증 환자에게서 낮은 골밀도가 더 흔한 이유를 밝히는 연구도 다음 과제로 남았습니다.</li>
+</ul>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>성호르몬을 재지 않았습니다. 그래서 프로락틴과 낮은 골밀도의 관련은 신중히 해석해야 합니다.</li>
+  <li>뼈에 영향을 주는 다른 약, 햇빛 노출, 음성 증상 같은 알려진 교란 요인을 통제하지 못했습니다.</li>
+  <li>우울의 정도를 공식 척도로 재지 않았습니다. 대신 우울과 관련될 수 있는 자살 사고를 보정했고, 그 뒤에도 세로토닌계 항우울제와 낮은 골밀도의 관련은 유지되었습니다.</li>
+  <li>항우울제 복용 기간에 따른 용량 반응 관계는 살피지 않았습니다.</li>
+</ul>
+
+<h2 id="quiz">6. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Jhon M, Yoo T, Lee J-Y, Kim S-Y, Kim J-M, Shin I-S, Williams L, Berk M, Yoon J-S, Kim S-W. Gender-specific risk factors for low bone mineral density in patients taking antipsychotics for psychosis. Hum Psychopharmacol Clin Exp. 2018;33:e2648. doi:10.1002/hup.2648</p>
+  <p>DOI <a href="https://doi.org/10.1002/hup.2648" target="_blank" rel="noopener">10.1002/hup.2648</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/29315805/" target="_blank" rel="noopener">29315805</a><br>
+  원문 저작권: Copyright © 2018 John Wiley &amp; Sons, Ltd. 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1~3에서 가져왔습니다.</p>
+  <p>T 점수 막대의 값은 구간을 설명하려는 가상 예시입니다. 연속 변수 비교의 평균 ± 표준편차 띠는 표의 평균과 표준편차로 계산한 값입니다. 이 페이지는 진료 판단을 대신하지 않습니다. 약을 바꾸거나 끊기 전에는 꼭 담당 의사와 상의해 주세요.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='bone-density-antipsychotics';
+
+/* 1) T 점수 구간(기준과 인원은 논문, 막대 값은 가상 예시) */
+const TC=[
+ {n:'정상',c:227,t:'젊은 성인 평균과 비슷하거나 높은 골밀도입니다. 이 연구에서는 285명 가운데 227명(79.6%)이 여기에 들었습니다.'},
+ {n:'골감소증',c:52,t:'골다공증의 앞 단계입니다. 논문은 골감소증도 골절 위험을 높인다고 적습니다. 이 연구에서 52명이 여기에 들었습니다.'},
+ {n:'골다공증',c:6,t:'젊은 성인 평균보다 표준편차 2.5개 이상 낮습니다. 이 연구에서 6명이 여기에 들었습니다.'}];
+const rng=$('#tRange');
+function tDraw(){
+  const v=Math.round(+rng.value*10)/10, c=v>=-1?0:(v>-2.5?1:2);
+  $('#tVal').textContent=v.toFixed(1);
+  $('#tGauge').innerHTML=S.gauge({min:-4,max:2,ticks:[-4,-2.5,-1,0,2],band:[-2.5,-1],pts:[{v,label:`가상 예시 T 점수 ${v.toFixed(1)}, ${TC[c].n}`}]},`T 점수 ${v.toFixed(1)}`);
+  document.querySelectorAll('#tClass div').forEach(d=>d.classList.toggle('on',+d.dataset.c===c));
+  $('#tOut').innerHTML=`T 점수 <b>${v.toFixed(1)}</b>은 <b>${TC[c].n}</b> 구간입니다. ${esc(TC[c].t)}${c>0?' 이 연구는 골감소증과 골다공증을 합쳐 낮은 골밀도(58명, 20.4%)로 보았습니다.':''}`;
+  S.store.set(KEY+':t',v)}
+const t0=S.store.get(KEY+':t',-1.5); if(typeof t0==='number'&&t0>=-4&&t0<=2)rng.value=t0;
+rng.addEventListener('input',tDraw); tDraw();
+
+/* 2) 집단별 낮은 골밀도 비율: [이름, 낮은 골밀도 n, %, 집단 n] (표 1, 표 2) */
+const R={
+ t:{sex:{r:[['남성',42,26.3,160],['여성',16,12.8,125]],p:'p = .005'},
+    ad:{r:[['복용',14,33.3,42],['복용 안 함',39,17.1,228]],p:'p = .015'},
+    vd:{r:[['낮은 비타민 D군',24,16.9],['그 밖',34,23.8]],p:'p = .149'},
+    ins:{r:[['건강보험',18,14.4,125],['의료급여',38,25.3,150]],p:'p = .025'},
+    smk:{r:[['흡연',11,16.9,65],['비흡연',40,20.4,196]],p:'p = .539'}},
+ m:{ad:{r:[['복용',9,34.6],['복용 안 함',29,23.4]],p:'p = .320'},
+    vd:{r:[['낮은 비타민 D군',23,28.7],['그 밖',19,23.8]],p:'p = .472'},
+    ins:{r:[['건강보험',13,20.6],['의료급여',27,30.3]],p:'p = .181'},
+    smk:{r:[['흡연',10,17.9],['비흡연',27,29.7]],p:'p = .109'}},
+ f:{ad:{r:[['복용',5,31.3],['복용 안 함',10,9.6]],p:'p = .029'},
+    vd:{r:[['낮은 비타민 D군',12,19],['그 밖',4,6.5]],p:'p = .035'},
+    ins:{r:[['건강보험',5,8.1],['의료급여',11,18]],p:'p = .100'},
+    smk:{r:[['흡연',1,11.1],['비흡연',13,12.4]],p:'p = 1.000'}}};
+const RT={
+ 't:sex':'남성의 낮은 골밀도 비율이 여성의 약 두 배였습니다. 흔히 알려진 것과 반대 방향입니다.',
+ 't:ad':'세로토닌계 항우울제를 먹는 사람의 3분의 1이 낮은 골밀도였습니다.',
+ 't:vd':'전체에서는 비타민 D 군에 따른 차이가 뚜렷하지 않았습니다.',
+ 't:ins':'의료급여를 받는 사람에게서 낮은 골밀도가 더 흔했습니다.',
+ 't:smk':'흡연 여부에 따른 차이는 뚜렷하지 않았습니다.',
+ 'm:ad':'남성에서는 항우울제 복용에 따른 차이가 뚜렷하지 않았습니다.',
+ 'm:vd':'남성에서는 비타민 D 군에 따른 차이가 뚜렷하지 않았습니다.',
+ 'm:ins':'남성에서는 의료보장 종류에 따른 차이가 뚜렷하지 않았습니다.',
+ 'm:smk':'남성에서 흡연은 낮은 골밀도와 의미 있게 관련되지 않았습니다. 남성의 높은 흡연율이 이유로 거론되기도 하지만, 이 연구에서는 그렇게 나타나지 않았습니다.',
+ 'f:ad':'여성에서는 세로토닌계 항우울제를 먹는 사람의 낮은 골밀도 비율이 먹지 않는 사람의 세 배가 넘었습니다.',
+ 'f:vd':'여성에서는 낮은 비타민 D군의 낮은 골밀도 비율이 더 높았습니다.',
+ 'f:ins':'여성에서는 의료보장 종류에 따른 차이가 p < 0.05에 이르지 않았습니다.',
+ 'f:smk':'여성 흡연자는 9명이었고, 흡연 여부에 따른 차이는 없었습니다.'};
+let rf='sex',rg='t';
+function rDraw(){
+  const g=rf==='sex'?'t':rg, d=R[g][rf], sig=parseFloat(d.p.replace(/[^0-9.]/g,''))<.05;
+  document.querySelectorAll('#rGrp button').forEach(b=>{b.disabled=rf==='sex'&&b.dataset.k!=='t'});
+  $('#rBars').innerHTML=d.r.map(r=>`<div class="bar${sig?' hi':''}"><span class="bn">${esc(r[0])}${r[3]?`<small>${r[3]}명 중</small>`:''}</span><span class="bt" role="img" aria-label="${esc(r[0])} 낮은 골밀도 ${r[2]}%"><span class="bf" style="width:${(r[2]/40*100).toFixed(1)}%"></span></span><span class="bv">${r[1]}명, ${r[2]}%</span></div>`).join('');
+  $('#rTicks').innerHTML=[0,20,40].map(t=>`<span style="left:${t/40*100}%">${t}%</span>`).join('');
+  const who={t:'전체',m:'남성',f:'여성'}[g];
+  $('#rOut').innerHTML=`<b>${who}</b>, 두 집단 비교 ${esc(d.p)}. ${esc(RT[g+':'+rf])}`}
+S.seg('rFac',k=>{rf=k;rDraw()},KEY+':rfac');
+S.seg('rGrp',k=>{rg=k;rDraw()},KEY+':rgrp');
+
+/* 3) 연속 변수(표 2). m: 평균(표준편차) 또는 중앙값(사분위 범위) */
+const C={
+ bmi:{n:'체질량지수',u:'kg/m²',kind:'sd',ax:{min:14,max:34,ticks:[15,20,25,30]},
+   m:[[26.6,4.4],[23.3,4.2]],mp:'p < .001',f:[[26.6,4.9],[23.3,4.6]],fp:'p = .015',
+   note:'남녀 모두 골밀도가 낮은 사람의 평균 체질량지수가 3.3 낮았습니다(계산값). 띠는 평균 ± 표준편차(계산값)입니다.'},
+ dur:{n:'치료 기간',u:'년',kind:'iqr',ax:{min:0,max:30,ticks:[0,10,20,30]},
+   m:[[14,6,24],[12,4,20]],mp:'p = .003',f:[[12,5,24],[13.5,6,21]],fp:'p = .732',
+   note:'남성에서만 골밀도가 낮은 사람의 치료 기간이 더 짧았습니다. 띠는 사분위 범위입니다.'},
+ prl:{n:'프로락틴',u:'ng/ml',kind:'iqr',ax:{min:0,max:160,ticks:[0,40,80,120,160]},
+   m:[[23,10,56],[26.2,10.6,58.2]],mp:'p = .413',f:[[32.8,14,94],[51,23,150]],fp:'p = .088',
+   note:'여성은 남성보다 프로락틴이 높았고(전체 여성 중앙값 33.4, 남성 20 ng/ml, p < .001), 여성에서 골밀도가 낮은 사람의 중앙값이 더 높았습니다. 띠는 사분위 범위입니다.'},
+ age:{n:'나이',u:'세',kind:'sd',ax:{min:20,max:60,ticks:[20,30,40,50,60]},
+   m:[[40.4,10.7],[39.5,11.6]],mp:'p = .643',f:[[39.1,11],[44.3,13.3]],fp:'p = .090',
+   note:'참여자 평균 나이는 40세였고 81%가 50세 미만이었습니다. 띠는 평균 ± 표준편차(계산값)이며, 눈금 밖은 끝에 맞춰 그렸습니다.'}};
+const r1=v=>Math.round(v*10)/10;
+S.seg('cVar',k=>{const c=C[k],u=' '+c.u;
+  const row=(sex,lab,v,ref)=>{const band=c.kind==='sd'?[r1(v[0]-v[1]),r1(v[0]+v[1])]:[v[1],v[2]];
+    const txt=c.kind==='sd'?`${v[0]} (표준편차 ${v[1]})`:`${v[0]} (${v[1]}~${v[2]})`;
+    return `<span class="c-name">${sex}<small>${lab}</small></span>${S.gauge({...c.ax,band,pts:[{v:v[0],ref,label:`${sex} ${lab} ${c.kind==='sd'?'평균':'중앙값'} ${v[0]}${u}`}]},`${sex} ${lab} ${c.n} ${v[0]}${u}`)}<span class="c-val">${ref?v[0]:`<b>${v[0]}</b>`}${u}<br>${c.kind==='sd'?`표준편차 ${v[1]}`:`(${v[1]}~${v[2]})`}</span>`};
+  $('#cOut').innerHTML=`<div class="cmp">${row('남성','정상 골밀도',c.m[0],1)}${row('남성','낮은 골밀도',c.m[1],0)}<span class="c-sep"></span>${row('여성','정상 골밀도',c.f[0],1)}${row('여성','낮은 골밀도',c.f[1],0)}</div>`;
+  $('#cNote').textContent=`${c.n}(${c.kind==='sd'?'평균':'중앙값'}): 남성 ${c.mp}, 여성 ${c.fp}. ${c.note}`;
+},KEY+':cvar');
+
+/* 4) 표 3: 보정 오즈비. [이름, OR, 하한, 상한, 표기, p, 유의] */
+const F={
+ t:[['나이',1.0,.9,1.1,'1.0 (0.9–1.1)','.238'],['체질량지수',.8,.7,.9,'0.8 (0.7–0.9)','<.001',1],['프로락틴',1.2,.9,1.7,'1.2 (0.9–1.7)','.271'],['치료 기간',.7,.5,.9,'0.7 (0.5–0.9)','.025',1],['남성',3.0,1.3,6.5,'3.0 (1.3–6.5)','.007',1],['의료급여',1.5,.7,3.4,'1.5 (0.7–3.4)','.346'],['낮은 비타민 D군',1.7,.8,3.4,'1.7 (0.8–3.4)','.141'],['세로토닌계 항우울제',2.5,1.1,5.8,'2.5 (1.1–5.8)','.041',1],['자살 사고',.9,.4,2.0,'0.9 (0.4–2.0)','.805']],
+ m:[['나이',1.0,.9,1.1,'1.0 (0.9–1.1)','.103'],['체질량지수',.8,.7,.9,'0.8 (0.7–0.9)','.006',1],['프로락틴',1.1,.8,1.7,'1.1 (0.8–1.7)','.576'],['치료 기간',.6,.4,.9,'0.6 (0.4–0.9)','.023',1],['낮은 비타민 D군',1.2,.5,2.8,'1.2 (0.5–2.8)','.744'],['흡연',.4,.2,1.2,'0.4 (0.2–1.2)','.111']],
+ f:[['나이',1.0,.9,1.1,'1.0 (0.9–1.1)','.115'],['체질량지수',.8,.7,.9,'0.8 (0.7–0.9)','.015',1],['프로락틴',2.5,1.1,5.3,'2.5 (1.1–5.3)','.020',1],['의료급여',1.7,.4,8.1,'1.7 (0.4–8.1)','.543'],['낮은 비타민 D군',12.5,1.9,84.6,'12.5 (1.9–84.6)','.009',1],['세로토닌계 항우울제',34,3.8,306.6,'34 (3.8–306.6)','.001',1],['자살 사고',.6,.2,2.9,'0.6 (0.2–2.9)','.538']]};
+const FN={
+ 't:남성':'다른 요인을 함께 고려해도 남성은 여성보다 낮은 골밀도일 오즈가 3배였습니다.',
+ 't:세로토닌계 항우울제':'우울의 지표로 넣은 자살 사고를 함께 고려한 뒤에도 관련이 남았습니다.',
+ 't:체질량지수':'체질량지수가 높을수록 낮은 골밀도일 오즈가 낮았습니다. 몸무게가 뼈를 지키는 쪽으로 작용한다는 설명과 맞습니다.',
+ 't:치료 기간':'치료 기간이 길수록 낮은 골밀도일 오즈가 낮았습니다.',
+ 'm:치료 기간':'남성에서는 치료 기간이 짧을수록 낮은 골밀도가 많았습니다. 논문은 치료 중 늘어난 체중의 보호 효과를 한 가지 설명으로 듭니다.',
+ 'm:프로락틴':'남성에서는 프로락틴이 낮은 골밀도와 관련되지 않았습니다.',
+ 'm:체질량지수':'남성에서도 체질량지수가 높을수록 낮은 골밀도일 오즈가 낮았습니다.',
+ 'f:프로락틴':'프로락틴은 여성에서만 낮은 골밀도와 독립적으로 관련되었습니다. 논문은 성호르몬을 재지 않아 신중히 해석해야 한다고 덧붙입니다.',
+ 'f:낮은 비타민 D군':'여성에서 비타민 D가 중앙값(14.0 ng/ml)보다 낮은 군은 낮은 골밀도일 오즈가 12.5배였습니다.',
+ 'f:세로토닌계 항우울제':'여성에서 가장 큰 보정 오즈비입니다. 논문은 이를 정신증이 있는 성인 여성에서 처음 확인한 독립적 위험요인으로 보고, 고칠 수 있는 위험요인이라고 강조합니다.',
+ 'f:체질량지수':'여성에서도 체질량지수가 높을수록 낮은 골밀도일 오즈가 낮았습니다.'};
+const L0=Math.log10(.1),L1=Math.log10(400),fx=v=>((Math.log10(v)-L0)/(L1-L0)*100).toFixed(2)+'%';
+let fg='t';
+function fpPick(i){const r=F[fg][i]; if(!r)return;
+  document.querySelectorAll('.fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  const dir=r[1]>1?'1보다 커서 낮은 골밀도와 같은 방향입니다.':r[1]<1?'1보다 작아서 낮은 골밀도와 반대 방향입니다.':'1과 같습니다.';
+  const extra=FN[fg+':'+r[0]]||(r[6]?'':'95% 신뢰구간이 1을 지나, 이 모형에서 통계적으로 의미 있는 관련은 아니었습니다.');
+  $('#fpOut').innerHTML=`<b>${esc(r[0])}</b>: 보정 오즈비 ${esc(r[4])}, p ${esc(r[5])}. ${dir} ${esc(extra)}`;
+  S.store.set(KEY+':fp:'+fg,i)}
+function fpDraw(){
+  $('#fp').innerHTML=F[fg].map((r,i)=>`<button type="button" class="fp-row${r[6]?'':' ns'}" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r[0])}</span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${fx(1)}"></span><span class="fp-ci" style="left:${fx(r[2])};width:calc(${fx(r[3])} - ${fx(r[2])})"></span><span class="fp-dot" style="left:${fx(r[1])}"></span></span><span class="fp-val">${esc(r[4])}</span></button>`).join('');
+  document.querySelectorAll('.fp-row').forEach(b=>b.onclick=()=>fpPick(+b.dataset.i));
+  const i0=S.store.get(KEY+':fp:'+fg,-1);
+  fpPick(i0>=0&&i0<F[fg].length?i0:F[fg].findIndex(r=>r[6]))}
+$('#fpTicks').innerHTML=[.1,1,10,100].map(t=>`<span style="left:${fx(t)}">${t}</span>`).join('');
+S.seg('fpGrp',k=>{fg=k;fpDraw()},KEY+':fpgrp');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 낮은 골밀도는 어떻게 정의했나요?',o:['허리뼈 T 점수가 -1 미만','허리뼈 T 점수가 -2.5 이하','골절을 겪은 적이 있음'],a:0,e:'세계보건기구 기준을 따라 T 점수 -1 미만을 낮은 골밀도로 보았습니다. 골감소증 52명과 골다공증 6명을 합친 58명(20.4%)입니다.'},
+ {q:'낮은 골밀도는 남녀 가운데 어느 쪽에서 더 흔했나요?',o:['여성','남성','차이가 없었다'],a:1,e:'남성 26.3%, 여성 12.8%였고, 다른 요인을 고려한 보정 오즈비도 3.0이었습니다. 흔히 알려진 것과 반대 방향입니다.'},
+ {q:'체질량지수와 낮은 골밀도는 어떤 관계였나요?',o:['체질량지수가 높을수록 낮은 골밀도가 많았다','체질량지수가 높을수록 낮은 골밀도가 적었다','관련이 없었다'],a:1,e:'남녀 모두 보정 오즈비 0.8로, 체질량지수가 높을수록 낮은 골밀도일 오즈가 낮았습니다. 논문은 몸무게가 뼈에 주는 부하와 지방 조직의 에스트로겐을 설명으로 듭니다.'},
+ {q:'프로락틴이 낮은 골밀도와 독립적으로 관련된 집단은 어디였나요?',o:['남성','여성','남녀 모두'],a:1,e:'여성 모형에서만 보정 오즈비 2.5(1.1~5.3)로 관련되었습니다. 논문은 성호르몬을 재지 않아 신중히 해석해야 한다고 적습니다.'},
+ {q:'논문이 가장 쉽게 조절할 수 있는 위험요인으로 꼽은 것은 무엇인가요?',o:['세로토닌계 항우울제 복용','성별','치료 기간'],a:0,e:'여성에서 보정 오즈비 34로 나타난 세로토닌계 항우울제 복용은 약을 고르는 단계에서 조절할 수 있습니다. 논문은 신중히 처방하고 대안을 고려하자고 제안합니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

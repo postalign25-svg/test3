@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아동기 학대, IL-1β와 자살행동 - 전민 연구 기록</title>
+<meta name="description" content="우울장애 환자에서 아동기 학대 경험과 혈액 속 염증 물질 IL-1β가 함께 있을 때 자살행동과 어떻게 관련되는지 살핀 연구(Eur Arch Psychiatry Clin Neurosci, 2022)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+/* 1) 측정 시점 줄 */
+.tl{display:grid;grid-template-columns:1.3fr 1.1fr repeat(7,minmax(0,1fr));border:1px solid var(--line-2);margin:4px 0 8px}
+.tl .h{grid-row:1;font-size:12px;color:var(--meta);text-align:center;padding:4px 0 2px;border-bottom:1px solid var(--line)}
+.tl .h.wk{grid-column:3/span 4}
+.tl .h.mo{grid-column:7/span 3;border-left:1px solid var(--line)}
+.tl .h.pre{grid-column:1}
+.tl .h.base{grid-column:2;border-left:1px solid var(--line)}
+.tl .c{grid-row:2;position:relative;text-align:center;padding:6px 0 8px;font-family:var(--num);font-size:12.5px;color:var(--ink-2);border-left:1px solid var(--line);background:var(--surface);transition:background .2s}
+.tl .c.pre{font-family:var(--sans);border-left:0}
+.tl .c.on{background:var(--signal-soft);color:var(--ink)}
+.tl .c.on::after{content:"";position:absolute;left:50%;bottom:3px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--signal)}
+.oc-def{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.oc-num{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;align-items:baseline;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.oc-num .lbl{font-size:14px;color:var(--ink-2)}
+.oc-num .val{font-family:var(--num);font-size:18px;color:var(--signal-ink)}
+.oc-num .gauge{grid-column:1/-1;margin:2px 0 4px}
+/* 2) 숲 그림(로그 눈금) */
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:104px minmax(0,1fr) 150px;gap:12px;align-items:center;padding:8px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-name small{display:block;font-size:12px;color:var(--meta)}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right;line-height:1.45}
+.fp-row .fp-val b{font-weight:500;color:var(--signal-ink)}
+.fp-row .fp-val .w{font-family:var(--sans)}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-ref{position:absolute;top:6px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--surface);border:1.5px solid var(--ink)}
+.fp-axis{display:grid;grid-template-columns:104px minmax(0,1fr) 150px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.key{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--meta);margin:0 0 8px}
+.key i{display:inline-block;vertical-align:-1px;margin-right:6px}
+.key .k-ref{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink)}
+.key .k-pt{width:10px;height:10px;border-radius:50%;background:var(--signal)}
+.key .k-ln{width:18px;height:2px;background:var(--ink);vertical-align:3px}
+/* 3) 두 조건을 겹친 칸 */
+.x2{display:grid;grid-template-columns:110px repeat(2,minmax(0,1fr));border-top:1px solid var(--ink);margin:4px 0 0}
+.x2>div{padding:10px 12px;border-bottom:1px solid var(--line);min-width:0}
+.x2 .hd{font-size:13px;color:var(--meta);padding-top:6px;padding-bottom:6px}
+.x2 .rh{font-size:14px;color:var(--ink-2);padding-left:0}
+.x2 .cell{border-left:1px solid var(--line)}
+.x2 .cell b{display:block;font-family:var(--num);font-weight:500;font-size:20px;line-height:1.3;color:var(--ink)}
+.x2 .cell.hi{background:var(--tint)}
+.x2 .cell.hi b{color:var(--signal-ink)}
+.x2 .m{position:relative;height:6px;background:var(--tint);margin-top:6px}
+.x2 .cell.hi .m{background:var(--surface)}
+.x2 .m span{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.x2 .cell.hi .m span{background:var(--signal)}
+.inter{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;align-items:baseline;margin:14px 0 4px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.inter .lbl{font-size:14.5px}
+.inter .val{font-family:var(--num);font-size:18px;color:var(--signal-ink);text-align:right}
+.inter .sub{grid-column:1/-1;font-size:13px;color:var(--meta)}
+/* 4) 학대 종류 표 */
+.tt{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+.tt th,.tt td{border-bottom:1px solid var(--line);padding:8px 10px 8px 0;text-align:left;vertical-align:top}
+.tt thead th{font-weight:400;color:var(--meta);font-size:13px;border-bottom:1px solid var(--ink)}
+.tt tbody th{font-weight:400}
+.tt td{width:32%}
+.tt .yes{font-weight:600}
+.tt .yes::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal);margin-right:7px;vertical-align:1px}
+.tt .no{color:var(--ink-2)}
+.tt .na{color:var(--meta)}
+@media (max-width:640px){
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+  .tl{grid-template-columns:1.25fr 1.05fr repeat(7,minmax(0,1fr))}
+  .tl .c{font-size:11.5px}
+  .tl .h{font-size:11.5px}
+  .fp-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n v" "t t";gap:4px 10px;font-size:13.5px}
+  .fp-row .fp-name{grid-area:n}
+  .fp-row .fp-val{grid-area:v;font-size:12px}
+  .fp-row .fp-track{grid-area:t}
+  .fp-axis{grid-template-columns:minmax(0,1fr)}
+  .fp-axis>span{display:none}
+  .x2{grid-template-columns:76px repeat(2,minmax(0,1fr))}
+  .x2>div{padding:8px 8px}
+  .x2 .rh{font-size:13px}
+  .x2 .cell b{font-size:18px}
+  .tt{font-size:13px}
+  .tt td{width:34%}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 자살행동, 염증 지표</p>
+  <h1>어린 시절의 학대와 혈액 속 염증 물질이 겹치면, 우울증 환자의 자살 위험은 달라질까요?</h1>
+  <p class="lede">어린 시절 학대를 겪은 우울증 환자는 자살을 시도한 적이 있을 가능성이 높다고 알려져 있습니다. 그런데 학대를 겪은 사람 대부분은 자살을 시도하지 않습니다. 그렇다면 무엇이 그 차이를 만들까요? 이 연구는 몸의 염증 반응을 이끄는 물질 <span class="term" data-tip="Interleukin-1 beta. 면역세포가 내놓는 대표적인 염증 유발 사이토카인. 우울증의 병태생리, 항우울제 반응과 관련된다는 보고가 있다.">IL-1β</span>에 주목했습니다. 전남대병원 우울장애 외래 환자 1,094명에게서 학대 경험과 혈액 속 IL-1β를 함께 재고, 그중 884명을 1년 동안 약물치료하며 따라갔습니다.</p>
+  <p class="meta">원문: Lee J-Y, Jhon M 외. Eur Arch Psychiatry Clin Neurosci 272(8):1535–1546, 2022<br>읽는 데 약 10분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>우울장애 외래 환자 <b>1,094명</b>이 16세 이전 정서적, 신체적, 성적 학대 경험을 면담으로 답했고, 혈액 속 IL-1β를 재 중앙값(1.1 ng/mL)을 기준으로 높은 군과 낮은 군으로 나눴습니다. 학대 경험은 149명(13.6%)이 보고했습니다.</li>
+    <li>자살행동은 네 가지로 보았습니다. 기저 시점의 과거 자살시도와 자살사고, 그리고 1년 약물치료 동안의 자살사고 증가와 자살시도(사망 포함)입니다.</li>
+    <li>여러 요인을 보정하자, 학대 경험 하나만으로는 과거 자살시도와만 관련이 남았고 IL-1β 하나만으로는 어떤 자살행동과도 관련이 없었습니다.</li>
+    <li>그러나 <b>둘이 겹치면</b> 달랐습니다. IL-1β가 높은 군에서 학대 경험이 있는 사람의 과거 자살시도 비율은 29.2%(학대 없음 6.7%), 치료 중 자살시도 비율은 11.5%(학대 없음 1.5%)였고, 상호작용은 세 가지 자살행동에서 유의했습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>1,094명</b><span>기저 분석 표본(1년 추적 884명)</span></div>
+  <div class="stat"><b>13.6%</b><span>아동기 학대를 보고한 비율(149명)</span></div>
+  <div class="stat"><b>29.2%</b><span>IL-1β 높음 + 학대 있음 군의 과거 자살시도 비율</span></div>
+  <div class="stat"><b>11.5%</b><span>같은 군의 1년 치료 중 자살시도 비율</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 둘을 함께 보았을까요</a></li>
+    <li><a href="#how">누구를, 무엇으로, 언제 쟀을까요</a></li>
+    <li><a href="#alone">하나씩 보면 어땠을까요</a></li>
+    <li><a href="#together">둘이 겹치면 어땠을까요</a></li>
+    <li><a href="#types">학대의 종류와 가짓수로 나눠 보면</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 둘을 함께 보았을까요</h2>
+<p>논문은 먼저 한국의 상황을 짚습니다. 2019년 한국의 자살률은 인구 10만 명당 24.6명으로, OECD 평균의 두 배가 넘었습니다. 자살행동은 기분장애, 특히 주요우울장애 환자에게서 흔하고, 여러 생물학적, 심리사회적, 임상적 요인이 함께 작용한다고 이해됩니다.</p>
+<p>아동기 학대는 그 요인 가운데 하나입니다. 최근 연구에서 어린 시절 학대를 겪은 주요우울장애 환자는 그렇지 않은 환자보다 자살시도 이력이 있을 가능성이 세 배 높았습니다. 하지만 학대를 겪은 우울증 환자 대부분은 자살을 시도하지 않습니다. 그래서 학대와 자살행동 사이를 잇는 다른 요인을 함께 봐야 한다는 것이 논문의 출발점입니다. 학대가 신경계, 내분비계, 면역계에 오래 남는 변화를 일으켜 스트레스에 대처하는 힘을 떨어뜨린다는 가설이 있습니다.</p>
+<p>IL-1β는 면역계 쪽 후보입니다. <span class="term" data-tip="뇌 안에서 일어나는 염증 반응. 면역세포와 사이토카인이 뇌 기능에 영향을 줄 수 있다는 관점에서 우울증 연구에 쓰인다.">신경염증</span>을 통해 우울증과 항우울제 반응에 관여한다고 알려졌고, 어린 시절 외상을 겪은 우울증 환자에게서 IL-1β 수준이 달라진다는 보고도 있습니다. 다만 자살행동과의 관계는 연구마다 엇갈렸습니다. IL-1β가 높았다는 연구, 관련이 없었다는 연구, 오히려 낮았다는 연구가 모두 있습니다. 그래서 이 연구는 학대와 IL-1β를 따로 볼 때와 함께 볼 때를 나눠, 약물치료 전후의 자살행동을 살폈습니다.</p>
+<div class="callout"><p><b>비유:</b> 마른 장작과 불씨를 생각해 보세요. 장작만 쌓여 있거나 불씨만 있을 때는 큰불이 나지 않을 수 있습니다. 둘이 한자리에 있을 때 이야기가 달라집니다. 이 연구가 던진 물음은, 어린 시절의 학대와 몸의 염증 반응이 이런 식으로 서로를 키우는지였습니다. 둘의 효과가 단순히 더해지는 것보다 커지는지를 보는 분석을 <span class="term" data-tip="두 요인이 함께 있을 때의 효과가 각 요인의 효과를 따로 합친 것과 다른지 보는 분석. 한 요인의 효과가 다른 요인의 수준에 따라 달라지는지를 묻는다.">상호작용 분석</span>이라고 합니다.</p></div>
+
+<h2 id="how">2. 누구를, 무엇으로, 언제 쟀을까요</h2>
+<p>이 연구는 전남대병원의 우울증 코호트인 <span class="term" data-tip="MAKE Biomarker discovery for Enhancing anTidepressant Treatment Effect and Response. 전남대병원 정신건강의학과 외래 우울장애 환자를 단계적 약물치료로 1년간 따라가며 바이오마커를 찾는 전향적 연구 프로그램.">MAKE BETTER</span> 연구의 일부입니다. 2012년 3월부터 2017년 4월까지 정신건강의학과 외래를 찾은 우울장애 환자를 연속으로 모집했습니다. 구조화된 진단 면담(MINI)으로 주요우울장애, 기분부전장애, 달리 분류되지 않는 우울장애를 진단받고 해밀턴 우울척도 14점 이상인 사람이 대상이었습니다. 실제 참여자의 나이는 17~85세였습니다.</p>
+<ul class="flow" aria-label="참여자 흐름">
+  <li><b>1,262명</b><span>기저 평가를 받은 참여자</span></li>
+  <li><b>1,094명</b><span>혈액을 제공해 IL-1β를 잰 기저 분석 표본(86.7%)</span></li>
+  <li><b>884명</b><span>12주 급성기 치료를 마치고 6~12개월 사이 추적 자료가 한 번 이상 있는 1년 추적 표본(80.8%)</span></li>
+</ul>
+<p><b>아동기 학대</b>는 반구조화 면담인 <span class="term" data-tip="네덜란드 정신건강 조사(NEMESIS)에서 쓰인 아동기 외상 면담. 16세 이전의 정서적, 신체적, 성적 학대를 각각 묻는다.">NEMESIS 아동기 외상 면담</span>으로 물었습니다. 16세 이전에 정서적 학대(고함, 부당한 벌, 형제자매보다 낮게 대우받음, 협박), 신체적 학대(맞거나 차이거나 구타당함), 성적 학대(원치 않는 성적 접촉이나 그에 대한 압박)를 겪었는지입니다. 여러 학대가 함께 일어나는 경우가 많아, 한 가지라도 있으면 '학대 있음'으로 넓게 정의했습니다.</p>
+<p><b>IL-1β</b>는 전날 밤부터 금식한 뒤 아침 8~9시에 25~45분 조용히 쉬고 채혈해, 혈장에서 효소면역측정법(ELISA)으로 쟀습니다. 사이토카인이 하루 중 시간에 따라 달라지는 것을 줄이려고 채혈 시간을 맞췄습니다. 중앙값 1.1 ng/mL를 기준으로 높은 군(550명)과 낮은 군(544명)으로 나눴습니다.</p>
+<p>치료는 정해진 프로토콜이 아니라 실제 진료처럼 이뤄졌습니다. 3주 동안 항우울제 한 가지로 시작해, 충분히 좋아지지 않거나 부작용이 견디기 어려우면 환자가 의사와 상의해 약을 바꾸거나 더하거나 함께 쓰는 다음 단계로 넘어갔습니다. 아래에서 자살행동 네 가지를 골라, 각각 언제 어떻게 쟀는지 보세요.</p>
+
+<div class="panel figure" id="oc"><span class="cx"></span>
+  <div class="fig-head"><h3>자살행동 네 가지와 잰 시점</h3><span class="note">하나를 골라 보세요</span></div>
+  <div class="ctrl"><div class="seg" id="ocSeg" role="group" aria-label="자살행동 종류"><button data-k="pa">과거 자살시도</button><button data-k="bi">기저 자살사고</button><button data-k="ii">자살사고 증가</button><button data-k="sa">치료 중 자살시도</button></div></div>
+  <div class="tl" id="ocTl" aria-hidden="true">
+    <span class="h pre">기저 전</span><span class="h base">기저</span><span class="h wk">급성기(주)</span><span class="h mo">지속기(개월)</span>
+    <span class="c pre">평생</span><span class="c">0</span><span class="c">3</span><span class="c">6</span><span class="c">9</span><span class="c">12</span><span class="c">6</span><span class="c">9</span><span class="c">12</span>
+  </div>
+  <p class="oc-def" id="ocDef" aria-live="polite"></p>
+  <div class="oc-num" id="ocNum"></div>
+  <p class="fig-note">자살사고는 간이정신상태평가척도(BPRS)의 자살 문항(1~7점)으로 쟀습니다. 비율의 분모는 기저 결과가 1,094명, 추적 결과가 884명입니다.</p>
+</div>
+
+<p>분석은 두 단계였습니다. 먼저 학대와 IL-1β 각각이 네 가지 자살행동과 관련되는지 <span class="term" data-tip="결과가 있다/없다처럼 둘 중 하나일 때, 여러 요인이 그 결과의 오즈에 얼마나 관련되는지 추정하는 통계 방법.">로지스틱 회귀</span>로 보정 전후를 모두 보았습니다. 다음으로 둘을 함께 넣어 상호작용을 보았습니다. 보정 변수는 나이, 성별, 결혼 상태, 월 소득, 비전형 양상, 이전 우울 삽화, 신체 질환 수, 흡연, 불안 점수(HADS-A), 음주 문제 점수(AUDIT)였고, 추적 결과에는 치료 단계를 더했습니다.</p>
+
+<h2 id="alone">3. 하나씩 보면 어땠을까요</h2>
+<p>보정 전에는 학대 경험과 높은 IL-1β 모두 과거 자살시도, 높은 기저 자살사고와 관련이 있었습니다. 그런데 여러 요인을 보정하자 관련의 크기가 눈에 띄게 줄었습니다. 학대와 과거 자살시도의 관련만 남았고, 나머지는 통계적으로 유의하지 않았습니다. 1년 추적 결과에서도 학대는 보정 전에는 자살시도와 관련이 있었지만 보정 뒤에는 유의하지 않았고, IL-1β는 보정 전후 모두 어떤 추적 결과와도 유의한 관련이 없었습니다.</p>
+
+<div class="panel figure" id="alonefig"><span class="cx"></span>
+  <div class="fig-head"><h3>학대와 IL-1β, 각각의 오즈비(표 2, 표 3)</h3><span class="note">점선: 오즈비 1(관련 없음), 가로축은 로그 눈금</span></div>
+  <div class="ctrl"><div class="seg" id="alSeg" role="group" aria-label="자살행동 종류"><button data-k="pa">과거 자살시도</button><button data-k="bi">기저 자살사고</button><button data-k="ii">자살사고 증가</button><button data-k="sa">치료 중 자살시도</button></div></div>
+  <p class="key"><span><i class="k-ref"></i>보정 전 오즈비</span><span><i class="k-pt"></i>보정 후 오즈비</span><span><i class="k-ln"></i>보정 후 95% 신뢰구간</span></p>
+  <div class="fp" id="alFp" role="group" aria-label="요인별 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="alTicks"></div><span></span></div>
+  <p class="fp-out" id="alOut" aria-live="polite"></p>
+  <p class="fig-note">줄을 누르면 그 요인의 비율과 오즈비를 풀어 읽어 줍니다. 별표는 원문 표기를 따랐습니다(* P &lt; 0.05, † P &lt; 0.01, ‡ P &lt; 0.001).</p>
+</div>
+
+<p>학대 경험이 있는 사람의 특성도 달랐습니다. 기저에서 학대를 보고한 사람은 더 젊고, 남성이 더 많고, 교육 연수와 월 소득이 더 높았으며, 비전형 양상이 더 많고 발병 나이가 더 이르고 혈액 속 IL-1β가 더 높았습니다. 교육과 소득이 높았던 점은 이전 연구들과 다른 결과여서, 논문은 교육과 소득이 높은 사람이 정서적 학대를 포함한 학대를 더 세밀하게 인식하고 보고했을 가능성을 듭니다.</p>
+
+<h2 id="together">4. 둘이 겹치면 어땠을까요</h2>
+<p>이제 둘을 함께 놓아 봅니다. 아래 칸은 IL-1β 높음과 낮음, 학대 있음과 없음으로 네 집단을 나눈 것입니다. 네 가지 자살행동 모두에서 비율이 가장 높은 곳은 <b>IL-1β가 높고 학대 경험이 있는 집단</b>이었습니다.</p>
+
+<div class="panel figure" id="x2fig"><span class="cx"></span>
+  <div class="fig-head"><h3>학대 경험과 IL-1β를 겹친 네 집단(그림 1)</h3><span class="note">결과를 바꿔 보세요</span></div>
+  <div class="ctrl"><div class="seg" id="xSeg" role="group" aria-label="자살행동 종류"><button data-k="pa">과거 자살시도</button><button data-k="bi">기저 자살사고</button><button data-k="ii">자살사고 증가</button><button data-k="sa">치료 중 자살시도</button></div></div>
+  <div class="x2" id="xGrid"></div>
+  <div class="inter" id="xInter"></div>
+  <p class="key"><span><i class="k-pt"></i>각 IL-1β 군 안에서 학대 있음의 보정 오즈비(학대 없음 대비)</span><span><i class="k-ln"></i>95% 신뢰구간</span></p>
+  <div class="fp" id="xFp" role="group" aria-label="IL-1β 군별 학대의 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="xTicks"></div><span></span></div>
+  <p class="fp-out" id="xOut" aria-live="polite"></p>
+  <p class="fig-note">칸의 비율과 오즈비는 원문 그림 1에 적힌 값입니다. 기저 결과(과거 자살시도, 기저 자살사고)는 1,094명, 추적 결과(자살사고 증가, 치료 중 자살시도)는 884명에서 보았고, 보정 변수는 3절과 같습니다.</p>
+</div>
+
+<p>숫자로 정리하면 이렇습니다. 보정한 뒤, IL-1β가 높은 군에서는 학대 경험이 과거 자살시도(오즈비 5.69), 높은 기저 자살사고(1.92), 1년 치료 중 자살시도(8.59)와 유의하게 관련되었습니다. 학대와 IL-1β의 상호작용은 이 세 결과에서 유의했습니다. 치료 중 자살사고 증가에서는 같은 방향의 차이가 보였지만 상호작용은 유의하지 않았습니다.</p>
+<p>3절과 견주어 보면 이 연구의 핵심이 드러납니다. 따로 볼 때는 관련이 약하거나 사라졌던 두 요인이, 함께 있을 때는 자살행동과 뚜렷하게 관련되었습니다. 특히 IL-1β와 이후 자살행동의 관계를 전향적으로 살핀 연구는 이전에 없었다는 점에서 논문은 이 결과를 새롭다고 봅니다.</p>
+
+<h2 id="types">5. 학대의 종류와 가짓수로 나눠 보면</h2>
+<p>연구팀은 학대를 종류별로, 그리고 겪은 학대의 가짓수(0, 1, 2 이상)로도 다시 분석했습니다. 정서적 학대는 105명(9.6%), 신체적 학대는 98명(8.6%), 성적 학대는 30명(2.7%)이 보고했습니다. 아래에서 하나를 골라 본문이 밝힌 결과를 보세요.</p>
+
+<div class="panel figure" id="typefig"><span class="cx"></span>
+  <div class="fig-head"><h3>학대 종류별 결과(본문 요약)</h3></div>
+  <div class="ctrl"><div class="seg" id="tSeg" role="group" aria-label="학대 종류"><button data-k="emo">정서적</button><button data-k="phy">신체적</button><button data-k="sex">성적</button><button data-k="cnt">가짓수</button></div></div>
+  <div class="scroll-x"><table class="tt" id="tTab"></table></div>
+  <p class="fp-out" id="tOut" aria-live="polite"></p>
+  <p class="fig-note">빨간 점: 보정 후 유의. '보충 자료'는 본문에서 따로 결과를 적지 않고 원문 보충 자료(표 S4~S6, 그림 S2~S5)에 둔 칸입니다.</p>
+</div>
+
+<h2 id="meaning">6. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>논문은 학대 이력이나 혈액 속 IL-1β 값 하나만으로는 우울증 환자의 자살행동을 독립적으로 예측하지 못하지만, 둘이 함께 있을 때는 상승 효과가 있었다고 정리합니다. 그 까닭으로 몇 가지 가능성을 듭니다. 어린 시절의 역경이 염증 신호를 바꿔 IL-1β와 자살 경향의 관계를 조절할 수 있고, IL-1β 같은 염증 사이토카인과 아동기 학대가 모두 <span class="term" data-tip="시상하부-뇌하수체-부신 축. 스트레스에 반응해 코르티솔 같은 호르몬을 내는 몸의 경로.">HPA 축</span>을 활성화해 세로토닌 같은 모노아민과 관련된 자살행동에 영향을 줄 수 있다는 것입니다. 이는 논문이 결과를 바탕으로 제시한 추정입니다.</p>
+<p>상호작용이 기저 시점의 자살행동뿐 아니라 약물치료 중 새로 생긴 자살시도에서도 보였다는 점에서, 논문은 아동기 학대가 상승 효과의 한 요소로서 이후 자살시도를 강하게 예측할 수 있다고 봅니다. 성적 학대가 다른 학대와 다른 양상을 보인 것은, 성적 학대의 신경생물학적 결과가 다른 학대와 구별된다는 이전 연구와 맞닿는다고 적습니다.</p>
+<p>결론적으로 논문은 IL-1β를 자살행동의 바이오마커로 쓸 때, 아동기 학대와 함께 고려하면 그 쓸모가 크게 높아질 수 있다고 말합니다. 이 연구는 우울증 환자의 자살행동에서 생화학적 요인과 어린 시절 역경이 어떻게 맞물리는지에 대한 이해를 넓혔습니다.</p>
+<div class="callout"><p><b>다음 질문:</b> 이 연구는 자살행동과의 관련을 보았고, 학대 경험과 IL-1β를 함께 쓴 위험 평가 도구를 만들거나 시험하지는 않았습니다. 두 정보를 함께 보는 방식이 실제 진료에서 위험이 높은 사람을 더 일찍 알아보는 데 도움이 될지는 앞으로 확인할 물음입니다.</p></div>
+<div class="callout"><p><b>함께 읽기:</b> 같은 MAKE BETTER 코호트에서 여러 혈청 지표를 묶어 치료 결과를 내다본 연구도 있습니다. <a data-paper="multimodal_serum_bbi_2022">다중 혈청 바이오마커와 우울증 관해</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>뇌 속이 아니라 혈액(말초)의 IL-1β를 쟀습니다. 사이토카인은 혈액뇌장벽을 쉽게 넘지 못해, 말초 수준이 뇌 속 수준을 그대로 반영하지 않을 수 있습니다.</li>
+  <li>한 기관에서 모집해 결과를 일반화하는 데 한계가 있을 수 있습니다. 대신 한 기관 연구는 평가와 치료를 일관되게 할 수 있다는 강점이 있습니다.</li>
+  <li>자연주의 연구여서 치료가 정해진 프로토콜이 아니라 의사의 안내를 받은 환자의 결정에 따라 이뤄졌습니다. 의사마다의 차이가 결과에 영향을 줬을 수 있지만, 의사들은 환자의 학대 여부나 IL-1β 수준을 알지 못했습니다.</li>
+</ul>
+<p>논문은 강점으로 과거(후향)와 이후(전향)의 자살행동을 함께 분석한 점, 큰 표본, 구조화된 연구 프로토콜, 표준화된 척도, 많은 공변량을 고려한 점을 꼽습니다.</p>
+
+<h2 id="quiz">7. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Lee J-Y, Jhon M, Kim J-W, Kang H-J, Kim S-W, Shin I-S, Cho HJ, Chun BJ, Kim J-M. Interaction effect between childhood abuse and interleukin-1β levels on suicidality in depressed patients. Eur Arch Psychiatry Clin Neurosci. 2022;272(8):1535-1546. doi:10.1007/s00406-022-01408-6</p>
+  <p>DOI <a href="https://doi.org/10.1007/s00406-022-01408-6" target="_blank" rel="noopener">10.1007/s00406-022-01408-6</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/35467148/" target="_blank" rel="noopener">35467148</a><br>
+  원문 저작권: © The Author(s), under exclusive licence to Springer-Verlag GmbH Germany 2022. 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문, 표 1~3, 그림 1에서 가져왔습니다.</p>
+  <p>장작과 불씨의 비유는 상호작용을 설명하려고 든 것입니다. 이 연구는 관련성을 살핀 관찰 연구이며, 결과는 개인의 자살 위험을 판정하는 도구가 아닙니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='childhood-abuse-il1b';
+const MARK={1:'*',2:'†',3:'‡'};
+const PTXT={1:'P < 0.05',2:'P < 0.01',3:'P < 0.001'};
+
+/* 1) 자살행동 네 가지: 정의, 잰 시점, 빈도(본문 3쪽) */
+const OC={
+ pa:{n:'과거 자살시도',on:[0],d:'기저 평가 이전 어느 때든, 조금이라도 죽으려는 뜻을 품고 스스로 해친 적이 있는지 본인 보고로 물었습니다. 죽으려는 뜻이 애매했던 경우도 포함했고, 죽으려는 뜻이 없거나 알 수 없는 자해는 뺐습니다.',v:8.8,c:'96명',base:'1,094명 가운데'},
+ bi:{n:'높은 기저 자살사고',on:[1],d:'기저 시점에 BPRS 자살 문항으로 자살사고의 심한 정도를 평가했습니다. "삶이 살 가치가 없다고 느낀 적이 있나요?" 같은 질문을 묻고, 1~3점(없음~경도)을 낮은 군, 4~7점(중등도~극심)을 높은 군으로 나눴습니다.',v:33.1,c:'362명',base:'1,094명 가운데'},
+ ii:{n:'치료 중 자살사고 증가',on:[2,3,4,5,6,7,8],d:'약물치료 3, 6, 9, 12주와 6, 9, 12개월에 BPRS 자살 문항을 다시 쟀습니다. 추적 중 한 번이라도 기저보다 점수가 오르면 자살사고 증가로 보았습니다.',v:17.5,c:'155명',base:'884명 가운데'},
+ sa:{n:'치료 중 자살시도',on:[1,2,3,4,5,6,7,8],d:'1년 약물치료 기간 동안 일어난 자살시도(앞의 정의와 같음)와 자살로 인한 사망을 기록했습니다. 사망에 이르지 않은 시도와 사망을 함께 묶었습니다.',v:4.3,c:'38명(사망에 이르지 않은 시도 32명, 사망 6명)',base:'884명 가운데'}};
+const cells=[...document.querySelectorAll('#ocTl .c')];
+S.seg('ocSeg',k=>{const o=OC[k];
+  cells.forEach((c,i)=>c.classList.toggle('on',o.on.includes(i)));
+  $('#ocDef').innerHTML=`<b>${esc(o.n)}.</b> ${esc(o.d)}`;
+  $('#ocNum').innerHTML=`<span class="lbl">${esc(o.base)} ${esc(o.c)}</span><span class="val">${o.v}%</span>`+
+    S.gauge({min:0,max:40,ticks:[0,10,20,30,40],pts:[{v:o.v,label:`${o.n} ${o.v}% (${o.base} ${o.c})`}]},`${o.n} 비율 ${o.v}%`);
+},KEY+':oc');
+
+/* 로그 눈금 숲 그림 공통 */
+const LO=0.05,HI=30,lx=v=>(Math.max(0,Math.min(1,(Math.log(v)-Math.log(LO))/(Math.log(HI)-Math.log(LO))))*100).toFixed(2)+'%';
+const TICKS=[0.1,0.3,1,3,10,30];
+const tickHtml=()=>TICKS.map(t=>`<span style="left:${lx(t)}">${t}</span>`).join('');
+$('#alTicks').innerHTML=tickHtml();$('#xTicks').innerHTML=tickHtml();
+const f2=v=>v.toFixed(2);
+
+/* 2) 표 2, 표 3: 각각의 연관. g=[비교군 이름, n, %], e=[노출군 이름, n, %], u=보정 전 OR, us=보정 전 유의, a=[보정 후 OR, 하한, 상한], as=보정 후 유의 */
+const AL={
+ pa:[{n:'아동기 학대',s:'있음 대 없음',g:['없음',945,6.3],e:['있음',149,24.2],u:4.70,us:3,a:[2.72,1.62,4.56],as:3},
+     {n:'IL-1β',s:'높음 대 낮음',g:['낮음',544,5.9],e:['높음',550,11.6],u:2.11,us:2,a:[1.40,0.87,2.25],as:0}],
+ bi:[{n:'아동기 학대',s:'있음 대 없음',g:['없음',945,31.4],e:['있음',149,43.6],u:1.69,us:2,a:[1.24,0.83,1.86],as:0},
+     {n:'IL-1β',s:'높음 대 낮음',g:['낮음',544,29.2],e:['높음',550,36.9],u:1.42,us:2,a:[1.23,0.93,1.62],as:0}],
+ ii:[{n:'아동기 학대',s:'있음 대 없음',g:['없음',763,16.8],e:['있음',121,22.3],u:1.43,us:0,a:[1.21,0.72,2.05],as:0},
+     {n:'IL-1β',s:'높음 대 낮음',g:['낮음',451,15.5],e:['높음',433,19.6],u:1.33,us:0,a:[1.23,0.85,1.78],as:0}],
+ sa:[{n:'아동기 학대',s:'있음 대 없음',g:['없음',763,3.5],e:['있음',121,9.1],u:2.73,us:2,a:[1.67,0.71,3.93],as:0},
+     {n:'IL-1β',s:'높음 대 낮음',g:['낮음',451,4.9],e:['높음',433,3.7],u:0.75,us:0,a:[0.48,0.23,1.00],as:0}]};
+let alK='pa',alI=0;
+function alRead(){const r=AL[alK][alI],nm=OC[alK].n;
+  document.querySelectorAll('#alFp .fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===alI)));
+  const sig=s=>s?`유의했습니다(${PTXT[s]})`:'통계적으로 유의하지 않았습니다';
+  $('#alOut').innerHTML=`<b>${esc(r.n)}</b> ${esc(r.e[0])} ${r.e[1].toLocaleString()}명 가운데 ${r.e[2]}%, ${esc(r.g[0])} ${r.g[1].toLocaleString()}명 가운데 ${r.g[2]}%가 ${esc(nm)}에 해당했습니다. 보정 전 오즈비는 ${f2(r.u)}로 ${sig(r.us)}. 보정 후 오즈비는 ${f2(r.a[0])}(95% 신뢰구간 ${f2(r.a[1])}~${f2(r.a[2])})로 ${sig(r.as)}.`;
+  S.store.set(KEY+':alI',alI)}
+function alDraw(){const rows=AL[alK];
+  $('#alFp').innerHTML=rows.map((r,i)=>`<button type="button" class="fp-row" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r.n)}<small>${esc(r.s)}</small></span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${lx(1)}"></span><span class="fp-ci" style="left:${lx(r.a[1])};width:calc(${lx(r.a[2])} - ${lx(r.a[1])})"></span><span class="fp-ref" style="left:${lx(r.u)}"></span><span class="fp-dot" style="left:${lx(r.a[0])}"></span></span><span class="fp-val"><span class="w">보정 전</span> ${f2(r.u)}${MARK[r.us]||''}<br><b><span class="w">보정 후</span> ${f2(r.a[0])}${MARK[r.as]||''}</b><br>(${f2(r.a[1])}~${f2(r.a[2])})</span></button>`).join('');
+  document.querySelectorAll('#alFp .fp-row').forEach(b=>b.onclick=()=>{alI=+b.dataset.i;alRead()});
+  alRead()}
+alI=S.store.get(KEY+':alI',0);if(alI!==0&&alI!==1)alI=0;
+S.seg('alSeg',k=>{alK=k;alDraw()},KEY+':al');
+
+/* 3) 그림 1: 네 집단 비율, IL-1β 군별 학대의 보정 오즈비, 상호작용 */
+const X={
+ pa:{c:[[6.0,3.4],[6.7,29.2]],lo:[0.56,0.07,4.24,0],hi:[5.69,3.30,9.82,3],it:[11.26,1]},
+ bi:{c:[[29.7,20.7],[33.5,49.2]],lo:[0.62,0.25,1.55,0],hi:[1.92,1.28,2.90,2],it:[3.34,1]},
+ ii:{c:[[15.7,12.0],[18.1,25.0]],lo:[0.73,0.21,2.51,0],hi:[1.51,0.88,2.59,0],it:[1.65,0]},
+ sa:{c:[[5.2,0],[1.5,11.5]],lo:[0.95,0.93,0.97,1],hi:[8.59,2.91,25.40,3],it:[2.65,1]}};
+let xK='pa',xI=1;
+const XR=['IL-1β 낮음','IL-1β 높음'];
+function xRead(){const d=X[xK],r=xI?d.hi:d.lo,nm=OC[xK].n;
+  document.querySelectorAll('#xFp .fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===xI)));
+  const c=d.c[xI];
+  $('#xOut').innerHTML=`<b>${XR[xI]} 군</b>에서 ${esc(nm)} 비율은 학대 있음 ${c[1].toFixed(1)}%, 학대 없음 ${c[0].toFixed(1)}%였습니다. 학대 있음의 보정 오즈비는 ${f2(r[0])}(95% 신뢰구간 ${f2(r[1])}~${f2(r[2])})로 ${r[3]?'유의했습니다('+PTXT[r[3]]+')':'통계적으로 유의하지 않았습니다'}.`;
+  S.store.set(KEY+':xI',xI)}
+function xDraw(){const d=X[xK],mx=50;
+  const cell=(v,hi)=>`<div class="cell${hi?' hi':''}"><b>${v.toFixed(1)}%</b><div class="m" role="img" aria-label="${v.toFixed(1)}%"><span style="width:${(v/mx*100).toFixed(1)}%"></span></div></div>`;
+  $('#xGrid').innerHTML=`<div class="hd"></div><div class="hd cell">학대 없음</div><div class="hd cell">학대 있음</div>`+
+    d.c.map((row,i)=>`<div class="rh">${XR[i]}</div>${cell(row[0],0)}${cell(row[1],i===1)}`).join('');
+  $('#xInter').innerHTML=`<span class="lbl">학대와 IL-1β의 상호작용(보정 오즈비)</span><span class="val">${f2(d.it[0])}${d.it[1]?'*':''}</span><span class="sub">${d.it[1]?'P < 0.05로 유의했습니다. IL-1β가 높을 때 학대의 관련이 더 컸다는 뜻입니다.':'통계적으로 유의하지 않았습니다.'}</span>`;
+  $('#xFp').innerHTML=[d.lo,d.hi].map((r,i)=>`<button type="button" class="fp-row" data-i="${i}" aria-pressed="false"><span class="fp-name">${XR[i]}<small>학대 있음 대 없음</small></span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${lx(1)}"></span><span class="fp-ci" style="left:${lx(r[1])};width:calc(${lx(r[2])} - ${lx(r[1])})"></span><span class="fp-dot" style="left:${lx(r[0])}"></span></span><span class="fp-val"><b>${f2(r[0])}${MARK[r[3]]||''}</b><br>(${f2(r[1])}~${f2(r[2])})</span></button>`).join('');
+  document.querySelectorAll('#xFp .fp-row').forEach(b=>b.onclick=()=>{xI=+b.dataset.i;xRead()});
+  xRead()}
+xI=S.store.get(KEY+':xI',1);if(xI!==0&&xI!==1)xI=1;
+S.seg('xSeg',k=>{xK=k;xDraw()},KEY+':x');
+
+/* 4) 학대 종류와 가짓수(본문 결과 문단 요약). y=보정 후 유의, n=유의하지 않음, s=보충 자료 */
+const TY={
+ emo:{t:'정서적 학대(105명, 9.6%)',m:['y','n','n','n'],i:['y','s','s','y'],o:'정서적 학대는 단독으로는 보정 후 과거 자살시도와만 관련이 남았습니다. 높은 IL-1β와의 상호작용은 과거 자살시도와 치료 중 자살시도에서 유의했습니다.'},
+ phy:{t:'신체적 학대(98명, 8.6%)',m:['y','n','n','n'],i:['y','s','s','y'],o:'신체적 학대도 정서적 학대와 같은 양상이었습니다. 단독으로는 과거 자살시도와만 관련이 남았고, 높은 IL-1β와의 상호작용은 과거 자살시도와 치료 중 자살시도에서 유의했습니다.'},
+ sex:{t:'성적 학대(30명, 2.7%)',m:['y','n','n','y'],i:['n','n','n','n'],o:'성적 학대는 단독으로 과거 자살시도와 관련되었고, 치료 중 자살시도와의 관련도 보정 후 유의하게 남았습니다. 반면 IL-1β와의 상호작용은 어느 결과에서도 유의하지 않았습니다.'},
+ cnt:{t:'겪은 학대의 가짓수(0, 1, 2 이상)',m:['y','s','s','s'],i:['y','y','s','y'],o:'겪은 학대의 가짓수가 많을수록 보정 후 과거 자살시도와 관련이 있었습니다. 높은 IL-1β가 있을 때 가짓수는 과거 자살시도, 기저 자살사고, 치료 중 자살시도와 유의하게 관련되어, 학대를 있음과 없음으로 나눈 결과와 비슷한 상승 효과를 보였습니다.'}};
+const TL={y:['yes','유의'],n:['no','유의하지 않음'],s:['na','보충 자료']};
+const ORD=['pa','bi','ii','sa'];
+S.seg('tSeg',k=>{const t=TY[k];
+  $('#tTab').innerHTML=`<caption class="vh">${esc(t.t)}</caption><thead><tr><th>결과</th><th>단독 연관(보정 후)</th><th>높은 IL-1β와 상호작용</th></tr></thead><tbody>`+
+    ORD.map((o,i)=>`<tr><th scope="row">${esc(OC[o].n.replace('높은 ',''))}</th><td class="${TL[t.m[i]][0]}">${TL[t.m[i]][1]}</td><td class="${TL[t.i[i]][0]}">${TL[t.i[i]][1]}</td></tr>`).join('')+'</tbody>';
+  $('#tOut').innerHTML=`<b>${esc(t.t)}.</b> ${esc(t.o)}`;
+},KEY+':t');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 IL-1β 높은 군과 낮은 군은 어떻게 나눴나요?',o:['정상 범위를 넘는지로','표본의 중앙값(1.1 ng/mL)을 기준으로','우울 증상 점수로'],a:1,e:'혈장 IL-1β의 중앙값 1.1 ng/mL를 기준으로 높은 군 550명, 낮은 군 544명으로 나눴습니다.'},
+ {q:'여러 요인을 보정한 뒤, 학대 경험 하나만으로 유의한 관련이 남은 자살행동은 무엇이었나요?',o:['과거 자살시도','치료 중 자살사고 증가','네 가지 모두'],a:0,e:'보정 후 아동기 학대는 과거 자살시도와만 관련이 남았습니다(오즈비 2.72). IL-1β 하나만으로는 어떤 자살행동과도 유의한 관련이 없었습니다.'},
+ {q:'과거 자살시도 비율이 가장 높았던 집단은 어디였나요?',o:['IL-1β 낮음, 학대 있음','IL-1β 높음, 학대 없음','IL-1β 높음, 학대 있음'],a:2,e:'IL-1β가 높고 학대 경험이 있는 집단에서 29.2%로 가장 높았습니다. 같은 IL-1β 높은 군에서 학대가 없으면 6.7%였습니다.'},
+ {q:'학대와 IL-1β의 상호작용이 유의하지 않았던 결과는 무엇이었나요?',o:['과거 자살시도','치료 중 자살사고 증가','치료 중 자살시도'],a:1,e:'상호작용은 과거 자살시도, 높은 기저 자살사고, 치료 중 자살시도에서 유의했고, 치료 중 자살사고 증가에서는 유의하지 않았습니다(오즈비 1.65).'},
+ {q:'논문이 밝힌 한계에 해당하는 것은 무엇인가요?',o:['뇌 속이 아니라 혈액의 IL-1β를 쟀다','추적 기간이 12주뿐이었다','학대 경험을 묻지 않았다'],a:0,e:'말초 IL-1β는 뇌 속 수준을 그대로 반영하지 않을 수 있습니다. 이 밖에 한 기관 모집, 정해진 프로토콜이 아닌 자연주의 치료를 한계로 적었습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

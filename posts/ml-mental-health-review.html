@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정신질환 진단 AI 10년 리뷰 - 전민 연구 기록</title>
+<meta name="description" content="지난 10년 동안 조현병, 우울, 불안, 양극성장애, PTSD, 신경성 식욕부진증, ADHD 진단에 쓰인 머신러닝과 딥러닝 연구 33편을 정리한 리뷰(Healthcare, 2023)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line-2);margin:0 0 14px}
+.steps button{border:0;border-left:1px solid var(--line-2);background:var(--surface);padding:9px 6px;font-size:13.5px;line-height:1.35;color:var(--ink-2);border-radius:var(--r)}
+.steps button:first-child{border-left:0}
+.steps button b{display:block;font-family:var(--num);font-weight:500;font-size:13px;color:var(--meta)}
+.steps button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.steps button[aria-pressed="true"] b{color:var(--bg)}
+.step-n{display:flex;align-items:baseline;gap:10px;margin:4px 0 0}
+.step-n b{font-family:var(--num);font-weight:500;font-size:26px;color:var(--signal-ink);letter-spacing:-.02em}
+.step-n span{font-size:14px;color:var(--ink-2)}
+.step-text{margin:10px 0 0;font-size:15.5px;line-height:1.75}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.bars{display:grid;gap:6px;margin-top:4px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.bar .bt{position:relative;height:16px;background:var(--tint)}
+.bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.bar.hi .bf{background:var(--signal)}
+.bar .bv{font-family:var(--num);font-size:13px;text-align:right}
+.bar.hi .bv{color:var(--signal-ink)}
+.bar-ticks{display:grid;grid-template-columns:150px minmax(0,1fr) 52px;gap:10px;margin-top:2px}
+.bar-ticks div{position:relative;height:16px}
+.bar-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta)}
+.flabel{display:block;font-size:13px;color:var(--meta);margin:0 0 4px}
+.count{font-size:14px;color:var(--ink-2);margin:0 0 8px}
+.count b{font-family:var(--num);font-weight:500;color:var(--signal-ink)}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rows li{padding:10px 0;border-bottom:1px solid var(--line)}
+.rows .r-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;align-items:baseline}
+.rows .r-au{font-weight:600;font-size:15px}
+.rows .r-au .y{font-family:var(--num);font-weight:400;font-size:13px;color:var(--meta);margin-left:6px}
+.rows .r-tg{font-size:13px;color:var(--meta)}
+.rows dl{display:grid;grid-template-columns:76px minmax(0,1fr);gap:2px 12px;margin:6px 0 0;font-size:14px;line-height:1.6}
+.rows dt{color:var(--meta);font-size:13px}
+.rows dd{margin:0;color:var(--ink-2)}
+.rows dd.perf{color:var(--ink)}
+.rows .empty{color:var(--meta);font-size:14px}
+.ds{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.ds li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.55}
+.ds .d-name{font-weight:500}
+.ds .d-sub{grid-column:1/-1;font-size:13px;color:var(--meta)}
+.ds .d-year{font-family:var(--num);font-size:13px;color:var(--meta);text-align:right}
+.chal-body h4{font-size:15.5px;margin:4px 0 6px}
+.chal-body p{margin:0 0 10px;font-size:15.5px;line-height:1.75}
+.chal-body .dir{background:var(--tint);padding:12px 14px;margin:0}
+@media (max-width:640px){
+  .steps{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .steps button{font-size:11.5px;padding:8px 2px}
+  .steps button b{font-size:12px}
+  .bar,.bar-ticks{grid-template-columns:96px minmax(0,1fr) 44px;gap:8px;font-size:13px}
+  .rows dl{grid-template-columns:64px minmax(0,1fr);font-size:13.5px}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 인공지능, 정신질환 진단</p>
+  <h1>지난 10년, 인공지능은 정신질환 진단을 어떻게 배워 왔을까요?</h1>
+  <p class="lede">뇌 영상, 트위터 글, 면담 녹화, 건강검진 기록. 지난 10년 동안 연구자들은 이런 자료를 컴퓨터에 보여 주며 정신질환을 가려내는 법을 가르쳐 왔습니다. 이 리뷰는 조현병부터 ADHD까지 일곱 가지 질환에서 그런 시도를 담은 논문 33편을 모아, 어떤 방법과 데이터가 쓰였고 연구자들이 어디서 어려움을 겪었는지 한자리에 정리했습니다. 전남대학교 인공지능융합학과와 함께 쓴 논문입니다.</p>
+  <p class="meta">원문: Iyortsuun NK, Kim S-H, Jhon M 외. Healthcare 11:285, 2023<br>읽는 데 약 11분, 직접 눌러 보는 요소 5개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>2013년부터 2022년까지 네 개 데이터베이스에서 찾은 기록 361건 가운데, 정해진 기준에 맞는 <b>33편</b>을 <span class="term" data-tip="Preferred Reporting Items for Systematic Reviews and Meta-Analyses. 체계적 문헌고찰에서 논문을 찾고 거르는 과정을 투명하게 보고하도록 정한 지침.">PRISMA</span> 방법으로 골랐습니다.</li>
+    <li>대상 질환은 조현병, 우울, 불안, 양극성장애, 외상후 스트레스장애(PTSD), 신경성 식욕부진증, ADHD 일곱 가지입니다. 불안과 우울을 다룬 논문이 31%로 가장 많았습니다.</li>
+    <li>서포트 벡터 머신과 랜덤 포레스트가 가장 자주 쓰였고, 최근에는 딥러닝 쪽으로 조금씩 옮겨 가는 흐름이 보였습니다. 연구에 쓸 수 있는 <b>공개 데이터셋 15종</b>도 목록으로 묶었습니다.</li>
+    <li>논문은 머신러닝과 딥러닝 모두 진단에서 뛰어난 결과를 냈다고 보면서, 작은 표본, 과적합, 시간에 따라 바뀌는 증상, 질 높은 데이터 확보라는 네 가지 어려움을 짚습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>361건</b><span>데이터베이스 검색으로 찾은 기록</span></div>
+  <div class="stat"><b>33편</b><span>리뷰에 포함한 논문</span></div>
+  <div class="stat"><b>7가지</b><span>다룬 정신질환</span></div>
+  <div class="stat"><b>15종</b><span>정리한 공개 데이터셋</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 이런 정리가 필요했을까요</a></li>
+    <li><a href="#how">논문 33편은 어떻게 골랐을까요</a></li>
+    <li><a href="#what">어떤 질환을, 언제 연구했을까요</a></li>
+    <li><a href="#papers">33편을 직접 살펴보기</a></li>
+    <li><a href="#data">연구에 쓸 수 있는 공개 데이터셋</a></li>
+    <li><a href="#hard">연구자들이 부딪힌 네 가지 어려움</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 이런 정리가 필요했을까요</h2>
+<p>정신건강의 문제를 제때 알아보려면 알맞은 평가가 필요합니다. 지금 선별은 주로 자기보고 설문지로 합니다. 진단은 정신과 면담에서 증상, 병력, 신체검사를 두루 살피고, 심리검사와 평가 도구로 보탭니다.</p>
+<p>여기에 <span class="term" data-tip="Machine learning. 사람이 규칙을 하나하나 정해 주지 않아도, 자료에서 패턴을 배워 분류나 예측을 하는 인공지능의 한 분야.">머신러닝</span>이 쓰이기 시작했습니다. 전자의무기록을 분석하고, 스마트워치 같은 웨어러블 기기의 자료로 상태를 이어서 살피고, 위험이 높은 사람을 미리 가려내는 자동 선별 도구를 만드는 식입니다. 최근에는 글이나 이미지 같은 원자료에서 특징을 스스로 찾아내는 <span class="term" data-tip="Deep learning. 여러 층의 인공신경망으로 이뤄진 머신러닝의 한 갈래. 사람이 특징을 골라 주지 않아도 원자료에서 스스로 특징을 배우지만, 더 많은 자료가 필요하다.">딥러닝</span>을 진단에 쓰려는 관심도 커졌습니다.</p>
+<p>앞선 리뷰들은 양극성장애만, PTSD만, 또는 영상과 음성으로 우울을 추정하는 딥러닝만처럼 한 부분을 다루는 경우가 많았습니다. 이 리뷰는 지금 우리 사회에 흔한 정신질환 일곱 가지를 한꺼번에 놓고, 지난 10년 동안 쓰인 방법을 요약해 진료와 연구에서 인공지능을 쓰려는 사람들에게 지도를 건네려 했습니다.</p>
+<div class="callout"><p><b>비유:</b> 새 길을 내기 전에 먼저 지도를 펼쳐 보는 일과 비슷합니다. 누가 어느 길로 갔는지(방법), 어떤 재료를 들고 갔는지(데이터), 어디서 길이 막혔는지(어려움)를 알면, 다음 사람은 같은 자리에서 헤매지 않아도 됩니다.</p></div>
+
+<h2 id="how">2. 논문 33편은 어떻게 골랐을까요</h2>
+<p>연구팀은 Google Scholar, PubMed, Scopus, Web of Science에서 2013년부터 2022년 사이의 논문을 "Artificial Intelligence for mental health diagnosis", "Machine Learning for mental health prediction" 같은 검색어로 찾았습니다. 그리고 PRISMA 지침에 따라 거르는 과정을 단계마다 기록했습니다. 다음 세 경우는 제외했습니다.</p>
+<ul>
+  <li>일곱 가지 질환 가운데 하나도 다루지 않은 연구</li>
+  <li>전문을 볼 수 없었던 논문</li>
+  <li>머신러닝이나 딥러닝을 쓰지 않은 연구</li>
+</ul>
+
+<div class="panel figure" id="prisma"><span class="cx"></span>
+  <div class="fig-head"><h3>361건에서 33편까지, 다섯 단계(그림 3)</h3><span class="note">단계를 눌러 보세요</span></div>
+  <div class="steps" id="prismaSeg" role="group" aria-label="논문 선정 단계">
+    <button data-k="0"><b>361</b>찾기</button><button data-k="1"><b>320</b>중복 제거</button><button data-k="2"><b>196</b>제목 거르기</button><button data-k="3"><b>180</b>전문 평가</button><button data-k="4"><b>33</b>포함</button>
+  </div>
+  <div id="prismaGauge"></div>
+  <p class="step-n" aria-live="polite"><b id="prismaN"></b><span id="prismaSub"></span></p>
+  <p class="step-text" id="prismaText"></p>
+  <p class="fig-note">빨간 점은 그 단계에 남은 수, 속 빈 점은 처음 찾은 기록 361건입니다. 수는 모두 원문 그림 3의 흐름도에 적힌 값입니다.</p>
+</div>
+
+<h2 id="what">3. 어떤 질환을, 언제 연구했을까요</h2>
+<p>포함된 논문을 질환별로 나누면 불안과 우울이 가장 많았고, ADHD, 조현병과 PTSD가 뒤를 이었습니다. 연도로 보면 2020년과 2021년에 논문이 가장 많았습니다. 아래에서 보기를 바꿔 보세요.</p>
+
+<div class="panel figure" id="dist"><span class="cx"></span>
+  <div class="fig-head"><h3 id="distTitle">질환별 비율</h3></div>
+  <div class="ctrl"><div class="seg" id="distSeg" role="group" aria-label="나눠 보는 기준"><button data-k="dis">질환별</button><button data-k="year">연도별</button></div></div>
+  <div class="bars" id="distBars"></div>
+  <div class="bar-ticks" aria-hidden="true"><i></i><div id="distTicks"></div><i></i></div>
+  <p class="fig-note" id="distNote"></p>
+</div>
+
+<p>방법으로 보면, 논문의 분석 절은 머신러닝 방법에 초점을 둔 논문 20편, 딥러닝만 쓴 논문 8편, 둘을 함께 쓴 논문 4편으로 나눕니다. 머신러닝 가운데서는 <span class="term" data-tip="Support vector machine. 두 집단을 가장 넓은 간격으로 나누는 경계(초평면)를 찾아 분류하는 방법.">서포트 벡터 머신(SVM)</span>과 <span class="term" data-tip="Random forest. 자료의 일부로 결정 트리를 여러 개 만들고, 그 판단을 모아 최종 결정을 내리는 앙상블 방법.">랜덤 포레스트(RF)</span>가 가장 자주 골라졌습니다. 머신러닝 논문 20편 가운데 절반이 넘는 논문이 둘 중 하나 이상을 썼습니다.</p>
+<p>딥러닝을 쓴 논문들은 뇌 영상, 면담 글, 영상과 음성처럼 여러 종류의 자료에서 좋은 결과를 보였습니다. 이 리뷰에 포함된 딥러닝 논문은 모두 정확도 63.32% 이상, F1 점수 63.50% 이상을 기록했습니다. 딥러닝과 전통적 머신러닝을 함께 쓴 연구도 작은 자료에서 과적합 없이 고무적인 정확도를 보였다고 논문은 적습니다.</p>
+
+<h2 id="papers">4. 33편을 직접 살펴보기</h2>
+<p>원문의 표 3은 33편을 한 줄씩 정리합니다. 대상 질환, 자료의 종류, 자료 크기, 방법, 성능, 검증 방식입니다. 질환과 자료 종류로 골라 보세요. 같은 질환이라도 뇌 영상에서 소셜미디어 글까지 자료가 얼마나 다양한지 보입니다.</p>
+<p>성능 지표는 논문마다 다릅니다. <span class="term" data-tip="전체 가운데 맞게 분류한 비율.">정확도</span>, <span class="term" data-tip="Area under the ROC curve. 기준점을 바꿔 가며 민감도와 특이도를 함께 본 판별력. 0.5는 무작위, 1은 완벽한 구분.">AUC</span>, <span class="term" data-tip="정밀도(양성이라 한 것 가운데 진짜 양성의 비율)와 재현율(진짜 양성 가운데 찾아낸 비율)의 조화평균.">F1 점수</span>, <span class="term" data-tip="민감도는 실제 환자를 환자로 찾아낸 비율, 특이도는 환자가 아닌 사람을 아니라고 맞힌 비율.">민감도와 특이도</span>처럼 서로 다른 잣대를 쓰므로, 숫자끼리 바로 견주기보다 각 연구 안에서 읽는 것이 좋습니다.</p>
+
+<div class="panel figure" id="t3"><span class="cx"></span>
+  <div class="fig-head"><h3>리뷰에 포함된 논문(표 3)</h3></div>
+  <div class="ctrl">
+    <div><span class="flabel">대상 질환</span><div class="seg" id="t3Dis" role="group" aria-label="대상 질환"><button data-k="all">전체</button><button data-k="scz">조현병</button><button data-k="ad">우울과 불안</button><button data-k="bd">양극성장애</button><button data-k="ptsd">PTSD</button><button data-k="an">식욕부진증</button><button data-k="adhd">ADHD</button></div></div>
+    <div><span class="flabel">자료 종류</span><div class="seg" id="t3Dom" role="group" aria-label="자료 종류"><button data-k="all">전체</button><button data-k="img">뇌 영상</button><button data-k="text">글</button><button data-k="av">영상, 음성</button><button data-k="clin">임상 자료, 설문</button><button data-k="gen">유전체</button></div></div>
+  </div>
+  <p class="count" id="t3Count" aria-live="polite"></p>
+  <ul class="rows" id="t3Rows"></ul>
+  <p class="fig-note">자료 종류는 표 3의 '자료 영역' 칸을 다섯 묶음으로 나눈 것입니다. 두 질환을 함께 다룬 논문은 두 질환 모두에서 보입니다. 약어: CV 교차검증, LOOCV 하나씩 빼는 교차검증, LR 로지스틱 회귀, NB 나이브 베이즈, CNN 합성곱 신경망, LSTM 장단기 기억 신경망.</p>
+</div>
+
+<h2 id="data">5. 연구에 쓸 수 있는 공개 데이터셋</h2>
+<p>정신건강 분야에서는 자료를 모으는 일 자체가 어렵습니다. 그래서 이 리뷰는 누구나 연구에 쓸 수 있는 공개 데이터셋 15종을 따로 묶었습니다(표 2). 면담 영상과 음성을 모은 <span class="term" data-tip="Distress Analysis Interview Corpus. 불안, 우울, PTSD 평가를 위한 면담의 영상과 음성 자료. 가상 면담자와의 대화를 담은 DAIC-WOZ가 널리 쓰인다.">DAIC</span>, ADHD 아동의 뇌 영상을 모은 ADHD-200, 소셜미디어 글을 모은 eRisk와 RSDD가 대표적입니다.</p>
+
+<div class="panel figure" id="ds"><span class="cx"></span>
+  <div class="fig-head"><h3>공개 데이터셋 15종(표 2)</h3></div>
+  <div class="ctrl"><div class="seg" id="dsSeg" role="group" aria-label="데이터 형태"><button data-k="all">전체</button><button data-k="av">영상, 음성</button><button data-k="text">글</button><button data-k="img">이미지</button></div></div>
+  <p class="count" id="dsCount" aria-live="polite"></p>
+  <ul class="ds" id="dsList"></ul>
+</div>
+
+<p>자료의 크기도 들여다볼 만합니다. 표 3에서 많은 연구가 1,000명(건)보다 적은 표본을 썼고, 1,000명(건)이 넘는 자료를 쓴 연구도 있었습니다. 논문은 자료가 크고 작은지는 연구마다 다르지만, 학습 자료가 적어 결과가 불리해진 연구가 많았다고 적습니다.</p>
+
+<h2 id="hard">6. 연구자들이 부딪힌 네 가지 어려움</h2>
+<p>논문은 33편을 정리하며 머신러닝과 딥러닝으로 정신질환을 진단하려 할 때 되풀이되는 어려움 네 가지를 꼽고, 각각에 대해 다음 연구가 해 볼 수 있는 일을 제안합니다. 하나씩 눌러 보세요.</p>
+
+<div class="panel figure" id="chal"><span class="cx"></span>
+  <div class="fig-head"><h3>어려움과 논문이 제안한 방향(5.3절)</h3></div>
+  <div class="ctrl"><div class="seg" id="chalSeg" role="group" aria-label="어려움 고르기"><button data-k="0">작은 표본</button><button data-k="1">과적합</button><button data-k="2">바뀌는 증상</button><button data-k="3">데이터 확보</button></div></div>
+  <div class="chal-body" id="chalBody" aria-live="polite"></div>
+</div>
+
+<p>평가 방법에 대해서도 한 가지를 강하게 권합니다. 모델을 학습하거나 검증할 때 쓴 자료가 아닌, 따로 떼어 둔 자료로 성능을 재라는 것입니다. 모델이 보지 못한 자료에서 재야 <span class="term" data-tip="Overfitting. 모델이 학습 자료에는 아주 잘 맞지만 처음 보는 자료에서는 성능이 떨어지는 현상.">과적합</span> 여부를 알 수 있기 때문입니다.</p>
+
+<h2 id="meaning">7. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>논문은 머신러닝과 딥러닝이 모두 정신질환 진단에 쓰였을 때 뛰어난 결과를 냈다고 봅니다. 나이브 베이즈, LSTM-RNN, 로지스틱 회귀, 서포트 벡터 머신, 랜덤 포레스트, 신경망 같은 여러 방법이 패턴을 찾아 진단하는 데 쓰이고 있고, 스페인어 트윗으로 식욕부진증을 가려낸 연구처럼 전이학습도 좋은 결과를 보였습니다.</p>
+<p>머신러닝만으로도 정신건강 문제를 이해하는 데 가치가 있으며, 딥러닝은 한 질환을 예측하면서 다른 질환도 함께 진단할 가능성을 보여 준다고 적습니다. 영상 자료에서도 딥러닝이 도움이 될 수 있고, 센서 같은 다른 자료를 살피는 것도 환자의 정신 상태를 알아보는 효과적인 방법이었다고 봅니다. 자료 전처리에 따라 성능이 달라질 수 있으니, 여러 방법을 견주어 고르라고 권합니다.</p>
+<p>성능을 높이려면 질 높은 자료를 더 확보하고, 실제 현장에 쓰일 수 있도록 <span class="term" data-tip="모델이 왜 그런 판단을 내렸는지 사람이 이해할 수 있게 보여 주는 성질.">설명 가능한</span> 딥러닝 모델을 개발해야 한다는 것이 논문의 결론입니다. 이런 시스템은 앞으로의 연구에 기준을 마련해 주고, 진단 정확도를 높이며, 환자를 치료할 때 전문가의 판단을 도울 수 있다고 봅니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 이 리뷰 뒤로 연구실은 몸이 내는 신호를 직접 재는 연구로 나아갔습니다. <a data-paper="facial_video_hrv_2026">얼굴 영상 심박변이도로 우울 증상을 가려낸 연구</a>에서 그 한 예를 보실 수 있습니다.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>네 개 데이터베이스(Google Scholar, PubMed, Scopus, Web of Science)만 검색했고, 영어로 출판된 논문만 포함했습니다.</li>
+  <li>일곱 가지 질환으로 범위를 좁혀, 자폐스펙트럼장애처럼 이 분야의 다른 질환은 다루지 않았습니다. 논문은 자폐스펙트럼장애도 중요한 질환이며 앞으로의 연구에서 더 살피고 싶다고 적습니다.</li>
+  <li>진단을 돕는 연구만 모았고, 머신러닝이나 딥러닝을 치료에 쓴 연구는 포함하지 않았습니다.</li>
+</ul>
+<div class="callout"><p><b>다음 질문:</b> 논문은 시간에 따라 달라지는 증상의 세기를 알아보는 모델, 그리고 사람들이 안심하고 자료를 내놓을 수 있는 익명의 정신건강 데이터 저장소를 다음 연구가 해 볼 일로 남겼습니다. 이런 방향이 실제 진료에서 어떤 도움이 될지는 앞으로 확인할 질문입니다.</p></div>
+
+<h2 id="quiz">8. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Iyortsuun NK, Kim S-H, Jhon M, Yang H-J, Pant S. A Review of Machine Learning and Deep Learning Approaches on Mental Health Diagnosis. Healthcare (Basel). 2023;11(3):285. doi:10.3390/healthcare11030285</p>
+  <p>DOI <a href="https://doi.org/10.3390/healthcare11030285" target="_blank" rel="noopener">10.3390/healthcare11030285</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/36766860/" target="_blank" rel="noopener">36766860</a><br>
+  원문은 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> 라이선스로 공개되었습니다(© 2023 by the authors, Licensee MDPI, Basel, Switzerland). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문, 그림 2와 3에 적힌 값, 표 2와 3에서 가져왔습니다.</p>
+  <p>연도별 논문 수는 표 3의 발표 연도를 세어 얻은 계산값이며, 원문 그림 1의 막대와 같습니다. 이 리뷰에 실린 모델들은 연구 단계의 결과이며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='ml-mental-health-review';
+
+/* 1) PRISMA 흐름(그림 3) */
+const PR=[
+ {n:361,sub:'건, 데이터베이스에서 찾은 기록',t:'네 개 데이터베이스와 웹 검색에서 기록을 모았습니다. Google Scholar 208건, PubMed 71건, Scopus 38건, Web of Science 42건, 웹 검색 2건입니다.'},
+ {n:320,sub:'건, 거르기 대상',t:'같은 논문이 여러 데이터베이스에서 겹쳐 나온 중복 기록 41건을 먼저 뺐습니다.'},
+ {n:196,sub:'건, 전문을 찾아본 보고서',t:'남은 320건을 살펴 124건을 제외했습니다. 그다음 196건의 전문을 찾았고, 그 가운데 16건은 구하지 못했습니다.'},
+ {n:180,sub:'건, 적격성을 평가한 보고서',t:'전문을 구한 180건을 기준에 맞춰 하나씩 평가했습니다. 일곱 질환을 다루지 않았거나, 전문을 볼 수 없었거나, 머신러닝이나 딥러닝을 쓰지 않은 147건을 제외했습니다.'},
+ {n:33,sub:'편, 리뷰에 포함한 논문',t:'최종으로 33편이 남았습니다. 연구팀은 이 논문들을 하나씩 평가하고, 제안된 방법을 일곱 질환별로 분류했습니다.'}];
+S.seg('prismaSeg',k=>{const s=PR[+k];
+  $('#prismaGauge').innerHTML=S.gauge({min:0,max:400,ticks:[0,100,200,300,400],pts:[{v:361,ref:1,label:'처음 찾은 기록 361건'},{v:s.n,label:`이 단계에 남은 수 ${s.n}`}]},`처음 361건 가운데 이 단계에 남은 수 ${s.n}`);
+  $('#prismaN').textContent=s.n.toLocaleString('ko-KR');$('#prismaSub').textContent=s.sub;$('#prismaText').textContent=s.t;
+},KEY+':prisma');
+
+/* 2) 질환별 비율(그림 2에 적힌 값)과 연도별 수(표 3의 연도를 센 계산값) */
+const DIS=[['불안, 우울',31],['ADHD',18],['조현병',15],['PTSD',15],['신경성 식욕부진증',12],['양극성장애',9]];
+const YEAR=[['2013',1],['2015',1],['2017',6],['2018',3],['2019',4],['2020',7],['2021',7],['2022',4]];
+const DV={
+ dis:{title:'질환별 비율',rows:DIS,max:40,ticks:[0,10,20,30,40],fmt:v=>v+'%',hi:v=>v>=31,note:'원문 그림 2에 적힌 비율입니다. 빨간 막대가 가장 많은 묶음입니다.'},
+ year:{title:'연도별 논문 수',rows:YEAR,max:8,ticks:[0,2,4,6,8],fmt:v=>v+'편',hi:v=>v>=7,note:'표 3에 적힌 발표 연도를 세어 얻은 계산값이며, 원문 그림 1의 막대와 같습니다. 2014년과 2016년 논문은 포함되지 않았습니다. 빨간 막대가 가장 많은 해입니다.'}};
+S.seg('distSeg',k=>{const d=DV[k];
+  $('#distTitle').textContent=d.title;
+  $('#distBars').innerHTML=d.rows.map(([n,v])=>`<div class="bar${d.hi(v)?' hi':''}"><span class="bn">${esc(n)}</span><span class="bt" role="img" aria-label="${esc(n)} ${d.fmt(v)}"><span class="bf" style="width:${(v/d.max*100).toFixed(1)}%"></span></span><span class="bv">${d.fmt(v)}</span></div>`).join('');
+  $('#distTicks').innerHTML=d.ticks.map(t=>`<span style="left:${t/d.max*100}%">${t}</span>`).join('');
+  $('#distNote').textContent=d.note;
+},KEY+':dist');
+
+/* 3) 표 3: 포함된 논문. d=질환, m=자료 묶음 */
+const T3=[
+ ['Srinivasagopalan 외',2019,['scz'],'조현병','img','뇌 영상(fMRI, sMRI)','144명(대조군 75, 환자 69)','LR, SVM, RF, 신경망(은닉층 3개)','정확도 LR 82.77%, SVM 82.68%, RF 83.33%, 신경망 94.44%','교차검증'],
+ ['Zeng 외',2018,['scz'],'조현병','img','뇌 영상(MRI)','1,000명 이상(환자 474, 대조군 607)','희소성 제약을 둔 판별 오토인코더 신경망','정확도 다기관 통합 분류 85.0%, 기관을 뺀 전이 분류 81.0%','10겹 교차검증, 기관 간 교차검증'],
+ ['Organisciak 외',2022,['scz'],'조현병','clin','임상 관찰 자료','환자 97, 대조군 54','squeeze-and-excitation과 자기 주의를 결합한 견고하고 해석 가능한 프레임워크','정확도 98%','10겹 교차검증'],
+ ['Birnbaum 외',2017,['scz'],'조현병','text','글(트위터)','사용자 671명','가우시안 NB, RF, LR, SVM','AUC RF 88.0%','10겹 교차검증'],
+ ['Jo 외',2020,['scz'],'조현병','img','뇌 영상','조현병 48, 대조군 25','SVM, 다항 NB, RF, XGBoost','전역 네트워크 RF 정확도 68.0%, AUC 0.680; 노드 네트워크 XGBoost 정확도 66.3%, AUC 0.656','10겹 교차검증'],
+ ['Sau, Bhakta',2017,['ad'],'불안','clin','임상 자료','노인 환자 510명','베이즈 네트워크, 로지스틱, 다층 퍼셉트론, NB, RF, J48, SMO 등 10가지','RF 정확도 89%, 정밀도 89.1%, F 89%, AUC 94.3%','10겹 교차검증'],
+ ['Sau, Bhakta',2019,['ad'],'불안과 우울','text','글(면담 기반)','선원 470명','Catboost, LR, NB, RF, SVM','정확도 Catboost 89.3%, LR 87.5%, NB 82.1%, RF 78.6%, SVM 82.1%','10겹 교차검증'],
+ ['Niu 외',2021,['ad'],'우울','av','글과 음성','DAIC-WOZ 데이터셋','계층적 맥락 인식 그래프 주의 모델','F1 0.92, MAE 2.94, RMSE 3.80','무작위 분할'],
+ ['Yoon 외',2022,['ad'],'우울','av','영상과 음성','유튜브 브이로그 961개','멀티모달 교차 주의','정밀도 65.40, 재현율 65.57, F1 63.50','무작위 분할(70:10:20)'],
+ ['Xezonaki 외',2020,['ad'],'우울','text','글(면담, 치료 회기)','치료 회기 1,262개(우울 아님 881, 우울 381), DAIC-WOZ 전사본','계층적 주의 네트워크','F1 GPC 71.6, DAIC-WOZ 68.6','5겹 교차검증'],
+ ['Cho 외',2020,['ad'],'우울','clin','건강검진 자료','433,190명(우울 10,824, 비우울 422,364)','RF','AUC 0.849, 민감도 0.737, 특이도 0.824, 양성예측도 0.097, 음성예측도 0.992, 정확도 0.780','5겹 교차검증'],
+ ['Sharma 외',2020,['ad'],'우울','clin','바이오마커와 자기보고 우울 자료','표본 11,081개','XGBoost','정확도 0.9729, 균형 정확도 0.9765, 정밀도 0.9548, 재현율 0.9987, F1 0.9762','교차검증'],
+ ['Deshpande 외',2017,['ad'],'우울','text','글(트위터)','트윗 10,000개','다항 NB, SVM','다항 NB 정확도 83%, F1 0.8329; SVM 정확도 79%, F1 0.7973','교차검증 없음'],
+ ['Hilbert 외',2017,['ad'],'불안과 우울','img','뇌 영상(MRI)','범불안장애 19, 주요우울 14, 대조군 24','SVM','환자와 대조군 구분 정확도 90.10%, 장애끼리 구분 정확도 67.46%','LOOCV'],
+ ['Richter 외',2021,['ad'],'불안과 우울','clin','임상 자료, 설문','101명','RF','증상군 대 대조군 특이도 76.81%, 민감도 69.66%; 불안 대 우울 특이도 80.50%, 민감도 66.46%','LOOCV'],
+ ['Li 외',2020,['bd'],'양극성장애','img','MRI와 임상 평가','환자 44, 대조군 36','SVM','정확도 87.5%, 민감도 86.4%, 특이도 88.9%','LOOCV'],
+ ['Li 외',2021,['bd'],'양극성장애, 첫 삽화 정신증','img','뇌 영상(sMRI)','첫 삽화 정신증 89, 양극성장애 40, 대조군 83','CNN','3분류 정확도 99.72%, 정밀도 99.76%, 재현율 99.74%, F1 99.75%, AUC 99.75%','10겹 교차검증'],
+ ['Abaei, Osman',2020,['bd'],'양극성장애','av','영상','47명, 녹화 영상 208개','CNN과 LSTM의 혼합 모델','UAR 60.67%, 정확도 63.32%','무작위 분할'],
+ ['Rosellini 외',2018,['ptsd'],'PTSD','clin','설문','23,907명','39개 알고리즘을 묶은 슈퍼 러너','AUC 79.04','10겹 교차검증'],
+ ['Schultebraucks 외',2021,['ptsd'],'PTSD','clin','임상 자료','473명','RF, SVM','AUC RF 78%, SVM 88%','무작위 분할(75:25)'],
+ ['Reece 외',2017,['ad','ptsd'],'우울, PTSD','text','글(트위터)','우울 204명의 트윗 279,951개, PTSD 174명의 트윗 243,775개','여러 지도학습 알고리즘, 1200-트리 RF','일별 F1 우울 0.644, PTSD 0.769; 주별 F1 우울 0.651, PTSD 0.772(원문 표 1)','5겹 교차검증'],
+ ['Campbell 외',2019,['ptsd'],'PTSD','clin','설문','2,290명','결정 트리 분석','독립 표본 민감도 0.425, 특이도 0.880','독립 시험'],
+ ['Gokten, Uyulan',2021,['ptsd','ad'],'PTSD, 우울','clin','임상 자료','아동과 청소년 482명','RF','AUC 우울 88.0%, PTSD 76.0%','10겹 교차검증'],
+ ['Paul 외',2018,['an','ad'],'식욕부진증, 우울','text','글(레딧)','사용자 472명, 게시물 253,752개','AdaBoost, LR, RF, SVM','BOW 특징 SVM 정밀도 0.97, 재현율 0.98, F 0.98; UMLS 특징 SVM F 0.55; 두 특징 결합 AdaBoost F 0.47','10겹 교차검증'],
+ ['Guo 외',2015,['an'],'신경성 식욕부진증','gen','유전체 유전형 자료','환자 3,940, 대조군 9,266','LR, SVM, 그레이디언트 부스팅 트리','AUC LR 0.693, SVM 0.691, 그레이디언트 부스팅 트리 0.623','10겹 교차검증'],
+ ['Ranganathan 외',2019,['an'],'신경성 식욕부진증','text','글(레딧)','사용자 472명','신경 기계 번역(Seq2Seq), TF-IDF와 SGD를 쓴 SVM','정밀도 0.48, 재현율 0.26, F1 0.34, ERDE50 0.07','독립 시험'],
+ ['López-Úbeda 외',2021,['an'],'신경성 식욕부진증','text','글(스페인어 트윗)','트윗 5,707개','전이학습(BETO, M-BERT, XLM), 신경망(LSTM, BiLSTM, CNN)','BETO F1 94.1%','10겹 교차검증'],
+ ['Mikolas 외',2022,['adhd'],'ADHD','clin','임상 자료','299명','SVM','정확도 특징 30개 66.1%, 인구학 특징 제외 65.1%, 결측 없는 자료 68.8%','10겹 교차검증'],
+ ['Tan 외',2017,['adhd'],'ADHD','img','뇌 영상(fMRI)','265명(NYU, ADHD-200)','SVM','정확도 67.7%','10겹 교차검증(10회 반복)'],
+ ['Tachmazidis 외',2021,['adhd'],'ADHD','clin','설문과 임상 자료','환자 69명','머신러닝과 지식 기반 모델의 혼합','정확도 95%','LOOCV'],
+ ['Peng 외',2013,['adhd'],'ADHD','img','뇌 영상(MRI)','환자 55, 대조군 55(북경대, ADHD-200)','선형 SVM, RBF SVM, 극한 학습 기계(ELM)','정확도 선형 SVM 84.73%, RBF SVM 86.55%, ELM 90.18%','LOOCV'],
+ ['Yin 외',2022,['adhd'],'ADHD','img','휴지기 fMRI','ADHD와 정형발달 아동 360명','XGBoost','구분 정확도 77%(교차검증), 74.46%(독립 시험); 중증도 예측 R² 0.2794(교차검증), 0.156(독립 시험)','10겹 교차검증(10회 반복)'],
+ ['Liu 외',2020,['adhd'],'ADHD','img','뇌 영상(fMRI)','ADHD-200 데이터셋','합성곱 잡음 제거 오토인코더와 적응형 부스팅 결정 트리','정확도 75.64%, 민감도 76.92%, 특이도 73.08%','교차검증 없음']];
+let dis='all',dom='all';
+function t3(){
+  const rows=T3.filter(r=>(dis==='all'||r[2].includes(dis))&&(dom==='all'||r[4]===dom));
+  $('#t3Count').innerHTML=`<b>${rows.length}</b>편이 조건에 맞습니다.`;
+  $('#t3Rows').innerHTML=rows.length?rows.map(r=>`<li><div class="r-top"><span class="r-au">${esc(r[0])}<span class="y">${r[1]}</span></span><span class="r-tg">${esc(r[3])}</span></div><dl><dt>자료</dt><dd>${esc(r[5])}, ${esc(r[6])}</dd><dt>방법</dt><dd>${esc(r[7])}</dd><dt>성능</dt><dd class="perf">${esc(r[8])}</dd><dt>검증</dt><dd>${esc(r[9])}</dd></dl></li>`).join(''):'<li class="empty">이 조합에 해당하는 논문은 표 3에 없습니다. 다른 질환이나 자료 종류를 골라 보세요.</li>';
+}
+S.seg('t3Dis',k=>{dis=k;t3()},KEY+':t3dis');
+S.seg('t3Dom',k=>{dom=k;t3()},KEY+':t3dom');
+
+/* 4) 표 2: 공개 데이터셋 */
+const DS=[
+ ['Distress Analysis Interview Corpus(DAIC)','불안, 우울, PTSD','Gratch 외','영상, 음성',2014,['av']],
+ ['Turkish Audio-visual Bipolar Disorder Corpus','양극성장애','Çiftçi 외','영상, 음성',2018,['av']],
+ ['eRisk','신경성 식욕부진증','CLEF','글',2018,['text']],
+ ['Spanish Anorexia Dataset(SAD)','신경성 식욕부진증','López Úbeda 외','글',2019,['text']],
+ ['ADHD-200','ADHD','ADHD-200 컨소시엄','이미지',2012,['img']],
+ ['Danish Depression Database','우울','Videbech 외','영상, 음성, 보고 자료',2011,['av']],
+ ['Reddit Self-reported Depression Diagnosis(RSDD)','우울','MacAvaney 외','글',2017,['text']],
+ ['Penn-dataset','조현병','Hamm 외','영상, 이미지',2014,['av','img']],
+ ['AVEC 2013 시청각 우울 언어 코퍼스(AViD-Corpus)','우울','Valstar 외','영상, 음성',2013,['av']],
+ ['AVEC 2014','우울','Valstar 외','영상, 음성',2014,['av']],
+ ['AVEC 2016','우울','Valstar 외','영상, 음성',2016,['av']],
+ ['Crisis Text Line','우울','Lieberman, Meyer','글',2013,['text']],
+ ['DementiaBank Database','우울','Becker 외','영상, 음성',1994,['av']],
+ ['SemEval-2014 Task 7','우울','Pradhan 외','글',2014,['text']],
+ ['Emotional Audio-Textual Depression Corpus(EATD-Corpus)','우울','Shen 외','음성, 글(중국어)',2022,['av','text']]];
+S.seg('dsSeg',k=>{const rows=DS.filter(d=>k==='all'||d[5].includes(k));
+  $('#dsCount').innerHTML=`<b>${rows.length}</b>종이 조건에 맞습니다.`;
+  $('#dsList').innerHTML=rows.map(d=>`<li><span class="d-name">${esc(d[0])}</span><span class="d-year">${d[4]}</span><span class="d-sub">${esc(d[1])}에 쓰임, ${esc(d[3])}, ${esc(d[2])}</span></li>`).join('');
+},KEY+':ds');
+
+/* 5) 네 가지 어려움(5.3절) */
+const CH=[
+ {h:'작은 표본',p:'정신건강 연구는 사람이 직접 참여해야 자료가 모이기 때문에 비용이 많이 들고, 그래서 표본이 작은 경우가 흔합니다. 많은 머신러닝 모델은 적은 자료로 학습해도 정확도를 크게 잃지 않지만, 딥러닝 모델은 그렇지 않습니다. 딥러닝은 많은 매개변수를 고루 탐색하고 처음 보는 자료에도 일반화하려면 학습 자료가 많이 필요합니다.',d:'적은 자료에서는 머신러닝이 버티는 힘이 있고, 딥러닝을 쓰려면 더 큰 자료를 마련해야 합니다.'},
+ {h:'과적합',p:'모델이 학습 자료에서는 아주 잘 맞히지만 처음 보는 자료에서는 잘 맞히지 못하는 문제입니다. 학습 자료가 적거나, 모델이 지나치게 복잡하거나, 집단 크기가 고르지 않을 때 생길 수 있습니다.',d:'완전히 없앨 수는 없지만 학습 횟수(에포크), 드롭아웃, 정규화, 활성화 함수, 은닉층 수 같은 하이퍼파라미터를 조정해 줄일 수 있습니다. 독립된 시험 자료를 두면 모델이 처음 보는 자료에 잘 일반화하는지 확인할 수 있습니다.'},
+ {h:'시간에 따라 바뀌는 증상',p:'환자의 정신건강 상태는 자주 달라지고, 어떤 질환들은 증상이 서로 가깝습니다. 그래서 오랜 기간에 걸쳐 한 질환을 분명하게 진단하거나 예측하는 일이 가장 큰 어려움 가운데 하나입니다.',d:'같은 질환 안에서도 증상의 세기를 나눠 알아보는 모델, 그리고 시간에 따라 달라지는 여러 상황을 고려하는 모델을 개발해 볼 수 있습니다.'},
+ {h:'질 높은 데이터 확보',p:'의미 있고 질 높은 대규모 자료를 얻기가 어렵습니다. 참여자 모집에 따르는 윤리와 개인정보 문제, 비용, 그리고 의료 전문가와의 다학제 협력이 필요한 자료 수집의 성격 때문입니다.',d:'자료를 받기 전에 충분한 설명과 동의 절차를 다듬어 참여자의 신뢰를 높일 수 있습니다. 사람들이 연구를 위해 자신의 정신건강 정보를 자유롭게 내놓을 수 있는 익명의 책임 있는 데이터 저장소를 만드는 것도 참여자의 신뢰를 높일 수 있다고 논문은 봅니다.'}];
+S.seg('chalSeg',k=>{const c=CH[+k];
+  $('#chalBody').innerHTML=`<h4>${esc(c.h)}</h4><p>${esc(c.p)}</p><p class="dir"><b>논문이 제안한 방향:</b> ${esc(c.d)}</p>`;
+},KEY+':chal');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 리뷰에 최종으로 포함된 논문은 몇 편인가요?',o:['33편','180편','361편'],a:0,e:'데이터베이스에서 찾은 기록 361건 가운데 중복 제거, 제목 거르기, 전문 평가를 거쳐 33편이 남았습니다. 180은 전문을 평가한 보고서 수입니다.'},
+ {q:'포함된 논문 가운데 가장 많은 비율을 차지한 질환 묶음은 무엇인가요?',o:['ADHD','불안과 우울','조현병'],a:1,e:'그림 2에서 불안과 우울이 31%로 가장 많았고, ADHD 18%, 조현병과 PTSD가 각각 15%였습니다.'},
+ {q:'머신러닝 논문에서 가장 자주 골라진 분류 방법 두 가지는 무엇인가요?',o:['나이브 베이즈와 결정 트리','서포트 벡터 머신과 랜덤 포레스트','LSTM과 CNN'],a:1,e:'머신러닝 논문 20편 가운데 절반이 넘는 논문이 SVM이나 RF 가운데 하나 이상을 썼습니다. LSTM과 CNN은 딥러닝 방법입니다.'},
+ {q:'논문이 성능 평가에 대해 강하게 권한 것은 무엇인가요?',o:['학습에 쓴 자료로 다시 성능을 잰다','학습과 검증에 쓰지 않은 별도 자료로 성능을 잰다','정확도 하나만 보고한다'],a:1,e:'모델이 보지 못한 자료에서 재야 과적합 여부를 알 수 있기 때문입니다.'},
+ {q:'논문이 밝힌 한계에 해당하지 않는 것은 무엇인가요?',o:['영어 논문만 포함했다','자폐스펙트럼장애는 다루지 않았다','공개 데이터셋을 정리하지 않았다'],a:2,e:'이 리뷰는 공개 데이터셋 15종을 표 2로 정리했습니다. 네 개 데이터베이스와 영어 논문만 쓴 점, 일곱 질환으로 범위를 좁힌 점, 치료 연구를 포함하지 않은 점은 논문이 밝힌 한계입니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

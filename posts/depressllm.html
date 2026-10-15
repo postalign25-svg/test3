@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자서전적 서사로 우울 읽는 언어모델 - 전민 연구 기록</title>
+<meta name="description" content="행복했던 기억과 힘들었던 기억을 말한 이야기로 미세조정한 대형언어모델이 우울을 가려내고 그 판단을 얼마나 확신하는지까지 알려 준 연구(IEEE Journal of Biomedical and Health Informatics, 2026)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px;align-items:center}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+.slider{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2);flex:1 1 220px;min-width:0}
+.slider input{flex:1;min-width:0;accent-color:var(--ink)}
+.slider output{font-family:var(--num);font-size:13px;color:var(--ink);min-width:3.5em;text-align:right}
+.dist{display:block;width:100%;height:150px;background:var(--bg)}
+.dist .d-lo{fill:var(--line-2)}
+.dist .d-hi{fill:var(--ink)}
+.dist .d-cut{stroke:var(--signal);stroke-width:1.5;stroke-dasharray:4 3}
+.dist .d-ax{stroke:var(--meta);stroke-width:1}
+.dist text{font-family:var(--num);font-size:11px;fill:var(--meta)}
+.out{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.out b{font-family:var(--num);font-weight:500;color:var(--signal-ink)}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 10px;font-size:13px;font-family:var(--num);border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cm{display:grid;gap:8px;margin:4px 0 6px}
+.cm-row{display:grid;grid-template-columns:84px minmax(0,1fr);gap:10px;align-items:center;font-size:14px}
+.cm-bar{display:flex;height:22px;background:var(--bg);border:1px solid var(--line)}
+.cm-bar span{display:block;height:100%;transition:width .3s ease-out}
+.cm-bar .ok{background:var(--ink-2)}
+.cm-bar .miss{background:var(--tint);border-left:1px dashed var(--meta)}
+.cm-key{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;color:var(--ink-2);margin:6px 0 0}
+.cm-key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px}
+.cm-key .ok{background:var(--ink-2)}
+.cm-key .miss{background:var(--tint);border:1px dashed var(--meta)}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:14px 0 4px}
+.kv div{padding:8px 10px 8px 0;font-size:13px;color:var(--ink-2)}
+.kv div+div{padding-left:10px;border-left:1px solid var(--line)}
+.kv b{display:block;font-family:var(--num);font-weight:500;font-size:19px;color:var(--signal-ink)}
+.bars{display:grid;gap:6px;margin-top:4px}
+.bar{display:grid;grid-template-columns:190px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.bar .bn small{display:block;font-size:12px;color:var(--meta)}
+.bar .bt{position:relative;height:16px;background:var(--tint)}
+.bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.bar.hi .bf{background:var(--signal)}
+.bar .bv{font-family:var(--num);font-size:13px;text-align:right}
+.bar.hi .bv{color:var(--signal-ink)}
+.bar-ticks{display:grid;grid-template-columns:190px minmax(0,1fr) 52px;gap:10px;margin-top:2px}
+.bar-ticks div{position:relative;height:16px}
+.bar-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta)}
+.grp{font-size:12.5px;color:var(--meta);margin:10px 0 0;padding-top:6px;border-top:1px solid var(--line)}
+.grp:first-child{margin-top:0;padding-top:0;border-top:0}
+.cmp{display:grid;grid-template-columns:150px minmax(0,1fr) 120px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.cmp h4{grid-column:1/-1;margin:10px 0 0;font-size:14px;font-weight:600}
+.cases{display:grid;gap:12px;margin:0 0 6px}
+.cases .cg{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;align-items:center}
+.cases .cg-l{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+.cases .cg-l small{display:block;font-family:var(--num);font-size:12px;color:var(--meta)}
+.cases .cg-b{display:flex;flex-wrap:wrap;gap:6px}
+.cases button{width:40px;height:40px;border:1px solid var(--line-2);background:var(--surface);font-family:var(--num);font-size:13px;border-radius:var(--r);color:var(--ink)}
+.cases button.dis{border-style:dashed}
+.cases button:hover{border-color:var(--ink)}
+.cases button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.case-out{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.case-out dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0 0 10px;border-bottom:1px solid var(--line)}
+.case-out dt{font-size:12.5px;color:var(--meta)}
+.case-out dd{margin:0 0 8px;font-size:14.5px}
+.case-out dd .n{font-family:var(--num)}
+.case-out p{margin:0;font-size:15.5px;line-height:1.75}
+@media (max-width:640px){
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+  .bar,.bar-ticks{grid-template-columns:112px minmax(0,1fr) 44px;gap:8px;font-size:13px}
+  .bar .bn small{font-size:11px}
+  .cmp{grid-template-columns:96px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .cm-row{grid-template-columns:64px minmax(0,1fr);font-size:13px}
+  .kv b{font-size:16px}
+  .cases .cg{grid-template-columns:1fr;gap:6px}
+  .case-out dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 대형언어모델, 우울 선별</p>
+  <h1>행복했던 기억과 힘들었던 기억을 말한 이야기에서, 언어모델은 우울을 얼마나 읽어 내고 그 판단을 얼마나 확신할까요?</h1>
+  <p class="lede">우리는 기분을 말로 드러냅니다. 같은 일을 이야기해도 우울한 사람의 말에는 다른 결이 묻어납니다. 이 연구는 실제 참여자가 들려준 행복한 기억과 고통스러운 기억 3,699편으로 <span class="term" data-tip="Large language model. 아주 많은 글로 미리 학습해 문장을 이해하고 만들어 내는 인공지능 모델. GPT, LLaMA 같은 모델이 여기에 속한다.">대형언어모델</span>을 다시 가르쳐 DepressLLM을 만들었습니다. 이 모델은 우울 여부만 말하지 않고, 그 판단을 얼마나 확신하는지와 어떤 말에 기대어 판단했는지도 함께 내놓습니다.</p>
+  <p class="meta">원문: Moon S, Lee A 외. IEEE Journal of Biomedical and Health Informatics, 2026(온라인 선공개)<br>읽는 데 약 14분, 직접 눌러 보는 요소 6개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>전남대병원과 화순전남대병원의 TREND-P 연구에서 참여자가 행복한 기억과 고통스러운 기억을 각각 3분 넘게 말한 녹음을 글로 옮긴 <b>3,699편</b>을 모았습니다. 80%로 언어모델을 미세조정하고, 나머지 20%(740명)로 성능을 쟀습니다.</li>
+    <li>모델은 우울 척도 <span class="term" data-tip="Patient Health Questionnaire-9. 지난 2주 동안의 우울 증상 9가지를 0~3점으로 묻는 자기보고 척도. 총점 0~27점.">PHQ-9</span> 점수(0~27점)를 예측하고, 점수마다 붙은 확률을 더하는 SToPS로 우울 여부와 신뢰도를 함께 계산합니다. PHQ-9 5점 기준 AUC는 <b>0.789</b>였고, 신뢰도 0.95 이상인 표본에서는 <b>0.904</b>까지 올랐습니다.</li>
+    <li>전문의 두 명과 같은 200명을 놓고 비교했을 때 MCC가 가장 높았고, 직장인 일상 음성 기록(VEMOD), 영어 임상 면담(DAIC-WOZ, E-DAIC), 중국어 면담(CMDC) 자료에서도 성능이 유지되었습니다.</li>
+    <li>모델이 높은 확신으로 틀린 16건을 전문의 두 명이 다시 보니, 12건은 두 사람 모두 자기보고 점수보다 모델의 판단에 동의했습니다. 논문은 시간 맥락, 보호 요인, 정보가 적은 이야기에서의 불확실성 표현을 더 다듬을 점으로 꼽습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>3,699편</b><span>미세조정과 검증에 쓴 자서전적 서사</span></div>
+  <div class="stat"><b>0.789</b><span>내부 검증 AUC(PHQ-9 5점 기준, 740명)</span></div>
+  <div class="stat"><b>0.904</b><span>신뢰도 0.95 이상 표본의 AUC</span></div>
+  <div class="stat"><b>12 / 16</b><span>고신뢰 오분류 중 두 전문의가 모두 모델 판단에 동의한 사례</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 이야기였을까요</a></li>
+    <li><a href="#how">자료와 모델은 어떻게 만들었나</a></li>
+    <li><a href="#stops">확률을 더해 신뢰도를 얻는 법, SToPS</a></li>
+    <li><a href="#perf">다른 모델과 비교하면</a></li>
+    <li><a href="#conf">확신할수록 더 정확했을까요</a></li>
+    <li><a href="#clin">전문의와 견주면, 다른 자료에서는</a></li>
+    <li><a href="#err">어디서 틀렸고, 틀린 판단은 정말 틀렸을까요</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 이야기였을까요</h2>
+<p>우울증은 아주 흔하고, 2030년에는 세계 질병 부담의 가장 큰 원인 가운데 하나가 될 것으로 예상됩니다. 말은 감정 상태를 비추기 때문에, 언어로 우울을 살피는 방법은 몸에 부담을 주지 않고 비용도 적게 드는 선별 방법으로 주목받아 왔습니다.</p>
+<p>대형언어모델이 나오면서 이 흐름은 더 빨라졌습니다. 그런데 논문은 두 가지 빈자리를 짚습니다. 첫째, 임상적으로 검증된 대규모 자료가 부족합니다. 기존 모델 상당수는 소셜미디어 글로 학습했는데, 이때 '우울'이라는 꼬리표는 PHQ-9 같은 표준 척도가 아니라 특정 낱말이나 "우울증 진단을 받았다"는 글에서 추론한 것이었고, 꼬리표가 없는 사용자를 건강하다고 가정하기도 했습니다. 이런 방식은 잡음을 많이 남깁니다. 둘째, 언어모델이 내린 우울 판단을 얼마나 믿을 수 있는지 평가한 연구가 드물었습니다.</p>
+<div class="callout"><p><b>비유:</b> 경험 많은 의사는 "우울증으로 보입니다"라고만 말하지 않습니다. "이 이야기만으로는 확신하기 어렵습니다", "이 부분 때문에 그렇게 봅니다"라고 덧붙입니다. 이 연구는 언어모델에게도 그 두 마디, 곧 확신의 정도와 근거를 말하게 하려 했습니다.</p></div>
+
+<h2 id="how">2. 자료와 모델은 어떻게 만들었나</h2>
+<p>학습 자료는 TREND-P입니다. 전남대병원과 화순전남대병원에서 정신질환의 디지털 생체표지를 <span class="term" data-tip="특정 진단명별로 나누지 않고, 여러 진단에 공통인 증상과 과정을 함께 보는 연구 방식.">진단 횡단</span> 방식으로 찾으려고 2021년 8월 2일부터 모은 자료로, 이 분석에는 2025년 1월 20일까지의 자료가 들어갔습니다. 외래 치료를 받는 성인과 정신과 진단이 없는 대조군이 참여했습니다.</p>
+<p>참여자는 조용한 방에서 태블릿과 헤드셋 마이크로, 자신에게 의미 있는 기쁜 기억 하나와 고통스러운 기억 하나를 각각 3분 이상 이야기했습니다. 녹음은 그대로 글로 옮기고 개인 정보를 지운 뒤 글만 분석에 썼습니다. 한 사람의 이야기 안에 긍정과 부정의 맥락이 짝을 이뤄 들어 있다는 점이 이 자료의 특징입니다.</p>
+<ul class="flow" aria-label="자료 흐름">
+  <li><b>3,699편</b><span>TREND-P 자서전적 서사(PHQ-9 평균 4.6점, 5점 이상 37.9%)</span></li>
+  <li><b>80%</b><span>미세조정에 사용</span></li>
+  <li><b>740명</b><span>나머지 20%, 학습에 쓰지 않은 내부 검증 자료</span></li>
+  <li><b>4개</b><span>외부 검증 자료: VEMOD(265명), DAIC-WOZ(189명), E-DAIC(86명), CMDC(78명)</span></li>
+</ul>
+<p>모델의 바탕으로는 OpenAI의 GPT 계열(GPT-3.5 turbo, GPT-4o, GPT-4.1)과 공개 모델 세 가지(Phi-4 14B, Qwen3-32B, LLaMA-3.3 70B)를 썼습니다. 공개 모델은 <span class="term" data-tip="Low-rank adaptation. 거대한 모델 전체를 다시 학습하지 않고, 작은 보조 행렬만 덧붙여 학습하는 효율적인 미세조정 방법. QLoRA는 여기에 4비트 양자화를 더해 메모리를 더 아낀다.">LoRA나 QLoRA</span>로 <span class="term" data-tip="이미 학습된 언어모델을 특정 과제의 자료로 조금 더 학습시켜 그 과제에 맞추는 일.">미세조정</span>했습니다. 공개 모델까지 함께 만든 것은 결과를 다시 확인할 수 있고 누구나 쓸 수 있게 하려는 뜻입니다. 실제로 LLaMA-3.3 기반 모델의 코드와 가중치, 웹 데모가 공개되어 있습니다.</p>
+<p>모델이 배운 과제는 "이 이야기를 한 사람의 PHQ-9 점수는 몇 점일까"입니다. 우울인지 아닌지를 곧바로 맞히게 하지 않고 연속된 점수를 예측하게 한 것이, 다음에 볼 SToPS의 출발점입니다.</p>
+
+<h2 id="stops">3. 확률을 더해 신뢰도를 얻는 법, SToPS</h2>
+<p>언어모델은 다음에 올 <span class="term" data-tip="언어모델이 글을 처리하는 가장 작은 단위. 낱말 조각이나 숫자 하나가 토큰 하나가 되기도 한다.">토큰</span>마다 확률을 매깁니다. 점수를 답하게 하면 0점부터 27점까지 점수 토큰 하나하나에 확률이 붙습니다. SToPS(Score-guided Token Probability Summation)는 이 확률을 기준점에서 둘로 나눠 더합니다.</p>
+<ul>
+  <li>기준점 이상 점수의 확률을 모두 더한 값이 <b>우울일 확률</b>입니다.</li>
+  <li>신뢰도는 그 확률이 반반(50%)에서 얼마나 멀리 떨어졌는지를 두 배 한 값, 곧 <b>2 × |우울일 확률 − 0.5|</b>입니다. 0이면 반반이라 전혀 확신하지 못한 것이고, 1이면 한쪽으로 완전히 기운 것입니다.</li>
+</ul>
+<p>논문 그림 1의 예에서는 10점 미만 점수의 확률 합이 10%, 10점 이상이 90%였습니다. 그래서 "우울 의심, 신뢰도 (90% − 50%) × 2 = 80%"가 됩니다. 아래에서 점수 분포를 직접 움직여 보세요.</p>
+
+<div class="panel figure" id="stopsFig"><span class="cx"></span>
+  <div class="fig-head"><h3>점수 확률을 더해 판단과 신뢰도 만들기</h3><span class="note">가상 예시</span></div>
+  <div class="ctrl">
+    <label class="slider">분포의 중심<input type="range" id="stC" min="0" max="27" step="0.5" value="7"><output id="stCv">7점</output></label>
+    <div class="seg" id="stSp" role="group" aria-label="분포 폭"><button data-k="2">좁게</button><button data-k="5">넓게</button></div>
+    <div class="seg" id="stCut" role="group" aria-label="기준점"><button data-k="5">기준 5점</button><button data-k="10">기준 10점</button></div>
+  </div>
+  <svg class="dist" id="stSvg" viewBox="0 0 580 150" preserveAspectRatio="none" role="img" aria-label="PHQ-9 점수 토큰별 확률 분포(가상 예시)"></svg>
+  <p class="out" id="stOut" aria-live="polite"></p>
+  <div id="stG"></div>
+  <p class="fig-note">막대 하나가 점수 토큰 하나(0~27점)의 확률입니다. 진한 막대가 기준점 이상(우울 쪽), 연한 막대가 기준점 미만(정상 쪽), 빨간 점선이 기준점입니다. 분포 모양은 설명을 위해 만든 가상 예시이며 실제 모델의 출력이 아닙니다. 계산식은 논문의 식 (1), (2)를 그대로 따랐습니다.</p>
+</div>
+
+<p>점수 하나만 뽑아 기준과 비교하면, 7점이라는 답이 5점과 27점 가운데 어디에 더 가까운 확신이었는지 알 수 없습니다. 분포 전체를 더하면 모델이 기준점 근처에서 망설이는지, 한쪽으로 분명히 기울었는지가 숫자로 드러납니다. Qwen3처럼 숫자를 한 자리씩 끊어 쓰는 모델은 두 자리 점수의 확률을 첫째 자리와 둘째 자리 확률의 곱으로 계산했습니다.</p>
+<p>모델은 판단과 함께 짧은 자연어 설명과 판단에 영향을 준 핵심 낱말이나 구절도 내놓습니다. 예를 들어 그림 1의 사례에서는 수면 부족, 사회적 위축, 친구를 잃은 경험 같은 표현을 근거로 들었습니다.</p>
+
+<h2 id="perf">4. 다른 모델과 비교하면</h2>
+<p>성능은 두 지표로 쟀습니다. <span class="term" data-tip="Area under the ROC curve. 우울인 사람을 우울이 아닌 사람보다 더 높게 점수 매길 확률. 0.5면 구분하지 못함, 1이면 완벽한 구분. 판정 기준점과 상관없이 전반적인 구분 능력을 본다.">AUC</span>는 기준점과 상관없는 전반적인 구분 능력을, <span class="term" data-tip="Matthews correlation coefficient. 참양성, 참음성, 거짓양성, 거짓음성을 모두 반영하는 이진 분류 지표. -1~1, 집단 크기가 다를 때도 균형 있게 평가한다.">MCC</span>는 실제 판정이 얼마나 균형 잡혔는지를 봅니다. 미세조정 모델은 세 번(시드 0, 1, 2) 돌린 평균입니다.</p>
+<p>비교 대상은 넓었습니다. 따로 학습시키지 않고 지시문만 준 <span class="term" data-tip="Zero-shot. 해당 과제의 예시나 추가 학습 없이 지시만 주고 바로 답하게 하는 방식.">제로샷</span> 언어모델(GPT-4.5, o1-pro 등), 문장 임베딩에 XGBoost를 얹은 지도학습 모델, 정신건강 글로 학습된 MentalBERT와 MentalRoBERTa가 있었습니다. 같은 계열의 MentaLLaMA-chat-13B는 740건 가운데 303건에서 지시를 따르지 않거나 분류를 내놓지 않아 활용이 제한적이었습니다.</p>
+
+<div class="panel figure" id="t2"><span class="cx"></span>
+  <div class="fig-head"><h3>내부 검증 자료 740명에서의 성능(표 II)</h3><span class="note">빨간 막대: DepressLLM(GPT-4.1)</span></div>
+  <div class="ctrl">
+    <div class="seg" id="t2Cut" role="group" aria-label="기준점"><button data-k="5">PHQ-9 5점</button><button data-k="10">PHQ-9 10점</button></div>
+    <div class="seg" id="t2Met" role="group" aria-label="지표"><button data-k="auc">AUC</button><button data-k="mcc">MCC</button></div>
+  </div>
+  <div class="bars" id="t2Bars"></div>
+  <div class="bar-ticks" aria-hidden="true"><span></span><div id="t2Ticks"></div><span></span></div>
+  <p class="fig-note">제로샷 결과는 온도 0으로 한 번 돌린 값이고, 지도학습과 미세조정 결과는 세 번 돌린 평균입니다. 'SToPS 없이'는 같은 미세조정 모델이 '정상'과 '우울' 답 토큰의 확률만으로 판정한 경우입니다. 표의 일부 행만 골라 보여 줍니다.</p>
+</div>
+
+<p>논문이 짚은 흐름은 이렇습니다. 미세조정한 DepressLLM은 모든 평가 설정에서 가장 좋은 결과를 냈습니다. 바탕 모델에 따라 성능이 달라져 GPT-4 계열이 GPT-3.5 turbo보다 뚜렷이 나았고, 공개 모델 가운데서는 크기가 큰 LLaMA-3.3 70B가 Phi-4와 Qwen3보다 나았습니다. 설명이나 스스로 말한 신뢰도를 덧붙이는 것은 성능에 거의 영향이 없었지만, SToPS를 빼면 성능이 눈에 띄게 떨어졌습니다. 제로샷에서는 기쁜 기억보다 고통스러운 기억을 읽을 때 분류가 더 잘 되었고, 둘을 함께 읽을 때 가장 좋았습니다.</p>
+
+<h2 id="conf">5. 확신할수록 더 정확했을까요</h2>
+<p>신뢰도가 쓸모 있으려면, 모델이 확신할 때 실제로 더 자주 맞아야 합니다. 연구팀은 신뢰도 문턱을 점점 높이며 문턱을 넘은 사례만 남겨 보았습니다. 문턱 0에서는 740명 모두를 판정해 정확도 72.8%, 문턱 0.5에서는 67.7%가 남아 80.0%, 문턱 0.95에서는 11.5%가 남아 92.9%였습니다.</p>
+
+<div class="panel figure" id="cf"><span class="cx"></span>
+  <div class="fig-head"><h3>신뢰도 문턱을 올리면 남는 사례와 정확도(그림 2a)</h3><span class="note">문턱을 골라 보세요</span></div>
+  <div class="pick" id="cfPick" role="group" aria-label="신뢰도 문턱"></div>
+  <div class="cm" id="cfBars"></div>
+  <div class="cm-key"><span><i class="ok"></i>맞힌 판정</span><span><i class="miss"></i>틀린 판정</span></div>
+  <div class="kv" id="cfKv"></div>
+  <div id="cfG"></div>
+  <p class="out" id="cfOut" aria-live="polite"></p>
+  <p class="fig-note">사례 수는 논문 그림 2a에 적힌 수입니다. 남은 비율과 정확도는 그 수로 계산한 계산값이며, 문턱 0, 0.5, 0.95에서는 본문에 적힌 값과 같습니다. 눈금의 속 빈 점은 문턱 0(전체)의 정확도, 빨간 점은 고른 문턱의 정확도입니다.</p>
+</div>
+
+<p>다른 신뢰도 방법과도 견줬습니다. 모델에게 "얼마나 확신하나요"라고 묻는 자기보고 신뢰도는 문턱을 올릴수록 오히려 성능이 떨어졌습니다. '정상'과 '우울' 두 답의 확률만 쓰는 방법은 그보다 나았지만, SToPS가 모든 문턱에서 AUC가 더 높았습니다. 그림 2b에 적힌 값으로 문턱 0.95에서 AUC는 자기보고 0.710, 두 답 확률 0.871, SToPS 0.904였습니다. 부록에서는 엔트로피, 최대 토큰 확률, 마진, 예측 엔트로피 같은 표준 방법과 비교해도 SToPS가 앞섰다고 보고합니다.</p>
+
+<h2 id="clin">6. 전문의와 견주면, 다른 자료에서는</h2>
+<p>내부 검증 자료에서 나이와 성별이 고루 들어가고 PHQ-9 중증도 분포가 비슷하도록 200명을 골라, 정신건강의학과 전문의 두 명에게 같은 이야기를 읽고 PHQ-9 점수를 모르는 상태에서 정상과 우울을 판정하게 했습니다.</p>
+
+<div class="panel figure" id="t3"><span class="cx"></span>
+  <div class="fig-head"><h3>전문의와 모델의 MCC, 같은 200명(표 III)</h3></div>
+  <div class="ctrl"><div class="seg" id="t3Cut" role="group" aria-label="기준점"><button data-k="5">PHQ-9 5점</button><button data-k="10">PHQ-9 10점</button></div></div>
+  <div class="bars" id="t3Bars"></div>
+  <div class="bar-ticks" aria-hidden="true"><span></span><div id="t3Ticks"></div><span></span></div>
+  <p class="fig-note">전문의와 GPT-4.1 제로샷은 한 번, DepressLLM은 세 번 돌린 평균입니다.</p>
+</div>
+
+<p>두 기준점 모두에서 DepressLLM의 MCC가 가장 높았습니다. 논문은 이를 표준 기준점에서 DepressLLM이 임상과 지역사회에서 선별을 돕는 도구로 쓰일 가능성을 뒷받침하는 결과로 봅니다.</p>
+<p>다음은 학습에 쓰지 않은, 성격이 전혀 다른 네 자료입니다. VEMOD는 콜센터 세 곳과 공공기관 한 곳의 고스트레스 직군이 2주 동안 하루 세 번 휴대전화 앱에 남긴 짧은 음성 기록(<span class="term" data-tip="Ecological momentary assessment. 일상 속에서 그때그때의 기분과 상태를 짧게 여러 번 기록하게 하는 방법.">EMA</span>)입니다. DAIC-WOZ와 E-DAIC는 영어 임상 면담 자료로 <span class="term" data-tip="PHQ-9에서 자살 사고 문항을 뺀 8문항 척도. 총점 0~24점.">PHQ-8</span>을 썼고, CMDC는 임상 진단을 받은 우울군과 대조군의 중국어 반구조화 면담 자료로 PHQ-9 9점을 기준으로 썼습니다.</p>
+
+<div class="panel figure" id="ext"><span class="cx"></span>
+  <div class="fig-head"><h3>외부 자료에서의 성능(표 IV, 표 V)</h3><span class="note">속 빈 점: 비교 모델, 빨간 점: DepressLLM</span></div>
+  <div class="ctrl">
+    <div class="seg" id="extDs" role="group" aria-label="자료"><button data-k="vemod">VEMOD</button><button data-k="daic">DAIC-WOZ</button><button data-k="edaic">E-DAIC</button><button data-k="cmdc">CMDC</button></div>
+    <div class="seg" id="extCut" role="group" aria-label="기준점"><button data-k="5">기준 5점</button><button data-k="10">기준 10점</button></div>
+  </div>
+  <div class="cmp" id="extOut"></div>
+  <p class="out" id="extNote" aria-live="polite"></p>
+</div>
+
+<p>논문은 DepressLLM이 대부분의 지표에서 GPT-4.1 기준 모델보다 나았고, 외부 자료에서도 일관된 성능을 보였다고 정리합니다. 신뢰도 0.95 문턱을 적용하면 AUC는 VEMOD 0.872, DAIC-WOZ 0.995였고, E-DAIC와 CMDC에서는 1.000에 이르렀습니다. 학습한 자서전적 서사와 형식이 다른 일상 기록과 면담에서도 신뢰도가 높은 판단일수록 더 잘 맞았다는 뜻입니다.</p>
+
+<h2 id="err">7. 어디서 틀렸고, 틀린 판단은 정말 틀렸을까요</h2>
+<h3>틀린 판정이 몰린 곳</h3>
+<p>오류는 고르게 흩어져 있지 않았습니다. 불안이 함께 있는지에 따라 오류 양상이 달랐습니다. 우울군 가운데서는 불안이 없는 사람에게서 우울을 놓치는 비율이 더 높았고, 정상군 가운데서는 불안이 있는 사람을 우울로 잘못 판정하는 비율이 더 높았습니다. 불면 여부로 나눴을 때 우울을 놓치는 비율은 뚜렷한 차이가 없었습니다.</p>
+<p>PHQ-9 점수가 경계에 걸친 3~9점 구간에서 오류가 더 잦았고, 이 구간에서는 평균 신뢰도도 낮았습니다. 모든 점수 구간에서 신뢰도가 높을수록 오류율이 낮았습니다. 모델이 헷갈린 곳에서 스스로도 덜 확신했다는 뜻입니다.</p>
+<h3>모델이 기댄 말</h3>
+<p>모델이 꼽은 핵심 표현을 모아 보면, 감정이 더 긍정적인 구절일수록 우울일 확률을 낮게 예측했습니다(구절 감정 점수와 예측 확률의 <span class="term" data-tip="두 값의 순위가 얼마나 같은 방향으로 움직이는지 나타내는 상관계수. -1이면 완전히 반대 방향.">스피어만 상관</span> ρ = −0.814, 그림 7b에 적힌 값). 고통, 외로움과 줄어든 사회적 지지, 수면 문제, 기능 저하, 자살 생각처럼 기존 연구에서 우울의 언어 표지로 알려진 주제가 묶음으로 드러났고, 긍정 정서나 회복과 관련된 묶음은 정상 예측에 더 많았습니다.</p>
+<p>TREND-P에서는 한 사람이 기쁜 기억과 고통스러운 기억을 모두 말했기 때문에 "행복했다", "괴로웠다" 같은 말이 두 예측 집단 모두에 흔했습니다. 대신 "힘들었다"처럼 고생을 뜻하는 말은 기쁜 기억을 말할 때 나와도 우울 예측으로 이어졌습니다. 일상 기록인 VEMOD에서는 "기분 좋아요", "스트레스 없어요"와 "지쳤어요", "불안해요"가 더 뚜렷하게 갈렸습니다. 또 전체 글의 길이보다 문장 하나에 담긴 정보가 많을수록 구분이 더 잘 되었습니다.</p>
+<h3>높은 확신으로 틀린 16건</h3>
+<p>연구팀은 신뢰도 0.95 이상이면서 PHQ-9 점수와 판정이 어긋난 16건을 골라, 정신건강의학과 전문의 두 명이 따로 이야기 전문과 모델의 설명을 읽고 검토하게 했습니다. 그 두 명 가운데 정신과 의사 A가 저였습니다. 사례 번호를 눌러 두 전문의의 판단과 요약된 의견을 보세요.</p>
+
+<div class="panel figure" id="cases"><span class="cx"></span>
+  <div class="fig-head"><h3>고신뢰 오분류 16건의 전문의 검토(표 VI)</h3><span class="note">점선 테두리: 두 전문의 의견이 갈린 사례</span></div>
+  <div class="cases" id="caseGrid"></div>
+  <div class="case-out" id="caseOut" aria-live="polite"></div>
+  <p class="fig-note">의견은 표 VI의 요약 의견을 우리말로 풀어 옮긴 것입니다. 여기서 우울 판정 기준은 PHQ-9 5점입니다.</p>
+</div>
+
+<p>16건 가운데 12건은 두 전문의 모두 자기보고 PHQ-9 점수보다 모델의 해석에 동의했습니다. 나머지 4건은 두 전문의의 의견이 서로 갈렸고, 두 사람이 모두 모델이 틀렸다고 본 사례는 없었습니다. 전문의들은 점수와 판정이 어긋난 이유로 신체화, 자기 감정을 잘 알아차리지 못함, 자기 정서에 대한 통찰 부족을 꼽았습니다.</p>
+<p>동시에 검토는 모델이 다듬어야 할 점도 분명히 보여 주었습니다. 지난 일을 지금의 상태처럼 읽는 등 시간 맥락을 충분히 따지지 못했고, 회복력 같은 보호 요인을 놓쳤으며, 병적인 감정 반응과 그렇지 않은 반응을 가르기 어려워했습니다. 이야기에 담긴 정보가 적을 때 신뢰도를 낮췄어야 했다는 의견도 여러 번 나왔습니다.</p>
+
+<h2 id="meaning">8. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>논문은 이 연구의 핵심 강점을 설명 가능성과 신뢰도 추정을 하나로 묶은 데서 찾습니다. 모델은 판단의 근거가 된 말을 짧게 설명하고, 보정된 신뢰도를 함께 내놓기 때문에 애매한 예측에는 무게를 덜 주며 실제 현장에서 더 조심스럽게 쓸 수 있습니다. 자기 감정 상태를 이해하도록 돕는 일은 통찰을 높이고 낙인을 줄이며 치료 참여를 늘릴 수 있다는 점에서 정신건강 분야에 특히 가치가 있다고 봅니다.</p>
+<p>이야기 형식이 다른 일상 기록과 면담 자료로 성능이 이어진 이유로, 논문은 기쁜 기억과 고통스러운 기억을 함께 학습해 넓은 범위의 미묘한 기분 신호를 읽게 되었을 가능성을 듭니다. 그리고 이를 자료의 질에 공을 들이는 접근의 가치로 정리합니다. 전문의끼리도 판단이 갈렸던 사례를 두고는, 주관이 개입하기 쉬운 영역에서 언어모델이 일관되고 재현 가능한 해석을 주는 보조 도구가 될 수 있다고 적습니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 말 대신 몸이 내는 신호로 우울을 살핀 연구도 있습니다. <a data-paper="facial_video_hrv_2026">얼굴 영상 심박변이도로 우울 증상을 가려낸 연구</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>지난 일을 돌아보는 행복과 고통의 이야기는 짧은 기간 안에는 실제 기분이 바뀌어도 비슷하게 나올 수 있어, 시간에 따른 변화를 잘 잡지 못할 수 있습니다.</li>
+  <li>정답으로 쓴 PHQ-9 점수가 자기보고여서, 감정 인식의 한계나 사회적 바람직성 편향 때문에 실제 상태와 다를 수 있습니다. 임상 판단에 더 가까운 꼬리표로 학습하면 성능이 더 나아질 것으로 봅니다.</li>
+  <li>전문의 의견이 갈린 애매한 사례에도 모델이 높은 신뢰도를 매겼습니다. 불확실성을 알아차리는 능력에는 한계가 있어 신뢰도 추정을 더 다듬어야 합니다.</li>
+  <li>OpenAI 모델은 API로만 쓸 수 있어 배포가 자유롭지 않고, 정신건강처럼 민감한 분야에서는 개인정보 우려가 있습니다. 그래서 공개 모델 기반 DepressLLM을 함께 만들었고, 공개 모델의 발전이 정확도와 쓰임새를 더 높일 것으로 기대합니다.</li>
+</ul>
+<h3>다음 질문</h3>
+<p>논문은 말소리나 뇌파처럼 언어 밖의 신호로 이 신뢰도 중심 설계를 넓히는 일을 실제 환경에서 선별을 더 튼튼하게 만드는 다음 단계로 꼽습니다. 또 정보가 적은 이야기에서 모델이 스스로 "판단하기 어렵다"고 말하게 하는 일, 시간 맥락과 보호 요인을 읽게 하는 일이 남아 있습니다.</p>
+
+<h2 id="quiz">9. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Moon S, Lee A, Kim JE, Kang H-J, Shin I-S, Kim S-W, Kim J-M, Jhon M, Kim J-W. DepressLLM: Interpretable Domain-Adapted Language Model for Depression Detection from Real-World Narratives. IEEE J Biomed Health Inform. 2026 (epub ahead of print). doi:10.1109/JBHI.2026.3711090</p>
+  <p>DOI <a href="https://doi.org/10.1109/JBHI.2026.3711090" target="_blank" rel="noopener">10.1109/JBHI.2026.3711090</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/42424224/" target="_blank" rel="noopener">42424224</a><br>
+  원문은 게재가 확정된 저자 원고로, 최종 편집 전이라 내용이 바뀔 수 있습니다. 저작권은 IEEE에 있습니다(© 2026 IEEE. All rights reserved). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문, 표 I~VI, 그림 2와 7에 적힌 값에서 가져왔습니다. 코드와 모델 가중치는 <a href="https://huggingface.co/SehwanMoon/DepressLLM-llama3.3-70B" target="_blank" rel="noopener">Hugging Face</a>에 공개되어 있습니다.</p>
+  <p>SToPS 계산 그림의 점수 분포는 설명을 위해 만든 가상 예시입니다. 이 연구의 모델은 진단 도구가 아니며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='depressllm';
+const pct=v=>(v*100).toFixed(1)+'%';
+
+/* 1) SToPS 계산(가상 예시 분포, 식 (1), (2)) */
+let stC=S.store.get(KEY+':stc',7),stSp=2,stCut=5;
+const slider=$('#stC');slider.value=stC;
+function stops(){
+  const w=[];let tot=0;for(let s=0;s<=27;s++){const v=Math.exp(-Math.pow(s-stC,2)/(2*stSp*stSp));w.push(v);tot+=v}
+  const p=w.map(v=>v/tot),pd=p.reduce((a,v,s)=>a+(s>=stCut?v:0),0),conf=2*Math.abs(pd-.5),mx=Math.max(...p);
+  let g='';const X=s=>14+s*20;
+  p.forEach((v,s)=>{const h=v/mx*104;g+=`<rect class="${s>=stCut?'d-hi':'d-lo'}" x="${X(s)-7}" y="${(118-h).toFixed(1)}" width="14" height="${h.toFixed(1)}"/>`});
+  g+=`<line class="d-ax" x1="0" x2="580" y1="118.5" y2="118.5"/>`;
+  for(let s=0;s<=27;s+=5)g+=`<text x="${X(s)}" y="136" text-anchor="middle">${s}</text>`;
+  g+=`<text x="${X(27)}" y="136" text-anchor="middle">27</text>`;
+  g+=`<line class="d-cut" x1="${X(stCut)-10}" x2="${X(stCut)-10}" y1="6" y2="122"/>`;
+  $('#stSvg').innerHTML=g;
+  $('#stCv').textContent=(+stC).toFixed(1).replace('.0','')+'점';
+  const call=pd>=.5?'우울 의심':'정상';
+  $('#stOut').innerHTML=`${stCut}점 이상 확률의 합 = <b>${pct(pd)}</b>, ${stCut}점 미만 = <b>${pct(1-pd)}</b>. 판정은 <b>${call}</b>, 신뢰도 = 2 × |${pct(pd)} − 50%| = <b>${pct(conf)}</b>.`;
+  $('#stG').innerHTML=S.gauge({min:0,max:1,ticks:[0,.25,.5,.75,1],pts:[{v:conf,label:`신뢰도 ${pct(conf)}(가상 예시)`}]},`신뢰도 ${pct(conf)}`);
+}
+slider.addEventListener('input',()=>{stC=+slider.value;S.store.set(KEY+':stc',stC);stops()});
+S.seg('stSp',k=>{stSp=+k;stops()},KEY+':stsp');
+S.seg('stCut',k=>{stCut=+k;stops()},KEY+':stcut');
+
+/* 2) 표 II: [이름, 묶음, c5 AUC, c5 MCC, c10 AUC, c10 MCC] */
+const T2=[
+ ['GPT-3.5 turbo','제로샷, 점수 예측',.637,.221,.663,.210],
+ ['LLaMA-3.3 70B','제로샷, 점수 예측',.700,.290,.739,.275],
+ ['GPT-4.1','제로샷, 점수 예측',.709,.320,.724,.265],
+ ['GPT-4.5','제로샷, 점수 예측',.716,.273,.749,.310],
+ ['o1-pro','제로샷, 점수 예측',.699,.367,.731,.259],
+ ['임베딩 + XGBoost','지도학습, 이진 분류',.688,.279,.762,.218],
+ ['MentalBERT','지도학습, 이진 분류',.686,.273,.735,.220],
+ ['MentalRoBERTa','지도학습, 이진 분류',.693,.256,.748,.255],
+ ['DepressLLM (GPT-4.1), SToPS 없이','미세조정',.774,.405,.807,.374],
+ ['DepressLLM (LLaMA-3.3 70B)','미세조정, SToPS',.779,.420,.830,.391],
+ ['DepressLLM (GPT-4o)','미세조정, SToPS',.787,.415,.846,.431],
+ ['DepressLLM (GPT-4.1)','미세조정, SToPS',.789,.424,.835,.430,1]];
+let t2c='5',t2m='auc';
+const ticks=(id,max,step)=>{const t=[];for(let v=0;v<=max+1e-9;v+=step)t.push(+v.toFixed(2));$(id).innerHTML=t.map(v=>`<span style="left:${(v/max*100).toFixed(2)}%">${v}</span>`).join('')};
+function bars(host,rows,max){$(host).innerHTML=rows.map(r=>`<div class="bar${r.hi?' hi':''}"><span class="bn">${esc(r.n)}${r.s?`<small>${esc(r.s)}</small>`:''}</span><span class="bt" role="img" aria-label="${esc(r.n)} ${r.v.toFixed(3)}"><span class="bf" style="width:${Math.min(100,r.v/max*100).toFixed(1)}%"></span></span><span class="bv">${r.v.toFixed(3)}</span></div>`).join('')}
+function t2(){const j=(t2c==='5'?2:4)+(t2m==='mcc'?1:0),max=t2m==='auc'?1:.5;
+  bars('#t2Bars',T2.map(r=>({n:r[0],s:r[1],v:r[j],hi:r[6]})),max);ticks('#t2Ticks',max,t2m==='auc'?.25:.1)}
+S.seg('t2Cut',k=>{t2c=k;t2()},KEY+':t2cut');
+S.seg('t2Met',k=>{t2m=k;t2()},KEY+':t2met');
+
+/* 3) 그림 2a: [문턱, TP, FN, TN, FP] (그림에 적힌 수) */
+const CF=[[0,174,106,365,95],[.1,162,101,356,82],[.2,149,79,342,74],[.3,144,72,329,67],[.4,138,67,309,58],[.5,128,52,273,48],[.6,118,36,233,41],[.7,109,21,186,29],[.8,91,15,121,22],[.9,67,5,62,11],[.95,53,1,26,5]];
+const EXTRA={0:'문턱 0은 740명 전체입니다. 이때 AUC는 0.789(표 II)입니다.',.5:'본문: 67.7%가 남아 정확도 80.0%.',.95:'본문: 11.5%가 남아 정확도 92.9%. 그림 2b에 적힌 값으로 이 문턱의 AUC는 0.904, MCC는 0.828입니다.'};
+$('#cfPick').innerHTML=CF.map((r,i)=>`<button type="button" data-k="${i}">≥${r[0].toFixed(2)}</button>`).join('');
+const W=465;
+S.seg('cfPick',k=>{const [t,tp,fn,tn,fp]=CF[+k],n=tp+fn+tn+fp,acc=(tp+tn)/n;
+  const seg=(a,b,la,lb)=>`<div class="cm-bar" role="img" aria-label="${la} ${a}, ${lb} ${b}"><span class="ok" style="width:${(a/W*100).toFixed(2)}%"></span><span class="miss" style="width:${(b/W*100).toFixed(2)}%"></span></div>`;
+  $('#cfBars').innerHTML=`<div class="cm-row"><span>실제 우울</span>${seg(tp,fn,'맞힌 우울','놓친 우울')}</div><div class="cm-row"><span>실제 정상</span>${seg(tn,fp,'맞힌 정상','우울로 잘못 본 정상')}</div>`;
+  $('#cfKv').innerHTML=`<div><b>${n}명</b>남은 사례</div><div><b>${(n/740*100).toFixed(1)}%</b>740명 중 남은 비율(계산값)</div><div><b>${(acc*100).toFixed(1)}%</b>정확도(계산값)</div>`;
+  $('#cfG').innerHTML=S.gauge({min:60,max:100,ticks:[60,70,80,90,100],pts:[{v:72.8,ref:1,label:'문턱 0(전체)의 정확도 72.8%'},{v:acc*100,label:`문턱 ${t.toFixed(2)}의 정확도 ${(acc*100).toFixed(1)}%(계산값)`}]},`정확도 ${(acc*100).toFixed(1)}%`);
+  $('#cfOut').textContent=`문턱 ${t.toFixed(2)}: 맞힌 우울 ${tp}, 놓친 우울 ${fn}, 맞힌 정상 ${tn}, 우울로 잘못 본 정상 ${fp}. `+(EXTRA[t]||'');
+},KEY+':cf');
+
+/* 4) 표 III */
+const T3=[['전문의 1',.355,.402],['전문의 2',.270,.220],['GPT-4.1 제로샷, 점수 예측',.352,.229],['GPT-4.1 제로샷, 이진 분류',.311,.309],['DepressLLM, SToPS 없이',.454,.385],['DepressLLM (GPT-4.1)',.492,.455,1]];
+S.seg('t3Cut',k=>{const j=k==='5'?1:2;bars('#t3Bars',T3.map(r=>({n:r[0],v:r[j],hi:r[3]})),.6);ticks('#t3Ticks',.6,.2)},KEY+':t3cut');
+
+/* 5) 표 IV, 표 V: 모델별 [AUC, MCC] */
+const EXT={
+ vemod:{name:'VEMOD',d:'직장인 265명의 2주 일상 음성 기록(한국어)',c5:[[.732,.337],[.755,.380],[.766,.381]],c10:[[.784,.318],[.832,.372],[.830,.394]],hc:'신뢰도 0.95 이상에서 AUC 0.872.'},
+ daic:{name:'DAIC-WOZ',d:'영어 임상 면담 189건, PHQ-8',c5:[[.894,.576],[.899,.597],[.920,.619]],c10:[[.875,.550],[.861,.534],[.880,.566]],hc:'신뢰도 0.95 이상에서 AUC 0.995.'},
+ edaic:{name:'E-DAIC',d:'DAIC-WOZ를 넓힌 영어 면담 86건, PHQ-8',c5:[[.904,.555],[.860,.537],[.894,.600]],c10:[[.892,.511],[.889,.563],[.904,.572]],hc:'신뢰도 0.95 이상에서 AUC 1.000.'},
+ cmdc:{name:'CMDC',d:'중국어 반구조화 면담 78건(우울군 26, 대조군 52), PHQ-9 9점 기준',c9:[[.9919,.9130],[.9988,.9620],[.9988,.9622]],hc:'신뢰도 0.95 이상에서 AUC 1.000.'}};
+const MN=['GPT-4.1 제로샷','DepressLLM, SToPS 없이','DepressLLM (GPT-4.1)'];
+let ds='vemod',ec='5';
+function ext(){const e=EXT[ds],cmdc=ds==='cmdc',rows=cmdc?e.c9:e['c'+ec],dg=cmdc?4:3;
+  $('#extCut').style.display=cmdc?'none':'';
+  const lo=m=>Math.max(0,Math.floor((Math.min(...rows.map(r=>r[m]))-.02)*20)/20);
+  const block=(m,lab)=>{const a=lo(m),st=(1-a)>.3?.1:.05,tk=[];for(let v=a;v<=1+1e-9;v+=st)tk.push(+v.toFixed(2));
+    return `<h4>${lab}</h4>`+rows.map((r,i)=>{const ref=i<2;return `<span class="c-name">${MN[i]}</span>${S.gauge({min:a,max:1,ticks:tk,pts:[{v:r[m],ref,label:`${MN[i]} ${lab} ${r[m].toFixed(dg)}`}]},`${e.name} ${MN[i]} ${lab} ${r[m].toFixed(dg)}`)}<span class="c-val">${ref?r[m].toFixed(dg):`<b>${r[m].toFixed(dg)}</b>`}</span>`}).join('')};
+  $('#extOut').innerHTML=block(0,'AUC')+block(1,'MCC');
+  $('#extNote').textContent=`${e.name}: ${e.d}. ${cmdc?'':`기준 ${ec}점. `}${e.hc} DepressLLM은 세 번 돌린 평균입니다.`}
+S.seg('extDs',k=>{ds=k;ext()},KEY+':extds');
+S.seg('extCut',k=>{ec=k;ext()},KEY+':extcut');
+
+/* 6) 표 VI: [번호, 실제 PHQ-9, 예측 PHQ-9, 전문의 A, 전문의 B, 묶음, 의견] */
+const CASES=[
+ [1,5,0,'정상','정상','n','모델 판단이 적절합니다. PHQ-9 점수는 기분이 아닌 다른 증상을 반영한 것으로 보입니다.'],
+ [2,6,0,'정상','정상','n','면담 내용만 보면 모델 판단이 적절합니다. 다만 고통에 대한 언급이 적어 정확한 평가가 어려워 보입니다.'],
+ [3,4,10,'중등도','중증','d','모델 판단이 적절합니다. 슬픔과 우울을 직접 말하고 있어 PHQ-9 문항에 실제보다 낮게 답했을 가능성이 있습니다.'],
+ [4,4,10,'경도','중등도','d','판단은 적절하지만 지난 일을 지나치게 무겁게 보았습니다. 낮은 PHQ-9 점수는 자기 기분을 잘 알아차리지 못해서일 수 있습니다.'],
+ [5,1,13,'경도','경도','d','기분을 평가하기에는 내용이 부족하지만, 어린 시절의 역경을 보면 판단은 적절합니다. 정보가 부족하다는 점을 모델이 짚었어야 합니다.'],
+ [6,4,8,'경도','경도','d','모델 판단이 적절합니다. 점수가 낮게 나온 이유는 분명하지 않습니다.'],
+ [7,1,10,'경도','중등도','d','판단은 적절하지만, 핵심어를 고를 때 시간 맥락을 따졌어야 합니다. 낮은 점수는 신체화 때문일 수 있습니다.'],
+ [8,2,10,'중등도','중증','d','모델 판단이 적절합니다. "다들 이렇지 않나요?" 같은 체념이 PHQ-9를 낮게 답한 데 영향을 주었을 수 있습니다.'],
+ [9,4,19,'경도','중등도','d','예측은 타당합니다. 다만 우울 위험 요인은 뚜렷해도 지금의 기분이 분명하지 않으니 신뢰도를 낮췄어야 합니다.'],
+ [10,2,10,'경도','중등도','d','판단은 적절합니다. 다만 세상을 떠난 아들을 이야기할 때 고통스러운 말이 나오는 것은 자연스러운데, 이를 지금의 기분 평가에 너무 무겁게 반영했습니다. 신뢰도는 1보다 낮아야 합니다.'],
+ [11,1,15,'중등도','중증','d','판단은 적절합니다. 강한 위험 요인이 있지만 지금의 기분이 분명하지 않으니 신뢰도를 조정해야 합니다.'],
+ [12,1,24,'중등도','중등도','d','어린 시절의 역경을 위험 요인으로 잘 짚어 판단이 적절합니다. 다만 지금의 기분에 대한 정보가 적으니 신뢰도는 낮아야 합니다.'],
+ [13,11,0,'정상','경도','x','전문의 A: 글에서 우울한 기분이 드러나지 않아 판단이 적절합니다. 전문의 B: 코로나19로 인한 고립과 관련된 말은 최근의 스트레스를 보여 주는데, 모델이 그 의미를 놓쳤습니다.'],
+ [14,5,0,'정상','경도','x','모델 판단이 적절합니다. PHQ-9 점수는 기분과 관련 없는 요인 때문으로 보입니다.'],
+ [15,0,10,'정상','중증','x','전문의 A: 지난 증상을 지금의 것으로 읽었고 회복력의 신호를 놓쳤습니다. 전문의 B: 공황과 우울을 자주 언급하므로 판단이 적절합니다.'],
+ [16,0,15,'정상','경도','x','전문의 A: 성격과 병적이지 않은 대처 방식을 고려하지 못했습니다. 속내를 잘 털어놓지 않고 혼자 스트레스를 푸는 모습을 우울로 잘못 읽었습니다. 전문의 B: 판단은 적절하지만 외로움이 주된 내용이라 가벼운 우울 정도로 보입니다(모델은 중증으로 분류).']];
+const GR=[['n','두 전문의 모두 정상','모델 판단에 동의, 2건'],['d','두 전문의 모두 우울','모델 판단에 동의, 10건'],['x','두 전문의 의견이 갈림','4건']];
+$('#caseGrid').innerHTML=GR.map(([g,l,s])=>`<div class="cg"><span class="cg-l">${l}<small>${s}</small></span><div class="cg-b" role="group" aria-label="${l}">${CASES.filter(c=>c[5]===g).map(c=>`<button type="button" class="${g==='x'?'dis':''}" data-k="${c[0]}" aria-label="사례 ${c[0]}" aria-pressed="false">${c[0]}</button>`).join('')}</div></div>`).join('');
+const lab=v=>v>=5?'우울':'정상';
+function showCase(k){const c=CASES.find(x=>x[0]===k);
+  document.querySelectorAll('#caseGrid button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.k===k)));
+  $('#caseOut').innerHTML=`<dl><div><dt>사례</dt><dd><span class="n">${c[0]}</span></dd></div><div><dt>자기보고 PHQ-9</dt><dd><span class="n">${c[1]}</span>점(${lab(c[1])})</dd></div><div><dt>모델 예측 점수</dt><dd><span class="n">${c[2]}</span>점(${lab(c[2])})</dd></div><div><dt>전문의 A, B</dt><dd>${c[3]}, ${c[4]}</dd></div></dl><p>${esc(c[6])}</p>`;
+  S.store.set(KEY+':case',k)}
+document.querySelectorAll('#caseGrid button').forEach(b=>b.onclick=()=>showCase(+b.dataset.k));
+showCase(S.store.get(KEY+':case',1));
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'DepressLLM은 이야기를 읽고 무엇을 예측하도록 학습했나요?',o:['PHQ-9 점수(0~27점)','우울증 진단명','다음 주의 기분'],a:0,e:'모델은 PHQ-9 점수를 예측하도록 미세조정되었고, 점수 토큰의 확률을 기준점에서 나눠 더해 우울 여부와 신뢰도를 얻습니다.'},
+ {q:'우울일 확률이 90%로 계산되었다면 SToPS 신뢰도는 얼마인가요?',o:['90%','80%','45%'],a:1,e:'신뢰도는 2 × |0.9 − 0.5| = 0.8입니다. 논문 그림 1의 예와 같습니다.'},
+ {q:'신뢰도 문턱을 0.95로 올렸을 때 내부 검증 자료에서 일어난 일은 무엇인가요?',o:['모든 사례가 남고 정확도는 그대로였다','11.5%의 사례가 남았고 정확도는 92.9%였다','정확도가 오히려 떨어졌다'],a:1,e:'확신이 높은 사례만 남길수록 정확도가 올랐습니다. 문턱 0에서는 72.8%였습니다. 반대로 모델이 스스로 말한 신뢰도는 문턱을 올릴수록 성능이 떨어졌습니다.'},
+ {q:'같은 200명을 두고 비교했을 때 MCC가 가장 높았던 것은 무엇인가요?',o:['전문의 1','GPT-4.1 제로샷','DepressLLM (GPT-4.1)'],a:2,e:'PHQ-9 5점 기준 MCC는 DepressLLM 0.492, 전문의 1 0.355, 전문의 2 0.270이었고, 10점 기준에서도 DepressLLM이 가장 높았습니다.'},
+ {q:'높은 확신으로 틀린 16건을 전문의 두 명이 검토한 결과로 맞는 것은?',o:['16건 모두 모델이 틀렸다고 보았다','12건은 두 전문의 모두 모델 판단에 동의했고, 두 사람 모두 모델이 틀렸다고 본 사례는 없었다','전문의 의견은 모든 사례에서 일치했다'],a:1,e:'나머지 4건은 전문의 의견이 갈렸습니다. 동시에 검토는 시간 맥락, 보호 요인, 정보가 적을 때의 불확실성 표현을 다듬을 점으로 짚었습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

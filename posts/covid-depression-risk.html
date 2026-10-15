@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코로나19 시기 일반인 우울 요인 - 전민 연구 기록</title>
+<meta name="description" content="코로나19 유행 첫해 봄, 감염되지 않은 한국 일반인 1,492명에서 우울과 관련된 위험요인과 보호요인을 살핀 연구(BMC Psychiatry, 2021)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.waffle{display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:3px;max-width:520px;margin:4px 0 12px}
+.waffle i{display:block;aspect-ratio:1;background:var(--tint);border:1px solid var(--line-2);border-radius:var(--r);transition:background .2s}
+.waffle i.on{background:var(--signal);border-color:var(--signal)}
+.w-out{margin:0;font-size:15.5px;line-height:1.75}
+.w-out b{font-family:var(--num);font-weight:500;color:var(--signal-ink)}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+.measures{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border-top:1px solid var(--line);margin:16px 0}
+.measures div{padding:10px 14px 12px 0;border-bottom:1px solid var(--line)}
+.measures div:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}
+.measures b{display:block;font-size:15px;font-weight:600}
+.measures span{display:block;font-size:14px;color:var(--ink-2);line-height:1.6;margin-top:2px}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 11px;font-size:13.5px;border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cmp{display:grid;grid-template-columns:110px minmax(0,1fr) 110px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.t-note{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:150px minmax(0,1fr) 128px;gap:12px;align-items:center;padding:6px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%;transition:opacity .15s}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-row.dim{opacity:.3}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right;line-height:1.35}
+.fp-row .fp-val small{display:block;font-size:11.5px;color:var(--meta)}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-row.ns .fp-dot{background:var(--surface);border:1.5px solid var(--ink)}
+.fp-axis{display:grid;grid-template-columns:150px minmax(0,1fr) 128px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-dir{display:grid;grid-template-columns:150px minmax(0,1fr) 128px;gap:12px;font-size:12.5px;color:var(--meta)}
+.fp-dir div{display:flex;justify-content:space-between;gap:8px}
+.calc-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:4px 0 8px}
+.calc-row label{font-size:14.5px;color:var(--ink-2)}
+.calc-row input[type=range]{flex:1 1 220px;min-width:0;accent-color:var(--ink)}
+.calc-row output{font-family:var(--num);font-size:15px;min-width:4.5em}
+.calc-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:10px 0 0}
+.calc-big b{font-family:var(--num);font-weight:500;font-size:30px;color:var(--signal-ink);letter-spacing:-.02em}
+.calc-big span{font-size:14.5px;color:var(--ink-2)}
+@media (max-width:640px){
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+  .measures{grid-template-columns:minmax(0,1fr)}
+  .measures div:nth-child(even){padding-left:0;border-left:0}
+  .cmp{grid-template-columns:76px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .fp-row,.fp-axis,.fp-dir{grid-template-columns:86px minmax(0,1fr) 70px;gap:8px;font-size:13px}
+  .fp-row{font-size:12.5px;line-height:1.35}
+  .fp-row .fp-val{font-size:11.5px}
+  .fp-row .fp-val small{font-size:10.5px}
+  .waffle{gap:2px}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 코로나19 사회정신의학, 우울의 위험요인과 보호요인</p>
+  <h1>코로나19 첫해 봄, 감염되지 않은 사람들의 우울은 무엇과 함께 늘고 무엇과 함께 줄었을까요?</h1>
+  <p class="lede">2020년 봄, 바이러스에 걸리지 않은 사람들도 사회적 거리두기와 멈춰 선 일상을 함께 겪었습니다. 이 연구는 그때 수도권, 대구, 광주에 사는 19~65세 시민 1,492명에게 온라인으로 마음 상태를 물었습니다. 그리고 우울과 함께 늘어난 요인과, 우울과 반대로 움직인 요인을 한 모형 안에서 함께 살폈습니다.</p>
+  <p class="meta">원문: Kim S-W, Park I-H 외. BMC Psychiatry 21:445, 2021<br>읽는 데 약 10분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>2020년 4월 24일부터 5월 5일까지 익명 온라인 설문을 했고, 코로나19에 감염된 적 없는 <b>1,492명</b>을 분석했습니다.</li>
+    <li><span class="term" data-tip="Patient Health Questionnaire-9. 지난 2주 동안의 우울 증상 9가지를 0~3점으로 묻는 자기보고 척도. 이 연구는 10점 이상을 임상적으로 의미 있는 우울로 보았다.">PHQ-9</span> 10점 이상인 우울은 <b>20.9%</b>(312명), 다섯 명 가운데 한 명꼴이었습니다.</li>
+    <li>다른 요인을 함께 고려해도 외로움, 코로나19 관련 스트레스, 식사와 수면의 흐트러짐, 젊은 나이, 흡연, 기저 정신질환은 우울과 함께 늘었습니다.</li>
+    <li>팬데믹 중 <b>주 3회 이상 운동</b>과 <b>감사 성향</b>은 우울과 반대 방향으로 관련되었습니다. 논문은 일상을 지키고 감사에 마음을 두는 것이 우울 예방에 중요할 수 있다고 봅니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>1,492명</b><span>분석한 비감염 일반인(19~65세)</span></div>
+  <div class="stat"><b>20.9%</b><span>PHQ-9 10점 이상 우울(312명)</span></div>
+  <div class="stat"><b>1.646</b><span>외로움 점수 1점당 우울의 오즈비</span></div>
+  <div class="stat"><b>0.933</b><span>감사 점수 1점당 우울의 오즈비</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 이 질문이었을까요</a></li>
+    <li><a href="#how">누구에게 무엇을 물었을까요</a></li>
+    <li><a href="#prev">얼마나 많은 사람이 우울했을까요</a></li>
+    <li><a href="#t1">우울한 사람과 아닌 사람은 어떻게 달랐을까요</a></li>
+    <li><a href="#t2">함께 고려했을 때 남은 요인</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 이 질문이었을까요</h2>
+<p>코로나19는 감염된 사람만 바꾸지 않았습니다. 오래 이어진 사회적 거리두기와 줄어든 경제 활동은 그 자체로 우울로 이어지기 쉽고, 실제로 유행 기간에 일반인의 우울 위험이 높아졌다는 보고가 이어졌습니다. 논문은 우울이 개인의 몸과 마음뿐 아니라 사회와 경제에도 부담을 주기 때문에, 이 시기 우울이 늘어난 것이 코로나19가 남긴 사회경제적 부담의 중요한 부분일 수 있다고 봅니다.</p>
+<p>우울을 높이는 쪽으로는 여성, 미혼, 낮은 소득, 경제적 타격, 기저 질환, 정서적 스트레스, 외로움, 수면과 식사 같은 생활의 흐트러짐이 알려져 있었습니다. 반대로 긍정적인 감정을 쓰는 적극적 대처와 사회적 지지, 낙관, 이타심, <span class="term" data-tip="삶 속의 사람이나 일에 고마움을 느끼고 표현하는 성향. 이 연구는 6문항 감사 척도(GQ-6)로 쟀다.">감사</span> 같은 긍정 심리 요인, 그리고 규칙적인 운동은 우울을 막는 쪽으로 보고되었습니다.</p>
+<p>문제는 팬데믹의 제약이 위험요인은 키우고 보호요인은 가로막는다는 점이었습니다. 연구팀은 앞서 남성 소방관에서 감사가 스트레스와 소진을 독립적으로 막는다는 결과를 낸 적이 있었고, 감사가 팬데믹 같은 공동체의 재난에서도 우울을 막는 데 중요할 수 있다고 가설을 세웠습니다. 그러나 팬데믹 시기 일반인에서 감사의 보호 효과를 살핀 연구는 드물었습니다.</p>
+<div class="callout"><p><b>비유:</b> 우울을 저울로 생각해 볼 수 있습니다. 한쪽 접시에는 스트레스, 외로움, 흐트러진 생활이 올라가고, 다른 쪽에는 운동과 감사 같은 버팀목이 올라갑니다. 이 연구는 2020년 봄 한국 사회에서 어느 추가 실제로 무게를 가졌는지를, 여러 추를 한꺼번에 올려놓고 재 보았습니다.</p></div>
+
+<h2 id="how">2. 누구에게 무엇을 물었을까요</h2>
+<p>조사 시기는 한국에서 코로나19가 발생한 지 석 달째인 2020년 4월 24일부터 5월 5일까지였습니다. 한국은 봉쇄는 하지 않았지만 개학이 미뤄지고 대부분의 모임이 취소되었으며, 시민들은 계속 거리두기를 요청받았습니다. 조사가 시작된 4월 말에는 누적 확진자가 1만 명을 넘었고, 거리두기 속에 첫 유행이 지나간 뒤였습니다.</p>
+<p>설문은 유행 정도가 다른 세 대도시권(수도권, 대구, 광주) 주민을 대상으로 조사 전문 업체를 통해 익명으로 진행했습니다.</p>
+<ul class="flow" aria-label="참여자 흐름">
+  <li><b>4,065명</b><span>조사 풀에 등록된 사람에게 초대 메일 발송</span></li>
+  <li><b>3,065명</b><span>설문 안내 링크에 접속(75.4%). 이 가운데 1,206명은 조사 대상 기준 밖이어서, 40명은 참여를 거절해 빠짐</span></li>
+  <li><b>1,819명</b><span>설문 완료. 같은 답을 반복하는 등 신뢰하기 어려운 응답 319명을 제외</span></li>
+  <li><b>1,500명</b><span>최종 수집. 이 가운데 코로나19 확진자 8명을 제외</span></li>
+  <li><b>1,492명</b><span>분석 대상: 코로나19에 감염된 적 없는 사람</span></li>
+</ul>
+<div class="measures">
+  <div><b>우울</b><span>PHQ-9. 10점 이상을 임상적으로 의미 있는 우울로 보았습니다. 이전 연구에서 이 기준점의 민감도와 특이도는 88%였습니다.</span></div>
+  <div><b>외로움</b><span><span class="term" data-tip="UCLA 외로움 척도를 대규모 조사용으로 줄인 3문항 판. 점수가 높을수록 외로움이 크다.">UCLA 외로움 척도 3문항판</span>. 점수가 높을수록 더 외롭습니다.</span></div>
+  <div><b>감사</b><span><span class="term" data-tip="Gratitude Questionnaire-6. 감사 성향을 묻는 6문항 척도. 점수가 높을수록 감사 성향이 강하다.">GQ-6</span>. 점수가 높을수록 감사 성향이 강합니다.</span></div>
+  <div><b>코로나19 관련 경험</b><span>연구팀이 만들고 검증한 설문. 감염 공포, 바깥 활동의 어려움, 식사와 수면의 흐트러짐, 낙인, 감염에 대한 비난 두려움 다섯 요인과 경제적 스트레스 등 코로나19 관련 스트레스 6문항. 모두 5점 <span class="term" data-tip="'전혀 아니다'부터 '매우 그렇다'까지 정해진 단계 가운데 하나를 고르게 하는 응답 방식.">리커트 척도</span>로 답했습니다.</span></div>
+  <div><b>사람과 생활</b><span>성별, 나이, 결혼, 거주 지역, 종교, 학력, 의료보장, 고용 형태, 흡연, 팬데믹 전과 팬데믹 중의 운동 빈도(주 3회 이상인지)</span></div>
+  <div><b>임상 정보</b><span>약을 먹고 있는 기저 신체질환과 정신질환, 격리 경험, 코로나19 검사 경험</span></div>
+</div>
+<p>분석은 두 단계였습니다. 먼저 우울이 있는 사람과 없는 사람을 하나씩 비교했고(<span class="term" data-tip="범주형 변수의 비율이 집단 사이에 다른지 보는 검정.">카이제곱 검정</span>과 t 검정), 여기서 p &lt; 0.05로 차이가 난 변수를 모두 한 <span class="term" data-tip="결과가 있다/없다처럼 둘로 나뉠 때, 여러 요인이 그 결과의 오즈와 어떻게 관련되는지 동시에 추정하는 통계 모형.">다중 로지스틱 회귀</span> 모형에 넣었습니다. 이렇게 하면 다른 요인의 몫을 함께 고려한 뒤에도 남는 관련성을 볼 수 있습니다.</p>
+
+<h2 id="prev">3. 얼마나 많은 사람이 우울했을까요</h2>
+<p>감염되지 않은 1,492명 가운데 312명, 20.9%가 PHQ-9 10점 이상이었습니다. 확진자까지 포함한 1,500명 전체로는 21.1%(316명)였고, 확진자 8명 가운데서는 절반인 4명이 우울을 보였습니다(p = 0.066).</p>
+<p>논문은 이 수치를 두 가지와 견줍니다. 하나는 같은 시기 미국, 유럽, 아시아에서 PHQ-9 10점 이상으로 보고된 우울 유병률 14.4~27.8%로, 이번 결과가 그 범위 안에 있었습니다. 다른 하나는 논문이 인용한 국내 통계의 2018년 PHQ-9 기준 우울 유병률 4.3%입니다. 조사 대상과 방법이 달라 직접 비교에는 한계가 있다고 전제하면서도, 논문은 약 다섯 배 높은 이 수치가 팬데믹이 가져온 심리사회적 변화가 우울 위험을 높였음을 시사한다고 적습니다.</p>
+
+<div class="panel figure" id="prevFig"><span class="cx"></span>
+  <div class="fig-head"><h3>100명으로 줄여 보면</h3><span class="note">칸 하나가 한 사람입니다</span></div>
+  <div class="ctrl"><div class="seg" id="prevSeg" role="group" aria-label="비교할 수치"><button data-k="now">이번 조사(2020년 봄)</button><button data-k="base">2018년 국내 통계</button></div></div>
+  <div class="waffle" id="waffle" role="img" aria-label="100명 가운데 우울한 사람 수"></div>
+  <p class="w-out" id="prevOut" aria-live="polite"></p>
+  <div id="prevGauge"></div>
+  <p class="fig-note">100명당 사람 수는 원문의 백분율을 반올림한 계산값입니다. 눈금의 빨간 점은 이번 조사 20.9%, 속 빈 점은 논문이 인용한 2018년 국내 통계 4.3%, 회색 띠는 논문이 인용한 같은 시기 다른 나라 보고 범위 14.4~27.8%입니다.</p>
+</div>
+
+<h2 id="t1">4. 우울한 사람과 아닌 사람은 어떻게 달랐을까요</h2>
+<p>먼저 두 집단을 하나씩 비교했습니다. 우울한 사람은 더 젊었고(평균 37.5세 대 41.0세), 미혼, 흡연자, 정신과 약을 먹는 사람, 실직 또는 임시직인 사람의 비율이 더 높았습니다. 반대로 지금 주 3회 이상 운동하는 사람은 우울한 집단에서 더 적었습니다. 흥미롭게도 팬데믹 전의 운동 빈도는 우울과 뚜렷한 관련이 없었습니다. 성별, 종교, 지역, 약을 먹는 신체질환에 따라서는 차이가 없었습니다.</p>
+<p>아래에서 묶음과 항목을 골라 두 집단을 비교해 보세요.</p>
+
+<div class="panel figure" id="t1Fig"><span class="cx"></span>
+  <div class="fig-head"><h3>항목별 두 집단 비교(표 1)</h3><span class="note">속 빈 점: 우울 없음 1,180명, 빨간 점: 우울 있음 312명</span></div>
+  <div class="ctrl"><div class="seg" id="t1Grp" role="group" aria-label="항목 묶음"><button data-k="life">사람과 생활</button><button data-k="covid">코로나19 경험</button><button data-k="mind">마음 척도</button></div></div>
+  <div class="pick" id="t1Pick" role="group" aria-label="항목 고르기"></div>
+  <div id="t1Out"></div>
+  <p class="t-note" id="t1Note" aria-live="polite"></p>
+  <p class="fig-note">범주 항목은 각 집단에서 해당하는 사람의 비율(%), 나머지는 평균 점수입니다. 코로나19 경험의 다섯 요인은 문항 점수의 평균(1~5점)이고, 코로나19 관련 스트레스는 원문 표 1에 실린 점수를 그대로 옮겼습니다.</p>
+</div>
+
+<h2 id="t2">5. 함께 고려했을 때 남은 요인</h2>
+<p>하나씩 비교해서 차이가 난 변수를 한 모형에 모두 넣자, 몇몇은 관련이 사라지고 몇몇은 남았습니다. 남은 것을 읽는 열쇠는 <span class="term" data-tip="Odds ratio. 어떤 요인이 있을 때(또는 1단위 클 때) 결과가 생길 오즈가 몇 배인지 나타낸다. 1보다 크면 함께 늘고, 1보다 작으면 반대로 움직인다.">오즈비</span>입니다. 1보다 크면 그 요인이 클수록 우울의 오즈가 높았다는 뜻이고, 1보다 작으면 낮았다는 뜻입니다. 가로선은 <span class="term" data-tip="같은 연구를 여러 번 반복한다면 참값을 95%의 경우에 포함할 범위. 1을 걸치지 않으면 통계적으로 뚜렷한 관련으로 본다.">95% 신뢰구간</span>입니다.</p>
+
+<div class="panel figure" id="t2Fig"><span class="cx"></span>
+  <div class="fig-head"><h3>보정 오즈비와 95% 신뢰구간(표 2)</h3><span class="note">점선: 오즈비 1, 속 빈 점: p ≥ 0.05</span></div>
+  <div class="ctrl"><div class="seg" id="fpSeg" role="group" aria-label="보기"><button data-k="all">모두</button><button data-k="up">우울과 함께 늘어난 쪽</button><button data-k="down">반대로 움직인 쪽</button><button data-k="ns">보정 뒤 뚜렷하지 않음</button></div></div>
+  <div class="fp-dir" aria-hidden="true"><span></span><div><span>오즈가 낮음</span><span>오즈가 높음</span></div><span></span></div>
+  <div class="fp" id="fp" role="group" aria-label="요인별 보정 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="fpTicks"></div><span></span></div>
+  <p class="t-note" id="fpOut" aria-live="polite"></p>
+  <p class="fig-note">가로축은 로그 눈금입니다. 점수 항목은 1점, 나이는 1세 차이에 대한 오즈비라서 항목끼리 점의 위치로 크기를 견주지 않습니다. 이 모형의 <span class="term" data-tip="로지스틱 회귀 모형이 결과의 차이를 얼마나 설명하는지 나타내는 값. 0~1, 클수록 설명력이 크다.">Nagelkerke R²</span>는 0.364로, 모형이 설명한 분산의 비율은 36.4%였습니다.</p>
+</div>
+
+<p>오즈비는 점수 1점에 대한 값이라 실감이 잘 나지 않을 수 있습니다. 점수 차이가 커지면 오즈비는 곱해서 쌓입니다. 아래에서 요인과 점수 차이를 골라 보세요. '표 1의 두 집단 차이'를 누르면 우울한 집단과 그렇지 않은 집단의 평균 차이만큼 움직입니다.</p>
+
+<div class="panel figure" id="calcFig"><span class="cx"></span>
+  <div class="fig-head"><h3>점수 차이가 쌓이면</h3><span class="note">다른 변수가 같다고 할 때</span></div>
+  <div class="ctrl"><div class="seg" id="calcSeg" role="group" aria-label="요인"><button data-k="lone">외로움</button><button data-k="grat">감사</button><button data-k="stress">코로나19 스트레스</button><button data-k="eat">식사와 수면</button><button data-k="age">나이</button></div></div>
+  <div class="calc-row">
+    <label for="calcRange" id="calcLabel"></label>
+    <input type="range" id="calcRange" min="0" max="3" step="0.1" value="1">
+    <output id="calcVal" for="calcRange"></output>
+    <button type="button" class="btn" id="calcPreset">표 1의 두 집단 차이</button>
+  </div>
+  <div class="calc-big"><b id="calcOR"></b><span id="calcTxt"></span></div>
+  <div id="calcGauge"></div>
+  <p class="fig-note">값은 원문 표 2의 오즈비를 점수 차이만큼 거듭제곱한 계산값입니다. 오즈는 확률과 다르며, 횡단 연구의 관련성이라 원인과 결과의 방향을 말하지 않습니다.</p>
+</div>
+
+<p>정리하면, 외로움, 코로나19 관련 스트레스, 식사와 수면의 흐트러짐, 젊은 나이, 흡연, 기저 정신질환은 다른 요인을 함께 고려한 뒤에도 우울과 함께 늘었습니다. 팬데믹 중 주 3회 이상 운동과 감사 점수는 우울과 반대로 움직였습니다. 하나씩 비교할 때 차이가 났던 미혼, 실직 또는 임시직, 감염 공포, 낙인, 비난 두려움은 보정 뒤에는 뚜렷한 관련이 남지 않았습니다.</p>
+
+<h2 id="meaning">6. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p><b>통제할 수 없는 상황과 스트레스.</b> 확진자와 사망자가 빠르게 늘면서 불확실성이 커지고 스스로 통제할 수 있다는 감각이 줄었습니다. 논문은 통제할 수 없는 상황에 놓인 사람이 무력해지고 의욕을 잃으며 우울에 이를 수 있다고 설명합니다.</p>
+<p><b>고칠 수 있는 생활.</b> 식사와 수면의 흐트러짐은 개인이 비교적 쉽게 바꿀 수 있는 요인입니다. 인과관계는 분명하지 않다고 전제하면서, 논문은 팬데믹 중 규칙적인 운동이 우울과 반대로 관련된 결과가 운동, 식습관, 수면 같은 건강한 생활을 날마다 지키는 일이 이 시기 우울 예방에 중요한 도구일 수 있음을 시사한다고 봅니다. 균형 잡힌 식사, 일상 지키기, 바깥 활동이 우울을 줄이는 대처 행동이었다는 스페인 연구와도 맞습니다.</p>
+<p><b>외로움과 감사.</b> 거리두기는 바이러스 확산을 막는 데 효과적이지만 정서적 단절로 외로움을 부를 수 있습니다. 논문은 거리두기 속에서도 사회적, 정서적 교류가 외로움이 우울에 미치는 영향을 줄일 수 있다고 봅니다. 감사는 사회적 지지, 자존감, 삶의 만족과 이어지고 관계를 만들고 지키는 데 중요하며, 논문은 감사가 긍정적인 기분과 사회적 유대를 함께 북돋아 우울에 대한 심리적 해독제가 될 수 있다고 적습니다. 감사 일기나 집단 안에서 감사를 표현하는 프로그램처럼 감사는 연습으로 기를 수 있어, 감사를 표현하는 공공 캠페인과 진료 현장의 감사 개입이 팬데믹 스트레스에 대처하는 데 도움이 될 수 있다고 제안합니다.</p>
+<p><b>더 살펴야 할 사람들.</b> 기저 정신질환이 있는 사람은 팬데믹 뒤 사회적, 의료적 지지가 줄었을 수 있어 지속적인 돌봄과 세심한 관찰이 필요하다고 봅니다. 젊은 세대는 심리적 회복력과 사회적 기반이 아직 충분하지 않을 수 있고 미래에 대한 걱정이 더 클 수 있어, 정신건강 문제를 일찍 발견하고 더 적극적으로 지원해야 한다고 적습니다. 흡연은 신경전달물질과 혈관 건강에 대한 생물학적 영향과, 호흡기 감염병이 흡연자에게 주는 심리사회적 영향을 함께 고려해야 한다고 봅니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 같은 해, 사회적 취약성과 우울을 다른 각도에서 본 연구도 있습니다. <a data-paper="discrimination_depression_jad_2021">우울증 치료 환자가 겪고 예상하는 차별과 그 2년 뒤</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>코로나19의 영향을 받은 다른 집단에 이 결과를 적용할 때는 주의가 필요합니다.</li>
+  <li>한 시점에 조사한 <span class="term" data-tip="같은 시점에 여러 변수를 함께 재서 관련성을 보는 연구. 무엇이 먼저였는지는 알기 어렵다.">횡단 연구</span>라 인과관계가 분명하지 않습니다. 특히 식사와 수면의 흐트러짐은 그 자체가 우울의 증상이기도 합니다.</li>
+  <li>온라인 설문의 결과는 대면 조사와 다를 수 있고 선택 편향의 가능성이 있어, 두 방식의 결과를 견줄 때 주의가 필요합니다.</li>
+</ul>
+<h3>다음 질문</h3>
+<p>논문은 코로나19와 관련된 우울의 위험요인과 보호요인을 확인하려면 시간에 따라 같은 사람을 따라가는 종단 연구가 필요하고, 우울을 막는 심리사회적 전략이 실제로 효과가 있는지 살피는 연구가 더 이뤄져야 한다고 적습니다. 일상 지키기와 감사 연습을 권했을 때 우울이 실제로 줄어드는지는 이 연구가 직접 시험한 것이 아니라, 이어서 물어야 할 질문입니다.</p>
+
+<h2 id="quiz">7. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Kim S-W, Park I-H, Kim M, Park A-L, Jhon M, Kim J-W, Kang H-J, Ryu S, Lee J-Y, Kim J-M. Risk and protective factors of depression in the general population during the COVID-19 epidemic in Korea. BMC Psychiatry. 2021;21:445. doi:10.1186/s12888-021-03449-y</p>
+  <p>DOI <a href="https://doi.org/10.1186/s12888-021-03449-y" target="_blank" rel="noopener">10.1186/s12888-021-03449-y</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/34496823/" target="_blank" rel="noopener">34496823</a><br>
+  원문은 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> 라이선스로 공개되었습니다(© The Author(s) 2021). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1~2에서 가져왔습니다.</p>
+  <p>100명 그림의 사람 수와 '점수 차이가 쌓이면'의 값은 원문 수치로 낸 계산값입니다. 이 연구의 결과는 진단 도구가 아니며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='covid-depression-risk';
+
+/* 1) 100명으로 줄여 보면: 20.9%와 4.3% */
+const PREV={
+ now:{v:20.9,n:21,t:'이번 조사에서는 감염되지 않은 1,492명 가운데 <b>20.9%</b>(312명)가 PHQ-9 10점 이상이었습니다. 100명으로 줄이면 약 <b>21명</b>입니다(계산값).'},
+ base:{v:4.3,n:4,t:'논문이 인용한 국내 통계의 2018년 PHQ-9 기준 우울 유병률은 <b>4.3%</b>였습니다. 100명으로 줄이면 약 <b>4명</b>입니다(계산값). 논문은 조사 대상과 방법이 달라 직접 비교에 한계가 있다고 전제합니다.'}};
+$('#waffle').innerHTML=Array.from({length:100},()=>'<i></i>').join('');
+const cells=[...document.querySelectorAll('#waffle i')];
+$('#prevGauge').innerHTML=S.gauge({min:0,max:30,ticks:[0,5,10,15,20,25,30],band:[14.4,27.8],pts:[{v:4.3,ref:1,label:'논문이 인용한 2018년 국내 통계 4.3%'},{v:20.9,label:'이번 조사 20.9%(1,492명 가운데 312명)'}]},'우울 유병률: 이번 조사 20.9%, 2018년 국내 통계 4.3%, 다른 나라 보고 범위 14.4~27.8%');
+S.seg('prevSeg',k=>{const d=PREV[k];cells.forEach((c,i)=>c.classList.toggle('on',i<d.n));$('#waffle').setAttribute('aria-label',`100명 가운데 약 ${d.n}명`);$('#prevOut').innerHTML=d.t},KEY+':prev');
+
+/* 2) 표 1: 두 집단 비교. a = 우울 있음(312명), b = 우울 없음(1,180명) */
+const T1={
+ life:[
+  {k:'age',n:'나이',u:'세',a:37.5,b:41.0,p:'p < 0.001',m:'mean',d:'우울한 사람이 평균 3.5세 더 젊었습니다(계산값).'},
+  {k:'female',n:'여성',a:50.6,b:50.0,p:'p = 0.840',d:'성별에 따른 차이는 없었습니다.'},
+  {k:'unmarried',n:'미혼',a:63.8,b:47.1,p:'p < 0.001',d:'하나씩 비교할 때는 차이가 컸지만, 다른 요인을 함께 고려한 모형에서는 뚜렷한 관련이 남지 않았습니다.'},
+  {k:'edu',n:'고졸 이하',a:19.9,b:16.4,p:'p = 0.142',d:'학력에 따른 차이는 뚜렷하지 않았습니다.'},
+  {k:'job',n:'실직 또는 임시직',a:29.8,b:18.0,p:'p < 0.001',d:'하나씩 비교할 때는 차이가 났지만 보정 모형에서는 뚜렷하지 않았습니다. 논문은 그래도 불안정한 고용에 놓인 사람을 더 살펴야 한다고 봅니다.'},
+  {k:'medicaid',n:'의료급여',a:6.4,b:4.2,p:'p = 0.091',d:'의료보장 형태에 따른 차이는 뚜렷하지 않았습니다.'},
+  {k:'religion',n:'종교 있음',a:35.3,b:39.8,p:'p = 0.140',d:'종교에 따른 차이는 없었습니다.'},
+  {k:'smoke',n:'흡연',a:28.2,b:19.5,p:'p = 0.001',d:'보정 모형에서도 흡연은 우울과 함께 늘었습니다.'},
+  {k:'mental',n:'기저 정신질환',a:8.7,b:3.4,p:'p < 0.001',d:'지금 약을 먹고 있는 정신질환입니다. 보정 모형에서도 관련이 남았습니다.'},
+  {k:'physical',n:'기저 신체질환',a:24.7,b:27.2,p:'p = 0.370',d:'약을 먹고 있는 신체질환에 따른 차이는 없었습니다.'},
+  {k:'exBefore',n:'팬데믹 전 주 3회 이상 운동',a:61.2,b:59.3,p:'p = 0.544',d:'팬데믹 전의 운동 빈도는 우울과 뚜렷한 관련이 없었습니다.'},
+  {k:'exDuring',n:'팬데믹 중 주 3회 이상 운동',a:22.8,b:33.3,p:'p < 0.001',d:'지금 운동하는 사람은 우울한 집단에서 더 적었고, 보정 모형에서도 반대 방향의 관련이 남았습니다.'}],
+ covid:[
+  {k:'stress',n:'코로나19 관련 스트레스',a:20.2,b:17.7,p:'p < 0.001',m:'mean',d:'경제적 스트레스, 생필품을 구하기 어려움 등 6문항입니다. 보정 모형에서도 관련이 남았습니다.'},
+  {k:'fear',n:'감염 공포',a:3.9,b:3.8,p:'p = 0.006',m:'likert',d:'하나씩 비교할 때는 차이가 났지만 보정 모형에서는 뚜렷하지 않았습니다.'},
+  {k:'out',n:'바깥 활동의 어려움',a:4.3,b:4.2,p:'p = 0.536',m:'likert',d:'두 집단 모두 높았고 차이는 뚜렷하지 않았습니다.'},
+  {k:'eat',n:'식사와 수면의 흐트러짐',a:3.3,b:2.7,p:'p < 0.001',m:'likert',d:'보정 모형에서도 우울과 함께 늘었습니다. 논문은 이것이 우울의 증상이기도 하다고 밝힙니다.'},
+  {k:'stigma',n:'코로나19 낙인',a:3.0,b:2.8,p:'p < 0.001',m:'likert',d:'하나씩 비교할 때는 차이가 났지만 보정 모형에서는 뚜렷하지 않았습니다.'},
+  {k:'blame',n:'감염에 대한 비난 두려움',a:3.7,b:3.5,p:'p = 0.002',m:'likert',d:'하나씩 비교할 때는 차이가 났지만 보정 모형에서는 뚜렷하지 않았습니다.'},
+  {k:'quar',n:'격리 경험',a:3.5,b:1.9,p:'p = 0.076',d:'격리 경험에 따른 차이는 뚜렷하지 않았습니다.'}],
+ mind:[
+  {k:'lone',n:'외로움(UCLA 3문항)',a:6.7,b:4.8,p:'p < 0.001',m:'mean',d:'우울한 사람의 외로움 점수가 평균 1.9점 높았습니다(계산값). 보정 모형에서 가장 강한 관련을 보였습니다.'},
+  {k:'grat',n:'감사(GQ-6)',a:26.9,b:31.0,p:'p < 0.001',m:'mean',d:'우울한 사람의 감사 점수가 평균 4.1점 낮았습니다(계산값). 보정 모형에서도 반대 방향의 관련이 남았습니다.'}]};
+function nice(lo,hi){const span=hi-lo,st=[.1,.2,.5,1,2,5,10,20].find(s=>span/s<=6)||20;const a=Math.floor(lo/st)*st,b=Math.ceil(hi/st)*st,t=[];for(let v=a;v<=b+1e-9;v+=st)t.push(+v.toFixed(2));return{min:+a.toFixed(2),max:+b.toFixed(2),ticks:t}}
+let grp='life';
+function t1Draw(k){
+  const m=T1[grp].find(x=>x.k===k)||T1[grp][0];
+  document.querySelectorAll('#t1Pick button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.k===m.k)));
+  let ax,u;
+  if(m.m==='likert'){ax={min:1,max:5,ticks:[1,2,3,4,5]};u='점'}
+  else if(m.m==='mean'){const lo=Math.min(m.a,m.b),hi=Math.max(m.a,m.b),pad=Math.max((hi-lo)*.6,1);ax=nice(lo-pad,hi+pad);u=m.u||'점'}
+  else{ax=nice(0,Math.max(m.a,m.b)*1.15);u='%'}
+  const row=(name,v,ref)=>`<span class="c-name">${name}</span>${S.gauge({...ax,pts:[{v,ref,label:`${name}: ${m.n} ${v}${u}`}]},`${m.n}, ${name} ${v}${u}`)}<span class="c-val">${ref?v:`<b>${v}</b>`}${esc(u)}</span>`;
+  $('#t1Out').innerHTML=`<div class="cmp">${row('우울 없음',m.b,1)}${row('우울 있음',m.a,0)}</div>`;
+  $('#t1Note').textContent=`${m.n}: ${m.d} 두 집단 비교 ${m.p}.`;
+  S.store.set(KEY+':t1item:'+grp,m.k);
+}
+S.seg('t1Grp',g=>{grp=g;$('#t1Pick').innerHTML=T1[g].map(m=>`<button type="button" data-k="${m.k}" aria-pressed="false">${esc(m.n)}</button>`).join('');
+  document.querySelectorAll('#t1Pick button').forEach(b=>b.onclick=()=>t1Draw(b.dataset.k));
+  t1Draw(S.store.get(KEY+':t1item:'+g,T1[g][0].k))},KEY+':t1grp');
+
+/* 3) 표 2: 보정 오즈비 */
+const T2=[
+ {n:'외로움(1점)',or:1.646,lo:1.500,hi:1.806,p:'p < 0.001',t:'외로움 점수가 1점 높을 때마다 우울의 오즈가 1.646배였습니다. 모형에서 가장 강한 관련(왈드 값 110.950)이었습니다.'},
+ {n:'식사와 수면의 흐트러짐(1점)',or:1.558,lo:1.289,hi:1.883,p:'p < 0.001',t:'식사와 수면이 흐트러진 정도가 1점 높을 때마다 우울의 오즈가 1.558배였습니다. 논문은 이것이 우울의 증상이기도 해서 인과의 방향은 알 수 없다고 밝힙니다.'},
+ {n:'기저 정신질환',or:1.950,lo:1.042,hi:3.648,p:'p = 0.037',t:'지금 정신과 약을 먹고 있는 사람은 그렇지 않은 사람보다 우울의 오즈가 1.950배였습니다.'},
+ {n:'흡연',or:1.439,lo:1.021,hi:2.028,p:'p = 0.038',t:'흡연자는 비흡연자보다 우울의 오즈가 1.439배였습니다.'},
+ {n:'코로나19 관련 스트레스(1점)',or:1.077,lo:1.032,hi:1.125,p:'p = 0.001',t:'코로나19 관련 스트레스 점수가 1점 높을 때마다 우울의 오즈가 1.077배였습니다.'},
+ {n:'나이(1세)',or:0.983,lo:0.967,hi:0.999,p:'p = 0.038',t:'나이가 1세 많을 때마다 우울의 오즈가 0.983배였습니다. 곧 젊을수록 우울의 오즈가 높았습니다.'},
+ {n:'감사(1점)',or:0.933,lo:0.908,hi:0.957,p:'p < 0.001',t:'감사 점수가 1점 높을 때마다 우울의 오즈가 0.933배였습니다. 외로움 다음으로 왈드 값(27.295)이 컸습니다.'},
+ {n:'팬데믹 중 주 3회 이상 운동',or:0.672,lo:0.477,hi:0.947,p:'p = 0.023',t:'팬데믹 중 주 3회 이상 운동한 사람은 그렇지 않은 사람보다 우울의 오즈가 0.672배였습니다.'},
+ {n:'미혼',or:1.241,lo:0.843,hi:1.828,p:'p = 0.273',t:'다른 요인을 함께 고려하자 미혼과 우울의 관련은 뚜렷하지 않았습니다.'},
+ {n:'실직 또는 임시직',or:1.104,lo:0.771,hi:1.580,p:'p = 0.589',t:'다른 요인을 함께 고려하자 고용 형태와 우울의 관련은 뚜렷하지 않았습니다.'},
+ {n:'감염 공포(1점)',or:0.781,lo:0.599,hi:1.018,p:'p = 0.068',t:'다른 요인을 함께 고려하자 감염 공포와 우울의 관련은 뚜렷하지 않았습니다.'},
+ {n:'코로나19 낙인(1점)',or:1.105,lo:0.905,hi:1.349,p:'p = 0.327',t:'다른 요인을 함께 고려하자 낙인과 우울의 관련은 뚜렷하지 않았습니다.'},
+ {n:'비난 두려움(1점)',or:0.994,lo:0.831,hi:1.188,p:'p = 0.945',t:'다른 요인을 함께 고려하자 비난 두려움과 우울의 관련은 뚜렷하지 않았습니다.'}];
+T2.forEach(r=>r.c=(r.lo>1)?'up':(r.hi<1)?'down':'ns');
+const L0=Math.log(.4),L1=Math.log(4),fx=v=>((Math.log(v)-L0)/(L1-L0)*100).toFixed(2)+'%';
+$('#fp').innerHTML=T2.map((r,i)=>`<button type="button" class="fp-row${r.c==='ns'?' ns':''}" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r.n)}</span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${fx(1)}"></span><span class="fp-ci" style="left:${fx(r.lo)};width:calc(${fx(r.hi)} - ${fx(r.lo)})"></span><span class="fp-dot" style="left:${fx(r.or)}"></span></span><span class="fp-val">${r.or.toFixed(3)}<small>${r.lo.toFixed(3)}~${r.hi.toFixed(3)}</small></span></button>`).join('');
+$('#fpTicks').innerHTML=[.5,1,2,4].map(t=>`<span style="left:${fx(t)}">${t}</span>`).join('');
+const rows=[...document.querySelectorAll('.fp-row')];
+function fpPick(i){const r=T2[i];
+  rows.forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  $('#fpOut').innerHTML=`<b>${esc(r.n)}</b>: ${esc(r.t)} 95% 신뢰구간 ${r.lo.toFixed(3)}~${r.hi.toFixed(3)}, ${r.p}.`;
+  S.store.set(KEY+':fp',i)}
+rows.forEach(b=>b.onclick=()=>fpPick(+b.dataset.i));
+const FPT={all:'우울과 함께 늘어난 요인 5개, 반대로 움직인 요인 3개, 보정 뒤 뚜렷하지 않은 요인 5개입니다.',up:'외로움, 식사와 수면의 흐트러짐, 기저 정신질환, 흡연, 코로나19 관련 스트레스입니다.',down:'감사, 팬데믹 중 운동, 그리고 나이입니다. 나이는 많을수록 오즈가 낮았으니, 젊을수록 우울의 오즈가 높았다는 뜻입니다.',ns:'하나씩 비교할 때는 차이가 났지만 다른 요인을 함께 고려하자 신뢰구간이 1을 걸친 요인입니다.'};
+S.seg('fpSeg',k=>{rows.forEach(b=>b.classList.toggle('dim',k!=='all'&&T2[+b.dataset.i].c!==k));
+  const first=T2.findIndex(r=>k==='all'||r.c===k),saved=S.store.get(KEY+':fp',0);
+  fpPick(k==='all'||T2[saved].c===k?saved:first);
+  $('#fpOut').innerHTML=esc(FPT[k])+' '+$('#fpOut').innerHTML},KEY+':fpseg');
+
+/* 4) 점수 차이가 쌓이면: OR^k (계산값) */
+const CF={
+ lone:{or:1.646,max:3,pre:1.9,u:'점',lab:'외로움 점수가 높은 정도',txt:k=>`외로움 점수가 ${k}점 높을 때 우울의 오즈(계산값: 1.646의 ${k}제곱)`,pn:'우울한 집단의 외로움 점수가 평균 1.9점 높았습니다.'},
+ grat:{or:0.933,max:10,pre:4.1,u:'점',lab:'감사 점수가 높은 정도',txt:k=>`감사 점수가 ${k}점 높을 때 우울의 오즈(계산값: 0.933의 ${k}제곱)`,pn:'우울하지 않은 집단의 감사 점수가 평균 4.1점 높았습니다.'},
+ stress:{or:1.077,max:6,pre:2.5,u:'점',lab:'코로나19 스트레스 점수가 높은 정도',txt:k=>`코로나19 관련 스트레스 점수가 ${k}점 높을 때 우울의 오즈(계산값: 1.077의 ${k}제곱)`,pn:'우울한 집단의 코로나19 관련 스트레스 점수가 평균 2.5점 높았습니다.'},
+ eat:{or:1.558,max:2,pre:0.6,u:'점',lab:'식사와 수면 흐트러짐 점수가 높은 정도',txt:k=>`식사와 수면의 흐트러짐 점수가 ${k}점 높을 때 우울의 오즈(계산값: 1.558의 ${k}제곱)`,pn:'우울한 집단의 점수가 평균 0.6점 높았습니다.'},
+ age:{or:0.983,max:20,pre:3.5,u:'세',lab:'나이가 많은 정도',txt:k=>`나이가 ${k}세 많을 때 우울의 오즈(계산값: 0.983의 ${k}제곱)`,pn:'우울하지 않은 집단이 평균 3.5세 많았습니다.'}};
+let cf='lone';const rg=$('#calcRange');
+function calc(){const c=CF[cf],k=+(+rg.value).toFixed(1),v=Math.pow(c.or,k);
+  $('#calcVal').textContent=k+c.u;
+  $('#calcOR').textContent=v.toFixed(2)+'배';
+  $('#calcTxt').textContent=c.txt(k)+'. '+c.pn;
+  $('#calcGauge').innerHTML=S.gauge({min:0,max:5,ticks:[0,1,2,3,4,5],pts:[{v:1,ref:1,label:'오즈비 1: 차이 없음'},{v,label:`${k}${c.u} 차이에서 오즈 ${v.toFixed(2)}배(계산값)`}]},`오즈 ${v.toFixed(2)}배`);
+  S.store.set(KEY+':calc:'+cf,k)}
+rg.addEventListener('input',calc);
+$('#calcPreset').onclick=()=>{rg.value=CF[cf].pre;calc()};
+S.seg('calcSeg',k=>{cf=k;const c=CF[k];rg.max=c.max;rg.step=k==='age'?0.5:0.1;$('#calcLabel').textContent=c.lab;rg.value=S.store.get(KEY+':calc:'+k,1);calc()},KEY+':calcseg');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 우울은 어떻게 정의했나요?',o:['PHQ-9 10점 이상','정신과 진단을 받은 경우','UCLA 외로움 척도 6점 이상'],a:0,e:'PHQ-9 10점 이상을 임상적으로 의미 있는 우울로 보았고, 감염되지 않은 1,492명 가운데 20.9%가 해당했습니다.'},
+ {q:'다른 요인을 함께 고려한 모형에서 우울과 가장 강하게 관련된 요인은 무엇이었나요?',o:['미혼','외로움','감염 공포'],a:1,e:'외로움 점수는 1점당 오즈비 1.646으로, 모형에서 왈드 값이 가장 컸습니다. 미혼과 감염 공포는 보정 뒤 뚜렷하지 않았습니다.'},
+ {q:'운동과 우울의 관계에서 드러난 점은 무엇인가요?',o:['팬데믹 전 운동 빈도가 가장 중요했다','팬데믹 중 주 3회 이상 운동이 우울과 반대로 관련되었다','운동은 우울과 관련이 없었다'],a:1,e:'팬데믹 전의 운동 빈도는 우울과 뚜렷한 관련이 없었고, 팬데믹 중 주 3회 이상 운동은 오즈비 0.672로 반대 방향의 관련을 보였습니다.'},
+ {q:'나이의 오즈비 0.983(1세당)은 무엇을 뜻하나요?',o:['나이가 많을수록 우울의 오즈가 높았다','젊을수록 우울의 오즈가 높았다','나이는 우울과 관련이 없었다'],a:1,e:'나이가 1세 많을 때마다 오즈가 0.983배였으니, 젊을수록 우울의 오즈가 높았습니다. 논문은 젊은 세대를 더 살펴야 할 집단으로 꼽습니다.'},
+ {q:'논문이 밝힌 한계로 맞는 것은 무엇인가요?',o:['횡단 연구라 인과관계가 분명하지 않다','표본이 100명 미만이다','감사를 재지 않았다'],a:0,e:'한 시점의 조사라 무엇이 먼저인지 알 수 없고, 특히 식사와 수면의 흐트러짐은 우울의 증상이기도 합니다. 온라인 설문의 선택 편향 가능성도 함께 밝혔습니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

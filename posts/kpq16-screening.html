@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대학생 정신증 위험 선별 설문 - 전민 연구 기록</title>
+<meta name="description" content="16문항 전구증상 설문 한국판(KPQ-16)과 수정판(mKPQ-16)으로 도움을 구하지 않는 대학생에서 정신증 초고위험을 선별할 수 있는지 확인한 타당화 연구(Psychiatry Investigation, 2018)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.steps{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line-2);margin:0 0 14px}
+.steps button{border:0;border-left:1px solid var(--line-2);background:var(--surface);padding:9px 6px;font-size:13.5px;line-height:1.35;color:var(--ink-2);border-radius:var(--r)}
+.steps button:first-child{border-left:0}
+.steps button b{display:block;font-family:var(--num);font-weight:500;font-size:12px;color:var(--meta)}
+.steps button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.steps button[aria-pressed="true"] b{color:var(--bg)}
+.funnel{display:grid;gap:5px;margin:4px 0 0}
+.fn{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:14px;color:var(--meta)}
+.fn .ft{position:relative;height:14px;background:var(--tint)}
+.fn .ff{position:absolute;left:0;top:0;bottom:0;min-width:2px;background:var(--line-2);transition:width .3s ease-out}
+.fn .fv{font-family:var(--num);font-size:13px;text-align:right}
+.fn.on{color:var(--ink)}
+.fn.on .ff{background:var(--ink-2)}
+.fn.cur .ff{background:var(--signal)}
+.fn.cur .fv{color:var(--signal-ink)}
+.step-text{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;margin:0 0 14px}
+.ctrl-label{font-size:13px;color:var(--meta);margin:0 0 4px}
+.cut-wrap{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
+.bars{display:grid;gap:6px;margin-top:4px}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:14px}
+.bar .bn small{display:block;font-size:12px;color:var(--meta)}
+.bar .bt{position:relative;height:16px;background:var(--tint)}
+.bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--ink-2);transition:width .3s ease-out}
+.bar.hi .bf{background:var(--signal)}
+.bar .bv{font-family:var(--num);font-size:13px;text-align:right}
+.bar.hi .bv{color:var(--signal-ink)}
+.roc{display:block;width:100%;height:auto;background:var(--bg)}
+.roc .r-ax{stroke:var(--meta);stroke-width:1}
+.roc .r-grid{stroke:var(--line);stroke-width:1}
+.roc .r-diag{stroke:var(--meta);stroke-width:1;stroke-dasharray:4 3}
+.roc .r-pt{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
+.roc .r-pt.sel{fill:var(--signal);stroke:var(--surface);stroke-width:2}
+.roc .r-ln{fill:none;stroke:var(--ink-2);stroke-width:1}
+.icons{display:block;width:100%;height:auto;margin-top:16px}
+.icons .i-tp{fill:var(--signal)}
+.icons .i-fn{fill:var(--surface);stroke:var(--signal);stroke-width:1.6}
+.icons .i-fp{fill:var(--ink-2)}
+.icons .i-tn{fill:var(--surface);stroke:var(--line-2);stroke-width:1.2}
+.ilegend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink-2);margin-top:8px}
+.ilegend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.ilegend .l-tp{background:var(--signal)}
+.ilegend .l-fn{border:1.6px solid var(--signal)}
+.ilegend .l-fp{background:var(--ink-2)}
+.ilegend .l-tn{border:1.2px solid var(--line-2)}
+.ilegend .v{color:var(--ink)}
+.out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+.cmp{display:grid;grid-template-columns:110px minmax(0,1fr) 120px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 11px;font-size:13.5px;border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.items{display:grid;grid-template-columns:repeat(19,minmax(0,1fr));gap:3px;margin:6px 0 8px}
+.items span{height:22px;background:var(--tint);border:1px solid var(--line)}
+.items span.p{background:var(--ink-2);border-color:var(--ink-2)}
+.items span.t{background:var(--surface);border:1.5px solid var(--ink)}
+.items span.n{background:var(--line-2);border-color:var(--line-2)}
+.items span.e{background:var(--signal);border-color:var(--signal)}
+.ikey{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink-2)}
+.ikey i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px}
+.ikey .p{background:var(--ink-2)}
+.ikey .t{border:1.5px solid var(--ink)}
+.ikey .n{background:var(--line-2)}
+.ikey .e{background:var(--signal)}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+@media (max-width:640px){
+  .steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .steps button{font-size:12.5px;padding:8px 4px;border-top:1px solid var(--line-2)}
+  .steps button:nth-child(-n+3){border-top:0}
+  .steps button:nth-child(4){border-left:0}
+  .fn{grid-template-columns:96px minmax(0,1fr) 52px;gap:8px;font-size:13px}
+  .cut-wrap{grid-template-columns:1fr}
+  .roc{max-width:260px}
+  .bar{grid-template-columns:92px minmax(0,1fr) 44px;gap:8px;font-size:13px}
+  .cmp{grid-template-columns:72px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .items span{height:18px}
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 조기 정신증, 선별 검사</p>
+  <h1>열여섯 문항의 짧은 설문으로, 정신증 위험이 높은 대학생을 가려낼 수 있을까요?</h1>
+  <p class="lede">조현병 같은 정신증은 대개 청소년기나 성인기 초반에 시작합니다. 일찍 알아차릴수록 좋지만, 증상이 막 보이기 시작한 청년은 스스로 병원을 찾지 않는 경우가 많습니다. 이 연구는 대학 신입생 2,246명에게 16문항짜리 자기보고 설문을 나눠 주고, 그 점수가 숙련된 면담으로 확인한 <span class="term" data-tip="Ultra-high risk. 정신증으로 넘어갈 위험이 높은 상태. 약한 정신증 증상, 짧게 왔다 사라진 정신증 증상, 유전적 취약성과 기능 저하 같은 기준으로 판단한다.">정신증 초고위험</span>을 얼마나 잘 가려내는지 확인했습니다.</p>
+  <p class="meta">원문: Kim S-W, Chung Y-C 외. Psychiatry Investigation 15(2):111-117, 2018. 전민은 저자 10명 가운데 여섯 번째 공저자입니다.<br>읽는 데 약 11분, 직접 눌러 보는 요소 5개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>한 대학의 신입생 2,921명 가운데 <b>2,246명</b>이 16문항 전구증상 설문의 한국판(KPQ-16)에 답했고, 4점 이상인 학생 가운데 <b>257명</b>이 표준 면담 도구(CAARMS)로 평가받았습니다.</li>
+    <li>면담한 257명 가운데 <b>17명(6.6%)</b>이 정신증 초고위험 기준을 충족했습니다.</li>
+    <li>사고와 인지 문제를 묻는 3문항을 더한 수정판(mKPQ-16)의 총점이 가장 잘 가려냈습니다(<b>AUROC 0.831</b>). 절단점 7점에서 민감도 76.5%, 특이도 75.4%였고, 원래 KPQ-16은 절단점 6점에서 민감도 64.7%, 특이도 71.2%였습니다.</li>
+    <li>논문은 두 설문을 학교와 지역사회에서 쓸 수 있는 좋은 선별 도구로 보면서, 도움을 구하지 않는 집단이라 양성 예측도가 낮고 위양성과 낙인을 신중히 다뤄야 한다고 함께 적습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>2,246명</b><span>1단계 설문에 참여한 신입생</span></div>
+  <div class="stat"><b>17명</b><span>면담 257명 가운데 초고위험 기준 충족</span></div>
+  <div class="stat"><b>0.831</b><span>mKPQ-16 총점의 판별(AUROC)</span></div>
+  <div class="stat"><b>76.5%</b><span>mKPQ-16 7점 기준의 민감도</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 짧은 설문이 필요했을까요</a></li>
+    <li><a href="#tool">설문은 무엇을 묻나요</a></li>
+    <li><a href="#how">두 단계로 거르기</a></li>
+    <li><a href="#acc">설문은 얼마나 정확했을까요</a></li>
+    <li><a href="#cut">절단점을 옮겨 보기</a></li>
+    <li><a href="#valid">우울과는 구별될까요</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 짧은 설문이 필요했을까요</h2>
+<p>정신증 초기에 개입하면 병이 결국 얼마나 무거워질지를 줄일 수 있습니다. 그런데 정신증 증상이 생겨도 정신건강 전문가를 처음 만나기까지는 오래 걸리는 경우가 많습니다. 치료가 늦어지고 <span class="term" data-tip="Duration of untreated psychosis. 정신증 증상이 처음 나타난 때부터 적절한 치료를 시작할 때까지의 기간.">정신증 미치료 기간</span>이 길어지면 치료 반응과 예후가 나빠진다고 알려져 있습니다. 논문은 한국의 정신증 미치료 기간이 서구보다 길다는 보고를 들며, 한국 청소년과 청년에서 정신증을 일찍 찾아내는 전략이 시급하다고 적습니다.</p>
+<p>병이 생긴 뒤에 거슬러 올라가 부르던 '전구기'라는 말 대신, 지금은 앞을 내다보는 뜻에서 정신증 '초고위험(UHR)'이나 '임상적 고위험(CHR)'이라는 말을 씁니다. DSM-5는 3부에 <span class="term" data-tip="Attenuated psychosis syndrome. 정신증 증상이 약한 형태로 나타나는 상태로, DSM-5에서 추가 연구가 필요한 진단으로 실렸다.">약화된 정신증 증후군</span>을 실었습니다. 하지만 약한 증상을 가진 사람 대부분은 일찍 도움을 구하지 않습니다. 그래서 학교와 지역사회에서 먼저 찾아 나서는 선별이 필요합니다.</p>
+<p>문제는 도구입니다. 초고위험을 판단하는 표준 도구인 <span class="term" data-tip="Comprehensive Assessment of At-Risk Mental States. 훈련받은 평가자가 약한 정신증 증상의 강도와 빈도를 0~6점으로 매기는 반구조화 면담 도구. 이 연구의 기준 진단이다.">CAARMS</span> 같은 구조화 면담은 일반 인구를 선별하기에는 맞지 않고, 정신건강 게이트키퍼가 쓰기에는 시간과 전문성이 많이 듭니다. 그래서 먼저 짧은 자기보고 설문으로 거르고, 걸린 사람에게 정밀 면담을 하는 단계적 방법이 효율적입니다.</p>
+<div class="callout"><p><b>비유:</b> 공항 보안 검색을 떠올려 보세요. 모든 승객의 가방을 하나하나 열어 보지는 않습니다. 먼저 검색대를 통과시키고, 경보가 울린 가방만 열어 봅니다. 검색대는 조금 예민해서 괜찮은 가방에도 울리지만, 위험한 물건을 놓치지 않는 것이 더 중요합니다. 이 연구의 설문은 검색대, CAARMS 면담은 가방을 여는 단계에 해당합니다.</p></div>
+
+<h2 id="tool">2. 설문은 무엇을 묻나요</h2>
+<p><span class="term" data-tip="16-item Prodromal Questionnaire. 92문항 전구증상 설문을 16문항으로 줄인 자기보고 선별 도구. 유럽에서 처음 타당화되었다.">PQ-16</span>은 원래 92문항, 답하는 데 20분쯤 걸리던 전구증상 설문을 많은 사람에게 쓰기 쉽게 줄인 것입니다. 각 문항에 '그렇다, 아니다'로 답하고, '그렇다'라고 답한 문항마다 그 경험이 얼마나 괴로웠는지를 4단계로 매깁니다. 총점은 '그렇다'의 개수(0~16점)이고, 괴로움을 더한 값은 고통 점수로 따로 살폈습니다.</p>
+<p>16문항 가운데 9문항은 지각 이상이나 환각, 5문항은 특이한 생각, 망상 같은 생각, 편집 사고, 2문항은 음성 증상을 묻습니다. 지각 문항에 비해 생각과 인지를 묻는 문항이 적습니다. 그래서 연구팀은 한국에서 이미 타당화된 <span class="term" data-tip="Eppendorf Schizophrenia Inventory. 정신증 환자에게 두드러지는 주관적 증상을 묻는 40문항 자기보고 척도. 한국판이 초고위험 선별용으로 타당화되었다.">ESI</span>에서 3문항(관계 사고, 인지 손상, 피해 사고)을 더한 탐색용 수정판 mKPQ-16(19문항)도 함께 시험했습니다.</p>
+
+<div class="panel figure" id="itemsFig"><span class="cx"></span>
+  <div class="fig-head"><h3>KPQ-16과 mKPQ-16의 문항 구성</h3></div>
+  <div class="seg" id="itemSeg" role="group" aria-label="설문 고르기" style="margin-bottom:12px"><button data-k="k">KPQ-16(16문항)</button><button data-k="m">mKPQ-16(19문항)</button></div>
+  <div class="items" id="itemGrid" role="img" aria-label="문항 구성"></div>
+  <div class="ikey"><span><i class="p"></i>지각 이상, 환각 9</span><span><i class="t"></i>특이한 생각, 망상, 편집 5</span><span><i class="n"></i>음성 증상 2</span><span id="ikeyE"><i class="e"></i>ESI에서 더한 문항 3</span></div>
+  <p class="out" id="itemText" aria-live="polite"></p>
+  <p class="fig-note">문항의 수와 영역만 나타냈습니다. 문항의 실제 문구는 옮기지 않았습니다. 한국어판은 원저자의 허락을 받아 번역하고, 의학을 전공한 이중 언어 번역자가 다시 영어로 옮겨 원문과 어긋남이 없음을 확인했습니다.</p>
+</div>
+
+<h2 id="how">3. 두 단계로 거르기</h2>
+<p>연구는 2016년 2월 학년 초에 18세 이상 신입생이 익명 설문 묶음의 하나로 KPQ-16에 답하면서 시작했습니다. 2단계로 넘어가는 기준은 4점 이상이었습니다. 유럽의 첫 타당화 연구에서 이 기준의 민감도가 97%, <span class="term" data-tip="Negative predictive value. 검사에서 음성이 나온 사람이 실제로 해당 상태가 아닐 확률.">음성 예측도</span>가 99%였고, 연구팀은 진짜 양성을 놓칠 위험을 아주 낮게 두고 싶었기 때문입니다. 25세 초과, 정신증 진단, 항정신병약물 사용 경험, 한국어가 서툰 경우는 제외했습니다.</p>
+<p>2016년 3월부터 4월 초까지, 훈련받은 임상심리사, 정신건강간호사, 정신건강사회복지사가 먼저 전화로 CAARMS 면담을 했습니다. 초고위험이 아니라고 강하게 판단된 학생은 그대로 결론을 냈고, 나머지는 CAARMS 경험이 많은 정신건강의학과 의사가 대면으로 평가했습니다. 대면 평가를 받은 학생은 약 한 달 뒤 ESI와 KPQ-16에 다시 답했습니다. 최종 진단은 연구팀 회의에서 다시 검토했습니다. 단계를 눌러 사람 수가 어떻게 줄어드는지 보세요.</p>
+
+<div class="panel figure" id="flowFig"><span class="cx"></span>
+  <div class="fig-head"><h3>신입생 2,921명에서 초고위험 17명까지</h3><span class="note">단계를 눌러 보세요</span></div>
+  <div class="steps" id="flowSeg" role="group" aria-label="선별 단계">
+    <button data-k="0"><b>1</b>신입생</button><button data-k="1"><b>2</b>설문 참여</button><button data-k="2"><b>3</b>4점 이상</button><button data-k="3"><b>4</b>연락처 제공</button><button data-k="4"><b>5</b>면담 완료</button><button data-k="5"><b>6</b>초고위험</button>
+  </div>
+  <div class="funnel" id="funnel"></div>
+  <p class="step-text" id="flowText" aria-live="polite"></p>
+  <p class="fig-note">막대 길이는 신입생 2,921명에 대한 비율입니다. 마지막 두 단계는 막대가 아주 짧아서 최소 굵기로 그렸습니다.</p>
+</div>
+
+<p>면담을 마친 257명은 평균 19.2세(18~23세)였고 여성이 129명(50.2%)으로 남녀가 거의 반반이었습니다. 대면 평가를 받은 60명도 평균 19.2세였고, 이 가운데는 남성이 35명(58.3%)으로 더 많았습니다. 초고위험 17명 가운데 16명은 증상의 강도 기준을, 1명은 빈도 기준을 충족했습니다. 지각 이상보다 생각의 문제가 더 흔했습니다. 한 명을 빼고 모두 약한 망상 증상이 있었고, 기준에 맞는 약한 환각은 4명에게서만 보였습니다.</p>
+
+<h2 id="acc">4. 설문은 얼마나 정확했을까요</h2>
+<p>설문 점수가 초고위험인 사람과 아닌 사람을 얼마나 잘 갈라놓는지는 <span class="term" data-tip="Area under the receiver operating characteristic curve. 가능한 모든 절단점에서 민감도와 위양성률을 이은 곡선 아래 넓이. 0.5는 두 집단을 전혀 가르지 못함, 1은 완벽하게 가름을 뜻한다.">AUROC</span>로 쟀습니다. 0.5는 두 집단을 전혀 가르지 못한다는 뜻이고 1은 완벽하게 가른다는 뜻입니다. 네 가지 점수 모두 의미 있게 갈랐고, 그 가운데 mKPQ-16 총점이 0.831로 가장 높았습니다. KPQ-16 총점보다 0.129 높았습니다.</p>
+
+<div class="panel figure" id="aucFig"><span class="cx"></span>
+  <div class="fig-head"><h3>점수별 판별력과 95% 신뢰구간(표 1)</h3><span class="note">빨간 점: mKPQ-16, 속 빈 점: KPQ-16</span></div>
+  <div class="seg" id="aucSeg" role="group" aria-label="점수 종류" style="margin-bottom:12px"><button data-k="tot">총점</button><button data-k="dis">고통 점수</button></div>
+  <div class="cmp" id="aucOut"></div>
+  <p class="out" id="aucText" aria-live="polite"></p>
+  <p class="fig-note">점에 손가락을 대거나 마우스를 올리면 값이 보입니다. 붉은 띠는 95% 신뢰구간입니다. 면담을 마친 257명의 자료로 계산한 값입니다.</p>
+</div>
+
+<h2 id="cut">5. 절단점을 옮겨 보기</h2>
+<p>선별 설문을 실제로 쓰려면 '몇 점 이상이면 면담으로 보낼지'를 정해야 합니다. 이 점수를 절단점이라고 합니다. 절단점을 낮추면 초고위험인 사람을 더 많이 찾아내지만(<span class="term" data-tip="Sensitivity. 실제로 해당 상태인 사람 가운데 검사에서 양성으로 나온 비율.">민감도</span>), 괜찮은 사람도 더 많이 걸립니다(<span class="term" data-tip="Specificity. 실제로 해당 상태가 아닌 사람 가운데 검사에서 음성으로 나온 비율.">특이도</span> 저하). 아래에서 점수와 절단점을 바꿔 보세요. 점 257개는 면담을 마친 학생 한 명 한 명입니다.</p>
+
+<div class="panel figure" id="cutFig"><span class="cx"></span>
+  <div class="fig-head"><h3>절단점별 민감도, 특이도, 예측도(표 1)</h3></div>
+  <div class="ctrl">
+    <div><p class="ctrl-label">점수</p><div class="seg" id="scaleSeg" role="group" aria-label="점수 고르기"><button data-k="kt">KPQ-16 총점</button><button data-k="mt">mKPQ-16 총점</button><button data-k="kd">KPQ-16 고통</button><button data-k="md">mKPQ-16 고통</button></div></div>
+    <div><p class="ctrl-label">절단점(이 점수 이상이면 양성)</p><div class="seg" id="cutSeg" role="group" aria-label="절단점 고르기"></div></div>
+  </div>
+  <div class="cut-wrap">
+    <div>
+      <div class="bars" id="cutBars"></div>
+    </div>
+    <svg class="roc" id="roc" viewBox="0 0 220 220" role="img" aria-label="표 1의 절단점을 민감도와 위양성률 평면에 찍은 그림"></svg>
+  </div>
+  <svg class="icons" id="icons" viewBox="0 0 520 200" role="img" aria-label="면담한 257명을 결과별로 나눈 점 그림"></svg>
+  <div class="ilegend" id="ilegend"></div>
+  <p class="out" id="cutText" aria-live="polite"></p>
+  <p class="fig-note">민감도, 특이도, <span class="term" data-tip="Positive predictive value. 검사에서 양성이 나온 사람이 실제로 해당 상태일 확률.">양성 예측도</span>, 음성 예측도는 원문 표 1의 값입니다. 점 그림의 사람 수와 오른쪽 그림의 위양성률(100에서 특이도를 뺀 값)은 표 1의 비율과 초고위험 17명, 비초고위험 240명으로 거꾸로 셈한 계산값입니다. 오른쪽 그림은 표 1의 절단점만 찍은 것이며 원문 그림 1의 곡선을 옮긴 것이 아닙니다.</p>
+</div>
+
+<p>논문은 균형을 보면 mKPQ-16 총점 7점(민감도 76.5%, 특이도 75.4%, 양성 예측도 18.1%)이 가장 알맞다고 보았습니다. 이는 한국판 ESI의 성적(민감도 77%, 특이도 70%)과 견줄 만합니다. 초고위험인 사람을 한 명도 놓치고 싶지 않다면 mKPQ-16 6점을 써서 민감도를 100%로 올릴 수 있고, 그 대신 특이도는 53.3%, 양성 예측도는 13.2%로 내려갑니다. 원래 KPQ-16에서는 6점(민감도 64.7%, 특이도 71.2%)과 7점(민감도 52.9%, 특이도 84.6%)이 균형이 좋았습니다. 고통 점수의 절단점으로는 KPQ-16 14점, mKPQ-16 16점을 제시했습니다.</p>
+<p>양성 예측도가 낮게 나온 까닭도 논문은 설명합니다. 전문 클리닉을 찾아온 사람처럼 도움을 구하는 표본에서는 양성 예측도가 높고, 이 연구처럼 도움을 구하지 않는 표본에서는 낮게 나오는 경향이 있습니다. 양성 예측도를 높이고 싶다면 절단점을 올릴 수 있지만 민감도가 함께 내려갑니다. 정신증처럼 심각하고 드문 병을 선별할 때는 양성 예측도가 낮거나 위양성이 많더라도 민감도가 좋은 절단점을 골라야 한다는 것이 논문의 입장입니다. 이 설문은 최종 진단이 아니라, 면담이 필요한 사람을 고르는 첫 관문이기 때문입니다.</p>
+<p>지각 문항이 많은 PQ-16의 구성 탓에 지각 이상이 없는 사람을 놓칠 수 있다는 추측도 논문은 덧붙입니다. 생각과 인지를 묻는 ESI 3문항을 더하자 민감도가 올라간 결과가 이 추측을 뒷받침한다고 봅니다. 간단함과 타당도를 함께 보면 mKPQ-16 총점이 가장 쓸모 있는 선별 도구일 수 있다고 적습니다.</p>
+
+<h2 id="valid">6. 우울과는 구별될까요</h2>
+<p>좋은 선별 설문이라면 비슷한 것을 재는 도구와는 함께 움직이고(<span class="term" data-tip="Convergent validity. 같은 개념을 재는 다른 도구와 점수가 함께 움직이는 정도.">수렴 타당도</span>), 다른 것을 재는 도구와는 따로 움직여야 합니다(<span class="term" data-tip="Discriminant validity. 다른 개념을 재는 도구와 구별되는 정도. 여기서는 우울과 구별되는지를 보았다.">변별 타당도</span>). 대면 평가를 받은 60명에서 KPQ-16 총점과 ESI 총점의 <span class="term" data-tip="두 점수의 순위가 얼마나 함께 움직이는지 나타내는 상관계수. -1~1.">스피어만 상관계수</span>는 0.644(p&lt;0.001)였습니다.</p>
+<p>우울과의 구별은 <span class="term" data-tip="Mini-International Neuropsychiatric Interview. DSM-IV 기준으로 주요 정신질환을 진단하는 짧은 구조화 면담.">MINI</span>로 진단한 우울장애와 <span class="term" data-tip="Patient Health Questionnaire-9. 지난 2주 동안의 우울 증상 9가지를 0~3점으로 묻는 자기보고 척도.">PHQ-9</span>로 보았습니다. 60명 가운데 15명(25.0%)이 우울장애(주요우울장애 2명, 달리 분류되지 않는 우울장애 13명)로 진단되었고, 초고위험군에서 우울장애 비율은 29.4%로 초고위험이 아닌 쪽과 의미 있는 차이가 없었습니다(p=0.743). 집단을 바꿔 가며 점수를 견주어 보세요.</p>
+
+<div class="panel figure" id="t2Fig"><span class="cx"></span>
+  <div class="fig-head"><h3>진단별 점수 비교: 중앙값과 사분위 범위(표 2)</h3><span class="note">속 빈 점: 해당 없음, 빨간 점: 해당 있음, 회색 띠: 사분위 범위</span></div>
+  <div class="ctrl"><div class="seg" id="grpSeg" role="group" aria-label="나눌 기준"><button data-k="uhr">초고위험 여부</button><button data-k="dep">우울장애 여부</button></div></div>
+  <div class="pick" id="t2Pick" role="group" aria-label="점수 고르기"></div>
+  <div id="t2Out"></div>
+  <p class="out" id="t2Text" aria-live="polite"></p>
+  <p class="fig-note">초고위험 여부는 면담 257명(초고위험 17명, 아님 240명), 우울장애 여부는 대면 평가 60명(우울장애 15명, 아님 45명)에서 비교했습니다. PHQ-9는 대면 평가 때만 재서, 초고위험이 아닌 쪽의 PHQ-9 값은 43명의 값입니다. 검정은 맨-휘트니 U 검정입니다.</p>
+</div>
+
+<p>정리하면, KPQ-16과 mKPQ-16 점수는 초고위험군에서 의미 있게 높았고, 우울장애 여부에 따라서는 차이가 없었습니다. PHQ-9는 거꾸로 우울장애가 있는 쪽에서 의미 있게 높았고, 초고위험 여부에 따라서는 차이가 없었습니다. 설문이 우울이 아니라 정신증 위험 신호를 잡고 있다는 뜻입니다.</p>
+<p>신뢰도도 확인했습니다. 문항들이 같은 것을 재는 정도인 <span class="term" data-tip="문항들이 서로 얼마나 일관되게 응답되는지 나타내는 내적 일관성 지표. 이 연구는 0.65를 넘으면 충분하다고 보았다.">크론바흐 알파</span>는 KPQ-16 0.680, mKPQ-16 0.685로, 연구가 정한 기준(0.65 초과)을 넘었습니다. 약 한 달 간격으로 다시 답했을 때 KPQ-16 총점의 <span class="term" data-tip="Intraclass correlation coefficient. 같은 사람을 두 번 쟀을 때 값이 얼마나 일치하는지 나타내는 지표.">급내상관계수</span>는 0.478(p=0.007)이었습니다.</p>
+
+<h2 id="meaning">7. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>한국판 PQ-16은 내적 일관성과 진단 타당도가 좋았고, 정신증 초고위험인 사람을 일반 인구에서 가려냈습니다. ESI와 수렴 타당도를, 우울과는 변별 타당도를 보였습니다. 연구팀은 정신증 위험을 재는 짧은 선별 설문이 타당화되면 한국의 학교와 지역사회에서 선별과 조기 발견이 늘어날 것이라고 봅니다.</p>
+<p>선별에는 낙인의 문제가 따릅니다. 논문은 위양성이 많은 만큼 도움을 구하지 않는 집단에서 정신증 선별이 낳을 수 있는 낙인을 신중히 생각해야 하고, 청년을 잘못 전구기로 판단하면 불필요한 걱정과 정서적 상처를 줄 수 있다고 적습니다. 동시에 조현병의 정신증 증상과 나쁜 경과는 평가에 따르는 낙인보다 더 해로울 수 있고, 괴로운 증상을 덜고 큰 정신질환을 예방하는 이득이 선별의 낙인 위험보다 크다고 봅니다. 선별로 예방에 성공하면 정신증이 낳을 낙인도 결국 사라진다는 것입니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 같은 시기에 정신증 초고위험 청소년을 다른 방향에서 들여다본 연구도 있습니다. <a data-paper="vienna_omega3_fa_2016">적혈구 막 지방산과 초고위험군의 증상</a>.</p></div>
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>참여자는 도움을 구하지 않는 일반 대학생이고 젊은 성인이었습니다. 아동과 청소년은 초고위험 증상을 더 많이 보고한다고 알려져 있어, 치료를 구하는 집단이나 더 어린 집단에서는 다른 절단점이 더 맞을 수 있습니다.</li>
+  <li>단면 연구여서 KPQ-16이 실제 정신증 전환을 예측하는지(예측 타당도)는 종단 연구로 더 확인해야 합니다. 다만 논문은 초고위험 상태가 정신증으로 넘어가지 않더라도 여러 갈래로 이어지고 기능 저하를 동반한다는 최근 연구를 들어, 전환과 상관없이 초고위험을 찾아내는 일 자체가 중요하다고 적습니다.</li>
+  <li>KPQ-16 4점 미만인 학생은 2단계에 들어가지 않았고, 많은 후보가 대면 면담에 참여하지 않아 선택 편향이 결과에 영향을 주었을 수 있습니다.</li>
+  <li>양성 예측도가 비교적 낮아, 도움을 구하지 않는 집단에서는 위양성과 그에 따른 낙인을 신중히 고려해야 합니다. 이런 경우 초고위험 진단을 내릴 때 기능 저하와 높은 주관적 고통도 함께 보아야 합니다.</li>
+</ul>
+<p><b>다음 질문:</b> 이 설문으로 찾아낸 초고위험 학생들은 시간이 지나며 어떻게 지낼까요? 논문이 요청한 종단 연구가 그 답을 줄 것입니다.</p>
+
+<h2 id="quiz">8. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Kim S-W, Chung Y-C, Kang Y-S, Kim J-K, Jang J-E, Jhon M, Lee J-Y, Kim J-M, Shin I-S, Yoon J-S. Validation of the Korean version of the 16-Item Prodromal Questionnaire in a Non-Help-Seeking College Population. Psychiatry Investig. 2018;15(2):111-117. doi:10.30773/pi.2017.04.24</p>
+  <p>DOI <a href="https://doi.org/10.30773/pi.2017.04.24" target="_blank" rel="noopener">10.30773/pi.2017.04.24</a>, PubMed <a href="https://pubmed.ncbi.nlm.nih.gov/29475231/" target="_blank" rel="noopener">29475231</a><br>
+  원문은 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a> 라이선스로 공개되었습니다(Copyright © 2018 Korean Neuropsychiatric Association). 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1, 표 2에서 가져왔습니다.</p>
+  <p>점 그림의 사람 수와 위양성률은 표 1의 비율로 셈한 계산값이고, 문항 구성 그림은 문항 수와 영역만 나타낸 것입니다. 이 설문은 진단 도구가 아니며 진료 판단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='kpq16-screening';
+
+/* 1) 문항 구성 */
+S.seg('itemSeg',k=>{
+  const cells=[...Array(9).fill('p'),...Array(5).fill('t'),...Array(2).fill('n'),...(k==='m'?Array(3).fill('e'):[])];
+  $('#itemGrid').innerHTML=cells.map(c=>`<span class="${c}"></span>`).join('');
+  $('#itemGrid').setAttribute('aria-label',k==='m'?'mKPQ-16: 지각 9, 생각 5, 음성 2, ESI 3, 모두 19문항':'KPQ-16: 지각 9, 생각 5, 음성 2, 모두 16문항');
+  $('#ikeyE').style.visibility=k==='m'?'visible':'hidden';
+  $('#itemText').textContent=k==='m'
+    ?'mKPQ-16은 KPQ-16에 ESI의 4, 5, 8번 문항(관계 사고, 인지 손상, 피해 사고)을 더한 19문항입니다. 한국판 ESI 타당화에서 예측력이 높았던 문항이고, 지역사회 정신건강 현장에서 ESI로 선별해 본 경험도 반영했습니다.'
+    :'KPQ-16의 16문항 가운데 절반이 넘는 9문항이 지각 이상과 환각을 묻습니다. 원저자들도 지각 이상 문항이 많은 편이라고 적었습니다.';
+},KEY+':items');
+
+/* 2) 선별 흐름 */
+const FLOW=[
+ {n:'신입생',v:2921,t:'학년 초, 연구의 목적과 절차를 설명받은 신입생은 2,921명이었습니다.'},
+ {n:'설문 참여',v:2246,t:'2,246명(76.9%)이 자발적으로 1단계 설문에 참여했습니다. 익명 설문 묶음에 KPQ-16이 들어 있었습니다.'},
+ {n:'4점 이상',v:518,t:'518명(23.1%)이 KPQ-16 4점 이상이었습니다. 진짜 양성을 놓치지 않으려고 낮은 기준을 썼습니다.'},
+ {n:'연락처 제공',v:361,t:'518명 가운데 361명이 자발적으로 전화번호를 알려 주었습니다. 25세가 넘은 1명은 분석에서 뺐습니다. 73명은 세 번 넘게 연락해도 닿지 않았고, 30명은 권유에도 추가 평가를 거절했습니다.'},
+ {n:'면담 완료',v:257,t:'257명이 CAARMS 면담을 마쳤습니다. 197명은 전화 면담에서 초고위험이 아니라고 판단되었고, 60명은 정신건강의학과 의사의 대면 평가를 받았습니다.'},
+ {n:'초고위험',v:17,t:'면담한 257명 가운데 17명(6.6%)이 CAARMS의 정신증 초고위험 기준을 충족했습니다.'}];
+S.seg('flowSeg',k=>{const c=+k;
+  $('#funnel').innerHTML=FLOW.map((f,i)=>`<div class="fn${i<=c?' on':''}${i===c?' cur':''}"><span>${esc(f.n)}</span><span class="ft" aria-hidden="true"><span class="ff" style="width:${(f.v/2921*100).toFixed(2)}%"></span></span><span class="fv">${f.v.toLocaleString('en-US')}</span></div>`).join('');
+  $('#flowText').textContent=FLOW[c].t;
+},KEY+':flow');
+
+/* 3) AUROC(표 1) */
+const AUC={
+ tot:[{n:'KPQ-16',v:.702,ci:[.564,.840],p:'p=0.005'},{n:'mKPQ-16',v:.831,ci:[.764,.898],p:'p<0.001'}],
+ dis:[{n:'KPQ-16',v:.716,ci:[.567,.866],p:'p=0.003'},{n:'mKPQ-16',v:.796,ci:[.697,.894],p:'p<0.001'}]};
+const AUCT={tot:'총점(그렇다의 개수)으로 보면 mKPQ-16이 0.831, KPQ-16이 0.702였습니다. 둘 다 의미 있게 갈랐고, 생각과 인지 문항 3개를 더한 쪽이 더 높았습니다.',
+ dis:'괴로움의 정도를 더한 고통 점수로 탐색해 보아도 KPQ-16 0.716, mKPQ-16 0.796으로 총점과 비슷하게 만족스러운 값이었습니다.'};
+const ax={min:.5,max:1,ticks:[.5,.6,.7,.8,.9,1]};
+S.seg('aucSeg',k=>{const L=k==='tot'?'총점':'고통 점수';
+  $('#aucOut').innerHTML=AUC[k].map((r,i)=>`<span class="c-name">${r.n}</span>${S.gauge({...ax,ci:r.ci,pts:[{v:r.v,ref:i===0?1:0,label:`${r.n} ${L} AUROC ${r.v.toFixed(3)}, 95% 신뢰구간 ${r.ci[0].toFixed(3)}~${r.ci[1].toFixed(3)}`}]},`${r.n} ${L} AUROC ${r.v.toFixed(3)}`)}<span class="c-val">${i?`<b>${r.v.toFixed(3)}</b>`:r.v.toFixed(3)}<br>(${r.ci[0].toFixed(3)}~${r.ci[1].toFixed(3)})</span>`).join('');
+  $('#aucText').textContent=AUCT[k]+` (${AUC[k][0].n} ${AUC[k][0].p}, ${AUC[k][1].n} ${AUC[k][1].p})`;
+},KEY+':auc');
+
+/* 4) 절단점(표 1): [절단점, 민감도, 특이도, PPV, NPV] */
+const T1={
+ kt:{n:'KPQ-16 총점',rows:[[5,82.4,37.5,8.5,96.8],[6,64.7,71.2,13.8,96.6],[7,52.9,84.6,19.6,96.2]]},
+ mt:{n:'mKPQ-16 총점',rows:[[6,100,53.3,13.2,100],[7,76.5,75.4,18.1,97.8],[8,58.8,85.8,22.7,96.7]]},
+ kd:{n:'KPQ-16 고통 점수',rows:[[12,82.4,56.7,11.9,97.8],[13,70.6,64.6,12.4,96.9],[14,64.7,74.6,15.2,96.8],[15,58.8,80.4,17.5,96.5]]},
+ md:{n:'mKPQ-16 고통 점수',rows:[[14,88.2,60.4,13.6,98.6],[15,76.5,67.5,14.3,97.6],[16,76.5,74.2,17.3,97.8],[17,52.9,81.2,16.7,96.1]]}};
+const NOTE={'kt:6':'KPQ-16에서 균형이 좋은 절단점입니다. 원래 유럽 연구와 같은 절단점입니다.','kt:7':'KPQ-16에서 6점과 함께 균형이 좋은 절단점으로 꼽혔습니다.','mt:6':'초고위험인 사람을 한 명도 놓치지 않는 절단점입니다. 대신 특이도와 양성 예측도가 낮습니다.','mt:7':'논문이 가장 균형이 좋다고 본 절단점입니다.','kd:14':'논문이 KPQ-16 고통 점수의 절단점으로 제시한 값입니다.','md:16':'논문이 mKPQ-16 고통 점수의 절단점으로 제시한 값입니다.'};
+const POS=17,NEG=240,MET=[['민감도','초고위험 가운데 양성',1],['특이도','아닌 사람 가운데 음성',2],['양성 예측도','양성 가운데 초고위험',3],['음성 예측도','음성 가운데 아닌 사람',4]];
+let scale='kt';
+function drawCut(c){const sc=T1[scale],r=sc.rows.find(x=>x[0]===+c)||sc.rows[0];
+  $('#cutBars').innerHTML=MET.map(([n,s,j])=>`<div class="bar${j<3?' hi':''}"><span class="bn">${n}<small>${s}</small></span><span class="bt" role="img" aria-label="${n} ${r[j]}%"><span class="bf" style="width:${r[j]}%"></span></span><span class="bv">${r[j]}%</span></div>`).join('');
+  /* ROC 평면: 표 1의 절단점 */
+  const X=v=>30+v/100*176,Y=v=>196-v/100*176;
+  let g='';for(let t=0;t<=100;t+=25){g+=`<line class="r-grid" x1="${X(t)}" x2="${X(t)}" y1="20" y2="196"/><line class="r-grid" x1="30" x2="206" y1="${Y(t)}" y2="${Y(t)}"/>`}
+  g+=`<line class="r-ax" x1="30" x2="206" y1="196" y2="196"/><line class="r-ax" x1="30" x2="30" y1="20" y2="196"/><line class="r-diag" x1="30" y1="196" x2="206" y2="20"/>`;
+  g+=[0,50,100].map(t=>`<text class="t-num" x="${X(t)}" y="210" text-anchor="middle">${t}</text><text class="t-num" x="25" y="${Y(t)+4}" text-anchor="end">${t}</text>`).join('');
+  g+=`<text x="118" y="14" text-anchor="middle">세로: 민감도, 가로: 위양성률(%)</text>`;
+  const pts=sc.rows.map(x=>[X(100-x[2]),Y(x[1]),x]);
+  g+=`<polyline class="r-ln" points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+  g+=pts.map(([x,y,row])=>`<circle class="r-pt${row===r?' sel':''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${row===r?6:4.5}"><title>${row[0]}점: 민감도 ${row[1]}%, 특이도 ${row[2]}%</title></circle>`).join('');
+  $('#roc').innerHTML=g;
+  /* 257명 점 그림(계산값) */
+  const tp=Math.round(r[1]/100*POS),fn=POS-tp,tn=Math.round(r[2]/100*NEG),fp=NEG-tn;
+  const cls=[...Array(tp).fill('i-tp'),...Array(fn).fill('i-fn'),...Array(fp).fill('i-fp'),...Array(tn).fill('i-tn')];
+  const cols=26;$('#icons').innerHTML=cls.map((c,i)=>`<circle class="${c}" cx="${10+(i%cols)*19.2}" cy="${10+Math.floor(i/cols)*19.6}" r="6.2"/>`).join('');
+  $('#icons').setAttribute('aria-label',`면담 257명 가운데 계산값: 초고위험이면서 양성 ${tp}명, 초고위험인데 음성 ${fn}명, 초고위험 아닌데 양성 ${fp}명, 초고위험 아니고 음성 ${tn}명`);
+  $('#ilegend').innerHTML=`<span><i class="l-tp"></i>초고위험, 양성 <b class="v">${tp}</b></span><span><i class="l-fn"></i>초고위험, 음성 <b class="v">${fn}</b></span><span><i class="l-fp"></i>초고위험 아님, 양성 <b class="v">${fp}</b></span><span><i class="l-tn"></i>초고위험 아님, 음성 <b class="v">${tn}</b></span>`;
+  const note=NOTE[scale+':'+r[0]]||'';
+  $('#cutText').innerHTML=`<b>${esc(sc.n)} ${r[0]}점 이상</b>을 양성으로 보면, 면담한 257명 가운데 약 ${tp+fp}명이 양성으로 걸리고 그중 ${tp}명이 초고위험입니다(계산값). 초고위험 17명 가운데 놓치는 사람은 ${fn}명입니다. ${esc(note)}`;
+}
+function buildCut(){const sc=T1[scale];
+  $('#cutSeg').innerHTML=sc.rows.map(x=>`<button data-k="${x[0]}">${x[0]}점</button>`).join('');
+  S.seg('cutSeg',drawCut,KEY+':cut:'+scale);}
+S.seg('scaleSeg',k=>{scale=k;buildCut()},KEY+':scale');
+
+/* 5) 표 2: 중앙값(사분위 범위) */
+const T2={
+ uhr:{a:'초고위험 아님',b:'초고위험',rows:{kt:[[5,4,6],[7,5,7.5],2.912,'0.004'],mt:[[5,5,6],[8,6.5,8],4.664,'<0.001'],kd:[[11,9,14],[16,12,19.5],2.994,'0.003'],md:[[12,10,16],[19,15,22],4.098,'<0.001'],phq:[[5,3,7],[3,2,8],0.438,'0.662']}},
+ dep:{a:'우울장애 없음',b:'우울장애',rows:{kt:[[7,5,8],[6,4,8],0.486,'0.627'],mt:[[8,6,8],[7,6,8],0.096,'0.924'],kd:[[16,12,19],[14,10,18],1.010,'0.313'],md:[[17,15,20.5],[16,12,23],0.660,'0.509'],phq:[[4,2,6],[7,5,11],3.282,'0.001']}}};
+const MN={kt:'KPQ-16 총점',mt:'mKPQ-16 총점',kd:'KPQ-16 고통',md:'mKPQ-16 고통',phq:'PHQ-9'};
+function nice(lo,hi){const span=hi-lo,st=[1,2,5,10].find(s=>span/s<=6)||10;const a=Math.floor(lo/st)*st,b=Math.ceil(hi/st)*st,t=[];for(let v=a;v<=b+1e-9;v+=st)t.push(v);return{min:a,max:b,ticks:t}}
+$('#t2Pick').innerHTML=Object.keys(MN).map(k=>`<button type="button" data-k="${k}">${MN[k]}</button>`).join('');
+let grp='uhr',meas='kt';
+function drawT2(){const G=T2[grp],R=G.rows[meas],a=R[0],b=R[1],
+  all=[a[1],a[2],b[1],b[2]],x=nice(Math.min(...all),Math.max(...all));
+  const sig=parseFloat(R[3].replace('<',''))<0.05;
+  const row=(name,v,ref)=>`<span class="c-name">${esc(name)}</span>${S.gauge({...x,band:[v[1],v[2]],pts:[{v:v[0],ref,label:`${name} 중앙값 ${v[0]}, 사분위 범위 ${v[1]}~${v[2]}`}]},`${MN[meas]} ${name} 중앙값 ${v[0]}`)}<span class="c-val">${ref?v[0]:`<b>${v[0]}</b>`}<br>(${v[1]}~${v[2]})</span>`;
+  $('#t2Out').innerHTML=`<div class="cmp">${row(G.a,a,1)}${row(G.b,b,0)}</div>`;
+  $('#t2Text').textContent=`${MN[meas]}: ${G.b} 쪽 중앙값 ${b[0]}, ${G.a} 쪽 ${a[0]}. Z=${R[2].toFixed(3)}, p${R[3].startsWith('<')?R[3]:'='+R[3]}. ${sig?'의미 있는 차이가 있었습니다.':'의미 있는 차이가 없었습니다.'}`;
+}
+S.seg('grpSeg',k=>{grp=k;drawT2()},KEY+':grp');
+S.seg('t2Pick',k=>{meas=k;drawT2()},KEY+':t2');
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 초고위험 여부를 판단한 기준(골드 스탠더드)은 무엇이었나요?',o:['CAARMS 반구조화 면담','PHQ-9 점수','KPQ-16 4점 이상'],a:0,e:'설문 점수가 아니라, 훈련받은 평가자가 약한 정신증 증상의 강도와 빈도를 매기는 CAARMS 면담으로 초고위험을 판단했습니다.'},
+ {q:'1단계에서 2단계 면담으로 넘기는 기준을 KPQ-16 4점 이상으로 낮게 잡은 까닭은 무엇인가요?',o:['진짜 양성을 놓칠 위험을 아주 낮게 두려고','면담할 사람 수를 줄이려고','4점이 KPQ-16의 평균이어서'],a:0,e:'유럽의 첫 타당화 연구에서 이 기준의 민감도가 97%, 음성 예측도가 99%였고, 연구팀은 초고위험인 사람을 놓치지 않는 것을 우선했습니다.'},
+ {q:'mKPQ-16은 KPQ-16에 무엇을 더한 설문인가요?',o:['ESI의 사고와 인지 문항 3개','우울 문항 3개','환각 문항 3개'],a:0,e:'PQ-16은 지각 이상 문항이 많아서, 관계 사고, 인지 손상, 피해 사고를 묻는 ESI 문항 3개를 더했습니다. 더한 쪽의 AUROC가 0.831로 가장 높았습니다.'},
+ {q:'mKPQ-16 총점 절단점을 7점에서 6점으로 낮추면 어떻게 되나요?',o:['민감도는 100%로 오르고 특이도는 53.3%로 내려간다','민감도와 특이도가 함께 오른다','양성 예측도가 오른다'],a:0,e:'절단점을 낮추면 초고위험인 사람을 모두 찾아내지만 괜찮은 사람도 더 많이 걸려, 특이도는 53.3%, 양성 예측도는 13.2%가 됩니다.'},
+ {q:'우울장애가 있는 학생과 없는 학생을 비교했을 때 KPQ-16 점수는 어땠나요?',o:['의미 있는 차이가 없었다','우울장애 쪽이 훨씬 높았다','우울장애 쪽이 훨씬 낮았다'],a:0,e:'KPQ-16과 mKPQ-16 점수는 초고위험군에서만 높았고 우울장애와는 차이가 없었습니다. 반대로 PHQ-9는 우울장애 쪽에서만 높았습니다. 설문이 우울과 구별되는 신호를 잡는다는 뜻입니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

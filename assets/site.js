@@ -132,7 +132,7 @@ function scene(p,host,{more='',label='이런 상황이라면?'}={}){
 function roleLine(p){
   const r=roleKo(p.role);
   const where=[p.venue,p.year].filter(Boolean).join(', ');
-  return (where?esc(where)+'. ':'')+(r?`이 논문에서 저는 ${esc(r)}입니다.`:'');
+  return (where?esc(where)+'. ':'')+(r?`전민은 이 논문의 ${esc(r)}입니다.`:'');
 }
 function concl(p,{root=ROOT}={}){
   const text=p.concl||p.conclusion_ko; if(!text)return null;

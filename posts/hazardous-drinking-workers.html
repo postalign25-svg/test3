@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위험음주 직장인의 중독 성향 - 전민 연구 기록</title>
+<meta name="description" content="위험음주를 하는 직장인 486명의 중독 성향, 자살시도 경험, 성격 특성을 비교한 연구(J Korean Neuropsychiatr Assoc, 2017)를 쉽게 풀어 쓴 인터랙티브 해설">
+<!-- 테마를 그리기 전에 적용(깜박임 방지). 모든 페이지 같음 -->
+<script>try{var t=JSON.parse(localStorage.getItem('jm:theme'));if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+/* 이 글에만 쓰는 규칙. 색은 site.css 토큰(var(--…))만, 모서리는 var(--r)만 */
+.ctrl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0 0 14px}
+.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.flow li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li b{font-family:var(--num);font-weight:500}
+.cut{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.cut label{font-size:14px;color:var(--ink-2)}
+.cut input[type=range]{width:100%;accent-color:var(--ink);margin:4px 0 0}
+.cut-out{margin:12px 0 0;font-size:15.5px;line-height:1.75}
+.cut-out b{font-family:var(--num);font-weight:500}
+.pair{display:grid;gap:10px;margin-top:4px}
+.pair-row{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:4px 12px;align-items:center;font-size:14px;padding:4px 0;border-bottom:1px solid var(--line)}
+.pair-row .pn small{display:block;font-family:var(--num);font-size:12px;color:var(--meta)}
+.pair-bars{display:grid;gap:3px}
+.pb{position:relative;height:12px;background:var(--tint)}
+.pb i{position:absolute;left:0;top:0;bottom:0;transition:width .3s ease-out}
+.pb.h i{background:var(--signal)}
+.pb.n i{background:var(--ink-2)}
+.pair-v{font-family:var(--num);font-size:12.5px;text-align:right;line-height:1.45}
+.pair-v .h{color:var(--signal-ink)}
+.pair-v .n{color:var(--ink-2)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--meta);margin:0 0 10px}
+.key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px}
+.key .h{background:var(--signal)}
+.key .n{background:var(--ink-2)}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.pick button{border:1px solid var(--line-2);background:var(--surface);padding:5px 11px;font-size:13.5px;border-radius:var(--r);color:var(--ink-2)}
+.pick button:hover{border-color:var(--ink)}
+.pick button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.cmp{display:grid;grid-template-columns:110px minmax(0,1fr) 150px;gap:4px 14px;align-items:center;margin-top:6px}
+.cmp .c-name{font-size:14px}
+.cmp .c-val{font-family:var(--num);font-size:13px;color:var(--ink-2);text-align:right;line-height:1.4}
+.cmp .c-val b{color:var(--signal-ink);font-weight:500}
+.cmp .gauge{margin:0}
+.fp{display:grid;gap:0;border-top:1px solid var(--line)}
+.fp-row{display:grid;grid-template-columns:120px minmax(0,1fr) 128px;gap:12px;align-items:center;padding:6px 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;font-size:14px;border-radius:var(--r);width:100%;color:var(--ink)}
+.fp-row:hover .fp-name{text-decoration:underline;text-underline-offset:3px}
+.fp-row[aria-pressed="true"]{background:var(--tint)}
+.fp-row .fp-val{font-family:var(--num);font-size:12.5px;color:var(--ink-2);text-align:right}
+.fp-row.sig .fp-name{font-weight:600}
+.fp-track{position:relative;height:22px}
+.fp-one{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed var(--meta)}
+.fp-ci{position:absolute;top:10px;height:2px;background:var(--ink)}
+.fp-dot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--signal);border:2px solid var(--surface)}
+.fp-row:not(.sig) .fp-dot{background:var(--surface);border:2px solid var(--ink-2)}
+.fp-axis{display:grid;grid-template-columns:120px minmax(0,1fr) 128px;gap:12px}
+.fp-ticks{position:relative;height:20px}
+.fp-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--num);font-size:11px;color:var(--meta);top:3px}
+.fp-out{margin:14px 0 0;font-size:15.5px;line-height:1.75}
+@media (max-width:640px){
+  .flow li{grid-template-columns:84px minmax(0,1fr)}
+  .pair-row{grid-template-columns:92px minmax(0,1fr) 54px;gap:4px 8px;font-size:13px}
+  .pair-v{font-size:11.5px}
+  .cmp{grid-template-columns:96px minmax(0,1fr);gap:2px 10px}
+  .cmp .c-name{font-size:13px}
+  .cmp .c-val{grid-column:2;text-align:left;margin-bottom:6px}
+  .fp-row,.fp-axis{grid-template-columns:78px minmax(0,1fr) 92px;gap:8px;font-size:13px}
+  .fp-row .fp-val{font-size:11px}
+}
+</style>
+</head>
+<body>
+<!-- 상단 바는 site.js가 채운다. data-root는 사이트 뿌리까지의 상대 경로 -->
+<header class="top" data-root="../"></header>
+
+<main class="post"><div class="wrap">
+
+<!-- site.js가 이 .hero 바로 뒤에 '이런 상황이라면?'과 결론 블록을 넣는다 -->
+<section class="hero">
+  <p class="eyebrow">논문 해설: 알코올과 중독, 직장인 정신건강</p>
+  <h1>술을 위험하게 마시는 직장인에게는 어떤 습관과 성향이 함께 있을까요?</h1>
+  <p class="lede">회식이 잦고 스트레스가 많은 직장에서 음주 문제는 흔히 '술자리 문화'나 '업무 스트레스'로 설명됩니다. 이 연구는 시선을 사람 쪽으로 돌렸습니다. 위험하게 술을 마시는 직장인에게 담배, 스마트폰 같은 다른 중독 성향과 자살시도 경험, 성격 특성이 함께 있는지를 광주 직장인 486명의 설문으로 살폈습니다.</p>
+  <p class="meta">원문: Jhon M, Lee J-Y 외. J Korean Neuropsychiatr Assoc 56(4):175-180, 2017<br>읽는 데 약 9분, 직접 눌러 보는 요소 4개와 퀴즈</p>
+</section>
+
+<div class="tldr">
+  <strong>30초 요약</strong>
+  <ul>
+    <li>2016년 광주 시민 정신건강 현황조사에 참여한 직장인 <b>486명</b>을 분석했습니다. 알코올 사용 장애 선별 검사(AUDIT-K)로 남성 10점, 여성 6점 이상을 위험음주로 보았고, <b>168명(34.6%)</b>이 해당했습니다.</li>
+    <li>위험음주군은 흡연 경험(47.6% 대 23.6%), 스마트폰 중독(19.1% 대 9%), 자살시도 경험(10.2% 대 3.8%)의 비율이 더 높았습니다.</li>
+    <li>여러 요인을 함께 보정한 로지스틱 회귀에서 위험음주와 관련이 남은 것은 <b>흡연 경험</b>(오즈비 2.89), <b>자살시도 경험</b>(3.14), <b>스마트폰 중독</b>(2.14), <b>높은 외향성</b>(1점당 1.31)이었습니다.</li>
+    <li>논문은 위험음주가 다른 중독행동과 함께 나타나는 경향이 있으므로 물질 중독과 행위 중독을 함께 평가하고 중재해야 하며, 위험음주를 하는 사람에게서 자살 위험을 세심히 살펴야 한다고 결론짓습니다.</li>
+  </ul>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>34.6%</b><span>위험음주에 해당한 직장인(486명 중 168명)</span></div>
+  <div class="stat"><b>2.89</b><span>흡연 경험의 보정 오즈비</span></div>
+  <div class="stat"><b>2.14</b><span>스마트폰 중독의 보정 오즈비</span></div>
+  <div class="stat"><b>3.14</b><span>자살시도 경험의 보정 오즈비</span></div>
+</div>
+
+<nav class="toc" aria-label="목차">
+  <strong>목차</strong>
+  <ol>
+    <li><a href="#why">왜 '사람'을 들여다보았을까요</a></li>
+    <li><a href="#how">누구를, 무엇으로 쟀을까요</a></li>
+    <li><a href="#diff">두 집단은 어떻게 달랐을까요</a></li>
+    <li><a href="#or">함께 보정해도 남은 관련</a></li>
+    <li><a href="#meaning">의미와 한계</a></li>
+    <li><a href="#quiz">퀴즈로 복습하기</a></li>
+  </ol>
+</nav>
+
+<h2 id="why">1. 왜 '사람'을 들여다보았을까요</h2>
+<p>음주 문제는 개인과 가족을 넘어 지역사회와 나라 전체에 몸과 마음, 사회의 피해를 남깁니다. 논문이 인용한 2016년 정신질환실태 역학조사에서 알코올 사용 장애는 조사한 정신질환 가운데 가장 흔했고, 평생유병률은 12.2%였습니다.</p>
+<p>우리나라 직장인은 술을 권하고 음주에 너그러운 환경과 여러 스트레스에 노출되어 있습니다. 논문은 직장인의 90% 이상이 술을 마시고, 그중 60% 이상이 이 때문에 여러 문제를 겪는다는 보고를 인용합니다. 직장인의 음주 문제는 개인의 건강뿐 아니라 일터의 생산성까지 떨어뜨립니다.</p>
+<p>그런데 지금까지 직장인 음주 연구는 주로 술자리 문화 같은 환경 요인, 업무 스트레스 같은 심리 요인, 음주에 대한 기대나 거절 같은 인지 요인을 다뤘습니다. 논문은 <span class="term" data-tip="한 가지 물질이나 행동에 쉽게 빠져드는 개인의 경향. 이 연구에서는 흡연, 인터넷, 스마트폰 사용으로 살폈다.">중독 성향</span>과 성격 같은 개인 요인도 평가와 개입에 매우 중요하다고 봅니다. 일부 연구는 알코올이나 담배 같은 <span class="term" data-tip="알코올, 니코틴처럼 몸에 들어가는 물질에 대한 중독.">물질 중독</span>과 인터넷, 스마트폰 같은 <span class="term" data-tip="물질 없이 특정 행동(인터넷, 스마트폰, 도박, 게임 등)을 조절하지 못하는 상태.">행위 중독</span>이 신경생물학적으로 공통된 성질을 지닌다고 설명합니다.</p>
+<div class="callout"><p><b>비유:</b> 같은 비를 맞아도 어떤 집은 지붕이 새고 어떤 집은 멀쩡합니다. 술자리 문화와 업무 스트레스가 '비'라면, 이 연구는 '지붕', 곧 술을 마시는 사람 쪽의 성향을 들여다본 셈입니다.</p></div>
+
+<h2 id="how">2. 누구를, 무엇으로 쟀을까요</h2>
+<p>이 연구는 2016년 광주정신보건사업지원단이 실시한 광주 시민 정신건강 현황조사의 일부입니다. 한 시점에 설문을 한 번 받은 <span class="term" data-tip="여러 변인을 한 시점에 함께 재어 서로의 관련을 보는 연구 설계. 무엇이 먼저인지는 알 수 없다.">횡단 연구</span>입니다.</p>
+<ul class="flow" aria-label="참여자 흐름">
+  <li><b>718명</b><span>설문에 참여한 광주광역시 시민</span></li>
+  <li><b>486명</b><span>직장생활을 하는 사람을 골라 분석. 대부분(376명, 77.4%)이 정규직이나 장기계약직이었습니다</span></li>
+  <li><b>168명</b><span>위험음주군(34.6%)</span></li>
+  <li><b>318명</b><span>비위험음주군(65.4%)</span></li>
+</ul>
+<p>직종은 사무직 166명(34.2%), 생산직 108명(22.2%), 서비스직 108명(22.2%), 전문직 104명(21.4%)이었습니다. 전체의 52.9%(257명)가 남성이었고 평균 나이는 41.8세였습니다.</p>
+<p>위험음주는 세계보건기구가 만든 <span class="term" data-tip="Alcohol Use Disorders Identification Test-Korean version. 알코올 의존 3문항, 해로운 음주 3문항, 위험한 음주 4문항, 모두 10문항으로 다양한 음주자를 간편하게 선별하는 검사.">AUDIT-K</span>로 나눴습니다. 한국어판의 신뢰도와 타당도를 확인한 선행연구를 따라 남성은 10점, 여성은 6점을 기준점으로 썼습니다. 아래에서 성별과 점수를 바꿔 기준을 직접 대어 보세요.</p>
+
+<div class="panel figure" id="cutFig"><span class="cx"></span>
+  <div class="fig-head"><h3>위험음주 기준점 대어 보기</h3><span class="note">빨간 점: 고른 점수, 속 빈 점: 기준점</span></div>
+  <div class="ctrl"><div class="seg" id="sexSeg" role="group" aria-label="성별"><button data-k="m">남성</button><button data-k="f">여성</button></div></div>
+  <div class="cut">
+    <label for="cutRange">AUDIT-K 점수(가상 예시): <b id="cutNum" class="num">8</b>점</label>
+    <input type="range" id="cutRange" min="0" max="20" step="1" value="8">
+    <div id="cutGauge"></div>
+  </div>
+  <p class="cut-out" id="cutOut" aria-live="polite"></p>
+  <p class="fig-note">점수는 기준을 설명하려고 고르는 가상 예시입니다. 실제 평균 점수는 위험음주군 15.0점(표준편차 6.1), 비위험음주군 2.4점(2.7)이었습니다(표 1).</p>
+</div>
+
+<p>함께 잰 것은 다음과 같습니다. 모두 자기보고 설문입니다.</p>
+<ul>
+  <li><b>행위 중독:</b> <span class="term" data-tip="Korean translation of the Internet Addiction Test. 5점 척도 20문항. 이 연구는 국제 기준에 따라 40점 이상을 인터넷 중독으로 보았다.">한국판 인터넷 중독 검사</span>(40점 이상)와 <span class="term" data-tip="Smartphone Addiction Scale. 6점 척도 33문항. 점수가 높을수록 중독 성향이 높다. 이 연구는 주의가 필요한 총점으로 제안된 101점을 기준으로 썼다.">스마트폰 중독 척도</span>(101점 이상)</li>
+  <li><b>불안과 우울:</b> <span class="term" data-tip="Hospital Anxiety and Depression Scale. 불안 7문항, 우울 7문항, 문항당 0~3점, 총 42점. 점수가 높을수록 증상이 심하다.">HADS</span></li>
+  <li><b>스트레스:</b> 10문항 <span class="term" data-tip="Perceived Stress Scale. 스스로 느끼는 스트레스 정도. 총점이 높을수록 스트레스가 심하다.">PSS</span></li>
+  <li><b>회복탄력성:</b> 25문항 <span class="term" data-tip="Korean version of Connor-Davidson Resilience Scale. 강인성, 인내력, 낙관성, 통제감, 영성의 5요인. 점수가 높을수록 잘 회복한다.">K-CD-RISC</span></li>
+  <li><b>성격:</b> 10문항으로 다섯 성격 요인(외향성, 친화성, 성실성, 신경증, 개방성)을 재는 <span class="term" data-tip="Big Five Inventory-Korean version-10. 국내에서 표준화한 성격 5요인 척도 단축형.">BFI-K-10</span></li>
+  <li><b>그 밖에:</b> 나이, 성별, 결혼 상태, 교육 기간(12년 기준), 월평균 수입, 직종(전문직과 비전문직), 흡연 경험, 자살시도 경험</li>
+</ul>
+<p>분석은 두 단계였습니다. 먼저 위험음주군과 비위험음주군을 하나씩 비교했고(범주형 변수는 카이제곱 검정, 연속형 변수는 독립 t 검정), 차이를 보인 변인들을 <span class="term" data-tip="여러 요인을 한 모델에 함께 넣어, 다른 요인의 영향을 고려하고도 각 요인이 결과와 관련되는지 보는 방법. 결과는 오즈비로 나온다.">로지스틱 회귀</span>에 함께 넣어 서로의 영향을 고려하고도 관련이 남는지 보았습니다.</p>
+
+<h2 id="diff">3. 두 집단은 어떻게 달랐을까요</h2>
+<p>먼저 하나씩 비교한 결과입니다. 위험음주군에는 남성, 교육 기간 12년 미만, 비전문직, 흡연 경험, 스마트폰 중독, 자살시도 경험이 있는 사람의 비율이 더 높았습니다. 인터넷 중독도 더 많았고 통계적 유의성에 가까웠습니다(p=0.053). 나이, 결혼 여부, 월평균 수입은 위험음주 여부와 관련이 없었습니다.</p>
+
+<div class="panel figure" id="t1cat"><span class="cx"></span>
+  <div class="fig-head"><h3>두 집단의 비율 비교(표 1)</h3><span class="note">묶음을 골라 보세요</span></div>
+  <div class="ctrl"><div class="seg" id="catSeg" role="group" aria-label="변인 묶음"><button data-k="add">중독과 자살시도</button><button data-k="soc">사회인구학 특성</button></div></div>
+  <p class="key"><span><i class="h"></i>위험음주군(168명)</span><span><i class="n"></i>비위험음주군(318명)</span></p>
+  <div class="pair" id="catBars"></div>
+  <p class="fig-note" id="catNote"></p>
+</div>
+
+<p>설문 점수에서도 차이가 보였습니다. 위험음주군은 불안과 우울(HADS), 스트레스(PSS) 점수가 더 높고 회복탄력성(K-CD-RISC) 점수가 더 낮았습니다. 성격에서는 외향성이 더 높았습니다. 척도를 골라 두 집단의 평균을 견주어 보세요.</p>
+
+<div class="panel figure" id="t1cont"><span class="cx"></span>
+  <div class="fig-head"><h3>척도 점수의 평균 비교(표 1)</h3><span class="note">속 빈 점: 비위험음주군, 빨간 점: 위험음주군, 회색 띠: 평균±표준편차(계산값)</span></div>
+  <div class="pick" id="contPick" role="group" aria-label="척도 고르기"></div>
+  <div id="contOut"></div>
+  <p class="fig-note" id="contNote"></p>
+</div>
+
+<h2 id="or">4. 함께 보정해도 남은 관련</h2>
+<p>하나씩 비교할 때 보이는 차이는 서로 얽혀 있을 수 있습니다. 예를 들어 남성이 담배를 더 많이 피운다면, 흡연과 위험음주의 관련은 성별 때문일 수도 있습니다. 그래서 성별, 학력, 직종, 흡연, 자살시도, 스마트폰 중독, HADS, PSS, K-CD-RISC, 외향성, 친화성, 개방성을 한 모델에 함께 넣었습니다.</p>
+<p>결과는 <span class="term" data-tip="어떤 특성이 있는 집단에서 결과(여기서는 위험음주)가 있을 오즈가, 없는 집단에 비해 몇 배인지 나타내는 값. 1이면 관련 없음, 1보다 크면 함께 나타나는 경향.">오즈비</span>로 나옵니다. 1보다 크면 그 특성이 위험음주와 함께 나타나는 경향이 있다는 뜻이고, <span class="term" data-tip="같은 연구를 되풀이할 때 참값이 들어 있을 것으로 기대하는 범위. 95% 신뢰구간이 1을 포함하지 않으면 유의한 관련으로 본다.">95% 신뢰구간</span> 전체가 1보다 위에 있으면 유의한 관련입니다. 줄을 눌러 각 값을 읽어 보세요.</p>
+
+<div class="panel figure" id="t2"><span class="cx"></span>
+  <div class="fig-head"><h3>위험음주와 관련된 요인의 보정 오즈비(표 2)</h3><span class="note">점선: 오즈비 1, 빨간 점: p&lt;0.05</span></div>
+  <div class="fp" id="fp" role="group" aria-label="요인별 보정 오즈비"></div>
+  <div class="fp-axis" aria-hidden="true"><span></span><div class="fp-ticks" id="fpTicks"></div><span></span></div>
+  <p class="fp-out" id="fpOut" aria-live="polite"></p>
+  <p class="fig-note">가로축은 배수 간격(로그 눈금)입니다. 범주형 요인은 그 특성이 있는 경우를, 척도 점수는 1점 높을 때를 기준으로 한 오즈비이며, 모두 모델 안의 다른 변인을 보정했습니다.</p>
+</div>
+
+<p>네 가지가 남았습니다. <b>흡연 경험</b>(오즈비 2.89, 95% 신뢰구간 1.61~5.18), <b>자살시도 경험</b>(3.14, 1.23~7.98), <b>스마트폰 중독</b>(2.14, 1.09~4.22), <b>외향성 점수</b>(1.31, 1.10~1.56)입니다. 하나씩 비교할 때 보였던 성별, 학력, 직종, 불안과 우울, 스트레스, 회복탄력성의 차이는 함께 보정하자 유의성이 사라졌습니다.</p>
+
+<h2 id="meaning">5. 의미와 한계</h2>
+<h3>논문이 말하는 의미</h3>
+<p>논문은 이 연구를 일반 직장인의 음주 문제와 관련된 정신의학적 특성으로 흡연, 자살시도, 스마트폰 중독 성향, 외향적 성격을 밝힌 국내 첫 연구로 소개합니다.</p>
+<ul>
+  <li><b>담배와 술:</b> 스트레스, 우울, 불안을 함께 고려했는데도 흡연과 위험음주의 관련이 뚜렷했습니다. 논문은 여기서 심리적 요인보다 개인의 중독 성향이 더 앞선다고 해석합니다. 니코틴과 알코올은 모두 <span class="term" data-tip="mesolimbic dopaminergic pathway. 중뇌에서 변연계로 이어지는 도파민 신경 경로로, 보상과 쾌감에 관여한다.">중뇌 변연계 도파민 경로</span>를 통해 보상 기전에 영향을 줍니다. 그래서 위험음주를 하는 직장인의 음주와 흡연은 함께 평가하고 함께 중재해야 한다고 적습니다.</li>
+  <li><b>스마트폰과 술:</b> 스마트폰 중독의 위험 요인인 충동성과 자기통제감 부족이 알코올 중독을 비롯한 중독행동의 공통 성질일 수 있다고 봅니다. 직장인은 업무와 소통에 스마트폰을 많이 써서 중독 위험에 노출된다는 점도 짚습니다.</li>
+  <li><b>자살시도와 술:</b> 우울 증상을 통제하고도 위험음주와 자살시도 경험은 독립적으로 관련되었습니다. 과거의 자살시도는 재시도와 자살 사망을 가장 강하게 예측하는 요인이므로, 위험음주군에서는 우울 증상이 있든 없든 자살시도를 평가하고 개입해야 한다고 제안합니다.</li>
+  <li><b>외향성과 술:</b> 성인의 음주는 사회 활동을 반영하고, 회식 문화가 있는 한국 직장에서는 외향적인 사람이 술자리를 이끌거나 함께할 가능성이 큽니다. 성격 5요인 가운데 외향성만 위험음주를 예측했다는 국내 선행연구와도 같은 결과입니다.</li>
+</ul>
+<p>논문은 직장인 대상 정신보건 사업이 일반인 대상 사업보다 대상자에게 닿기 쉬워, 적절한 평가와 개입이 이루어지면 효과가 클 것이라고 봅니다. 지금 건강하게 일하는 직장인에게 위험음주를 교육하고 일찍 중재하면 개인의 건강과 행복을 지키는 데 기여할 것으로 기대합니다.</p>
+<div class="callout"><p><b>함께 읽기:</b> 같은 시기, 증상이 굳기 전에 지역사회에서 먼저 가려내려는 물음은 <a data-paper="kpq16_validation_2018">대학생 정신증 위험 선별 도구의 한국어판 타당화</a>로도 이어집니다.</p></div>
+<p><b>다음 질문:</b> 술, 담배, 스마트폰을 한꺼번에 묻고 자살시도 경험까지 살피는 통합 선별을 실제 직장 정신보건 사업에 넣었을 때 위험음주 중재의 성과가 달라지는지는 이 연구가 다루지 않은, 앞으로 확인할 물음입니다.</p>
+
+<h3>논문이 밝힌 한계</h3>
+<ul>
+  <li>증상을 자기보고 설문으로만 평가했고, 모든 변인을 한 시점에 잰 횡단 설계라 인과관계를 해석하는 데 제한이 있습니다.</li>
+  <li>대상자의 음주력과 가족력, 그 밖의 중독 질환을 반영하지 못했습니다. 도박 중독과 게임 중독 같은 다른 행위 중독을 고려한 후속 연구가 필요합니다.</li>
+  <li>참여자 가운데 전문직이거나 학력과 소득이 평균 이상인 사람이 상당수였습니다. 직장 음주 문화와 업무 스트레스의 영향이 일반 근로자와 다를 수 있습니다.</li>
+  <li>직급에 따른 업무 부담의 차이를 고려하지 못했습니다. 논문은 그럼에도 고소득 전문직까지 포함해 성격과 공통 중독 성향을 확인한 점에서, 직장인 위험음주 평가에 개인 성향 평가가 기본이 된다는 근거를 준다고 봅니다.</li>
+</ul>
+
+<h2 id="quiz">6. 퀴즈로 복습하기</h2>
+<div id="quizBox"></div>
+
+<!-- site.js가 이 footer 바로 앞에 '이 연구가 이어지는 곳'(같은 질문, 같은 시기, 같은 주제)을 넣는다 -->
+<footer>
+  <div class="cite-row"><b>원문 인용</b><button type="button" class="btn" data-copy="#citeText">복사</button></div>
+  <p class="cite" id="citeText">Jhon M, Lee J-Y, Hong J-E, Yoo T, Kim S-Y, Kim J-M, Shin I-S, Yoon J-S, Kim S-W. Addictive Behavior and Personality among Workers with Hazardous Alcohol Drinking. J Korean Neuropsychiatr Assoc. 2017;56(4):175-180. doi:10.4306/jknpa.2017.56.4.175</p>
+  <p>DOI <a href="https://doi.org/10.4306/jknpa.2017.56.4.175" target="_blank" rel="noopener">10.4306/jknpa.2017.56.4.175</a><br>
+  원문: Copyright © 2017 Korean Neuropsychiatric Association. 이 페이지는 원문의 그림과 표를 옮기지 않고 내용을 풀어 설명했으며, 수치는 원문의 본문과 표 1, 2에서 가져왔습니다. 전민은 이 논문의 제1저자이며, 교신저자는 김성완 교수입니다.</p>
+  <p>AUDIT-K 기준점 그림의 점수는 설명을 위한 가상 예시이고, 평균±표준편차 띠는 표 1의 값으로 계산한 범위입니다. 이 페이지는 진단을 대신하지 않습니다.</p>
+  <p>지금 마음이 많이 힘드시다면 혼자 견디지 마시고 자살예방상담전화 <b>109</b>(24시간)로 연락해 주세요.</p>
+</footer>
+</div></main>
+
+<!-- 끝의 세 스크립트: 데이터, 공통 부품, 이 글의 요소. 순서를 바꾸지 않는다 -->
+<script src="../assets/catalog.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+const S=window.SITE, esc=S.esc, $=s=>document.querySelector(s);
+const KEY='hazardous-drinking-workers';
+
+/* 1) AUDIT-K 기준점(남성 10점, 여성 6점). 점수는 가상 예시 */
+const CUT={m:10,f:6},SEXN={m:'남성',f:'여성'};let sex='m';
+const rng=$('#cutRange');
+const s0=S.store.get(KEY+':cut',8);if(s0>=0&&s0<=20)rng.value=s0;
+function cut(){const v=+rng.value,c=CUT[sex],hz=v>=c;
+  $('#cutNum').textContent=v;
+  $('#cutGauge').innerHTML=S.gauge({min:0,max:20,ticks:[0,5,10,15,20],pts:[{v:c,ref:1,label:`${SEXN[sex]} 기준점 ${c}점`},{v:v,label:`가상 예시 점수 ${v}점`}]},`${SEXN[sex]} 기준점 ${c}점과 가상 예시 점수 ${v}점`);
+  $('#cutOut').innerHTML=`${SEXN[sex]}의 기준점은 <b>${c}점</b>입니다. 가상 예시 점수 <b>${v}점</b>은 ${hz?'기준점 이상이라 이 연구에서는 <b>위험음주군</b>으로 분류됩니다.':'기준점보다 낮아 이 연구에서는 <b>비위험음주군</b>으로 분류됩니다.'}${(v>=6&&v<10)?' 같은 점수라도 남성과 여성에서 분류가 달라지는 구간입니다.':''}`;
+  S.store.set(KEY+':cut',v)}
+rng.addEventListener('input',cut);
+S.seg('sexSeg',k=>{sex=k;cut()},KEY+':sex');
+
+/* 2) 표 1 범주형 변인: [이름, 위험음주군 %, 비위험음주군 %, p] */
+const CAT={
+ add:[['흡연 경험 있음',47.6,23.6,'<0.001'],['자살시도 경험 있음',10.2,3.8,'0.005'],['스마트폰 중독(SAS 101점 이상)',19.1,9,'0.002'],['인터넷 중독(KIAT 40점 이상)',27.6,19.8,'0.053']],
+ soc:[['남성',63.1,47.5,'0.001'],['교육 기간 12년 미만',31.0,21.1,'0.016'],['비전문직',84.2,76,'0.042'],['배우자 없음',38.1,33.6,'0.329'],['월평균 수입 기준 미만',26.7,24.2,'0.554']]};
+const CATN={add:'흡연, 자살시도, 스마트폰 중독은 위험음주군에서 유의하게 많았고(p<0.05), 인터넷 중독은 유의성에 가까웠습니다(p=0.053).',soc:'남성, 교육 기간 12년 미만, 비전문직은 위험음주군에서 유의하게 많았고, 결혼 상태와 월평균 수입은 차이가 유의하지 않았습니다.'};
+const pct=v=>(+v).toFixed(1).replace(/\.0$/,'');
+S.seg('catSeg',k=>{
+  $('#catBars').innerHTML=CAT[k].map(r=>`<div class="pair-row"><span class="pn">${esc(r[0])}<small>p ${r[3].startsWith('<')?'':'= '}${esc(r[3])}</small></span><span class="pair-bars"><span class="pb h" role="img" aria-label="위험음주군 ${pct(r[1])}%"><i style="width:${r[1]}%"></i></span><span class="pb n" role="img" aria-label="비위험음주군 ${pct(r[2])}%"><i style="width:${r[2]}%"></i></span></span><span class="pair-v"><span class="h">${pct(r[1])}%</span><br><span class="n">${pct(r[2])}%</span></span></div>`).join('');
+  $('#catNote').textContent=CATN[k]+' 막대 길이는 0~100% 기준입니다.';
+},KEY+':cat');
+
+/* 3) 표 1 연속형 척도: 평균(표준편차) */
+const CONT=[
+ {k:'audit',n:'AUDIT-K',a:[2.4,2.7],b:[15.0,6.1],p:'p < 0.001',t:'음주 문제를 선별하는 점수. 위험음주군을 이 점수로 나눴으니 차이가 큰 것은 당연합니다.'},
+ {k:'hads',n:'HADS',a:[9.2,5.8],b:[10.7,5.9],p:'p = 0.009',t:'불안과 우울 증상. 점수가 높을수록 증상이 심합니다.'},
+ {k:'pss',n:'PSS',a:[16.4,4.9],b:[17.9,4.5],p:'p = 0.001',t:'스스로 느끼는 스트레스. 점수가 높을수록 스트레스가 심합니다.'},
+ {k:'cdrisc',n:'K-CD-RISC',a:[68.1,14.6],b:[64.8,13.8],p:'p = 0.017',t:'회복탄력성. 점수가 높을수록 잘 회복합니다.'},
+ {k:'ext',n:'외향성',a:[6.1,1.4],b:[6.6,1.3],p:'p = 0.001',t:'BFI-K-10 외향성. 다른 사람과 어울리기를 즐기는 성향입니다.'},
+ {k:'con',n:'성실성',a:[7.1,1.2],b:[6.7,1.2],p:'p = 0.002',t:'BFI-K-10 성실성.'},
+ {k:'neu',n:'신경증',a:[7.1,1.5],b:[7.0,1.4],p:'p = 0.329',t:'BFI-K-10 신경증.'},
+ {k:'agr',n:'친화성',a:[5.4,1.4],b:[5.5,1.4],p:'p = 0.232',t:'BFI-K-10 친화성.'},
+ {k:'ope',n:'개방성',a:[6.9,1.4],b:[6.6,1.5],p:'p = 0.043',t:'BFI-K-10 개방성.'},
+ {k:'age',n:'나이',a:[41.9,12.2],b:[41.6,12.9],p:'p = 0.820',t:'단위는 세입니다.'}];
+function nice(lo,hi){const span=hi-lo,st=[.5,1,2,5,10,20,25,50].find(s=>span/s<=6)||50;const a=Math.floor(lo/st)*st,b=Math.ceil(hi/st)*st,t=[];for(let v=a;v<=b+1e-9;v+=st)t.push(+v.toFixed(2));return{min:a,max:b,ticks:t}}
+const r1=v=>(+v).toFixed(1);
+$('#contPick').innerHTML=CONT.map(m=>`<button type="button" data-k="${m.k}">${esc(m.n)}</button>`).join('');
+S.seg('contPick',k=>{const m=CONT.find(x=>x.k===k);
+  const lo=Math.max(0,Math.min(m.a[0]-m.a[1],m.b[0]-m.b[1])),hi=Math.max(m.a[0]+m.a[1],m.b[0]+m.b[1]),ax=nice(lo,hi);
+  const row=(name,v,ref)=>`<span class="c-name">${name}</span>${S.gauge({...ax,band:[Math.max(ax.min,v[0]-v[1]),v[0]+v[1]],pts:[{v:v[0],ref,label:`${name} 평균 ${r1(v[0])}, 표준편차 ${r1(v[1])}`}]},`${m.n} ${name} 평균 ${r1(v[0])}`)}<span class="c-val">${ref?r1(v[0]):`<b>${r1(v[0])}</b>`}<br>(표준편차 ${r1(v[1])})</span>`;
+  $('#contOut').innerHTML=`<div class="cmp">${row('비위험음주군',m.a,1)}${row('위험음주군',m.b,0)}</div>`;
+  $('#contNote').textContent=`${m.n}: ${m.t} 두 집단 비교 ${m.p}.`;
+},KEY+':cont');
+
+/* 4) 표 2: 보정 오즈비 */
+const T2=[
+ {n:'남성',u:'남성인 경우',or:1.78,lo:.98,hi:3.24,p:'p = 0.057'},
+ {n:'교육 12년 미만',u:'교육 기간이 12년 미만인 경우',or:1.29,lo:.76,hi:2.20,p:'p = 0.348'},
+ {n:'비전문직',u:'비전문직인 경우',or:1.13,lo:.62,hi:2.02,p:'p = 0.692'},
+ {n:'흡연 경험',u:'흡연 경험이 있는 경우',or:2.89,lo:1.61,hi:5.18,p:'p < 0.001',s:1},
+ {n:'자살시도 경험',u:'자살시도 경험이 있는 경우',or:3.14,lo:1.23,hi:7.98,p:'p = 0.016',s:1},
+ {n:'스마트폰 중독',u:'스마트폰 중독에 해당하는 경우',or:2.14,lo:1.09,hi:4.22,p:'p = 0.028',s:1},
+ {n:'HADS',u:'HADS 점수가 1점 높을 때',or:1.00,lo:.95,hi:1.05,p:'p = 0.845'},
+ {n:'PSS',u:'PSS 점수가 1점 높을 때',or:1.06,lo:1.00,hi:1.13,p:'p = 0.100'},
+ {n:'K-CD-RISC',u:'K-CD-RISC 점수가 1점 높을 때',or:1.00,lo:.98,hi:1.02,p:'p = 0.817'},
+ {n:'외향성',u:'외향성 점수가 1점 높을 때',or:1.31,lo:1.10,hi:1.56,p:'p = 0.003',s:1},
+ {n:'친화성',u:'친화성 점수가 1점 높을 때',or:.87,lo:.69,hi:1.09,p:'p = 0.223'},
+ {n:'개방성',u:'개방성 점수가 1점 높을 때',or:.86,lo:.73,hi:1.02,p:'p = 0.090'}];
+const L0=Math.log(.5),L1=Math.log(8),fx=v=>((Math.log(v)-L0)/(L1-L0)*100).toFixed(2)+'%';
+$('#fp').innerHTML=T2.map((r,i)=>`<button type="button" class="fp-row${r.s?' sig':''}" data-i="${i}" aria-pressed="false"><span class="fp-name">${esc(r.n)}</span><span class="fp-track" aria-hidden="true"><span class="fp-one" style="left:${fx(1)}"></span><span class="fp-ci" style="left:${fx(r.lo)};width:calc(${fx(r.hi)} - ${fx(r.lo)})"></span><span class="fp-dot" style="left:${fx(r.or)}"></span></span><span class="fp-val">${r.or.toFixed(2)} (${r.lo.toFixed(2)}~${r.hi.toFixed(2)})</span></button>`).join('');
+$('#fpTicks').innerHTML=[.5,1,2,4,8].map(t=>`<span style="left:${fx(t)}">${t}</span>`).join('');
+function fpPick(i){const r=T2[i];if(!r)return;
+  document.querySelectorAll('.fp-row').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));
+  const msg=r.s?`다른 요인을 함께 보정한 뒤에도 위험음주일 오즈가 ${r.or.toFixed(2)}배였습니다. 95% 신뢰구간 ${r.lo.toFixed(2)}~${r.hi.toFixed(2)}이 1보다 위에 있어 유의한 관련입니다(${r.p}).`
+    :`보정한 오즈비는 ${r.or.toFixed(2)}, 95% 신뢰구간 ${r.lo.toFixed(2)}~${r.hi.toFixed(2)}로 1을 포함해, 다른 요인을 함께 고려하면 위험음주와의 관련이 유의하지 않았습니다(${r.p}).`;
+  $('#fpOut').innerHTML=`<b>${esc(r.n)}</b>: ${esc(r.u)}, ${esc(msg)}`;
+  S.store.set(KEY+':t2',i)}
+document.querySelectorAll('.fp-row').forEach(b=>b.onclick=()=>fpPick(+b.dataset.i));
+fpPick(S.store.get(KEY+':t2',3));
+
+/* 퀴즈 */
+S.quiz($('#quizBox'),[
+ {q:'이 연구에서 위험음주를 나눈 AUDIT-K 기준점은 무엇이었나요?',o:['남녀 모두 8점','남성 10점, 여성 6점','남성 6점, 여성 10점'],a:1,e:'한국어판 AUDIT-K의 신뢰도와 타당도를 확인한 선행연구를 따라 남성 10점, 여성 6점 이상을 위험음주로 보았습니다.'},
+ {q:'직장인 486명 가운데 위험음주군은 몇 퍼센트였나요?',o:['약 12%','34.6%','65.4%'],a:1,e:'168명, 34.6%가 위험음주군이었습니다. 65.4%는 비위험음주군의 비율입니다.'},
+ {q:'여러 요인을 함께 보정한 뒤에도 위험음주와 관련이 남은 것이 아닌 것은 무엇인가요?',o:['흡연 경험','스마트폰 중독','불안과 우울 점수(HADS)'],a:2,e:'HADS는 하나씩 비교할 때는 차이가 있었지만 보정 오즈비가 1.00(0.95~1.05)으로 관련이 남지 않았습니다. 흡연 경험, 자살시도 경험, 스마트폰 중독, 외향성은 남았습니다.'},
+ {q:'우울 증상을 통제하고도 위험음주와 독립적으로 관련된 것을 근거로, 논문이 위험음주군에서 꼭 살피라고 한 것은 무엇인가요?',o:['자살시도 경험과 자살 위험','혈중 알코올 농도','업무 성과'],a:0,e:'자살시도 경험의 보정 오즈비는 3.14였습니다. 논문은 우울 증상이 있든 없든 위험음주군의 자살시도를 평가하고 개입해야 한다고 제안합니다.'},
+ {q:'성격 5요인 가운데 보정 후에도 위험음주와 관련된 것은 무엇이었나요?',o:['신경증','외향성','성실성'],a:1,e:'외향성 점수가 1점 높을 때 위험음주일 오즈가 1.31배였습니다. 논문은 회식 같은 음주 문화가 있는 한국 직장의 특성과 연결해 해석합니다.'}
+],KEY);
+})();
+</script>
+</body>
+</html>

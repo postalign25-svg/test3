@@ -11,7 +11,7 @@ colors:
     ink-2: "#4b5058"       # 보조 글 (7.6:1)
     meta: "#646a73"        # 캡션, 축 숫자, 라벨 (bg 5.1:1, tint 4.8:1)
     line: "#dcdedf"        # 구분선
-    line-2: "#c4c7ca"      # 버튼 테두리, 밑줄
+    line-2: "#858a91"      # 버튼, 입력칸 테두리, 밑줄 (bg 3.2:1, tint 3.05:1, 비텍스트 3:1)
     mark: "#9aa0a6"        # 패널 모서리 십자(장식, 정보 없음)
     grid-minor: "#eef0f1"  # 기록지 눈금(작은 칸)
     grid-major: "#dde1e4"  # 기록지 눈금(큰 칸)
@@ -27,7 +27,7 @@ colors:
     ink-2: "#b4bac2"       # 8.9:1
     meta: "#959ca5"        # 6.2:1 (tint 5.3:1)
     line: "#2f363e"
-    line-2: "#3d454e"
+    line-2: "#6e767f"      # surface 3.5:1, tint 3.2:1
     mark: "#5d6670"
     grid-minor: "#20262d"
     grid-major: "#2b323a"

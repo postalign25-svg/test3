@@ -143,7 +143,7 @@
     <div>
       <!-- CORE.text(themes.json core_question)를 읽기 쉽게 줄인 문장. 질문이 바뀌면 함께 고친다 -->
       <h1 id="coreQ">현장에서 정신질환의 위험과 경과를 더 일찍, 더 적은 부담으로 가려내려면 어떤 지표가 필요하고, 임상에서 믿고 쓰려면 무엇을 갖춰야 하는가</h1>
-      <p>처음에는 혈액과 척도로 한 시점의 값을 쟀다. 2023년부터는 걸음 수, 심박변이도, 목소리, 일상 언어처럼 몸과 생활이 계속 내보내는 신호를 읽는다. 아래 기록지는 그 이동을 논문 한 편 단위로 그린 것이다.</p>
+      <p>처음에는 혈액과 척도로 한 시점의 값을 쟀습니다. 2023년부터는 걸음 수, 심박변이도, 목소리, 일상 언어처럼 몸과 생활이 계속 내보내는 신호를 읽습니다. 아래 기록지는 그 이동을 논문 한 편 단위로 그린 것입니다.</p>
     </div>
   </section>
 
@@ -152,7 +152,7 @@
   <section class="panel sheet" id="sheet" aria-labelledby="sheet-title"><span class="cx"></span>
     <div class="sheet-head">
       <h2 id="sheet-title">연구 기록지, 2016–2026</h2>
-      <p>점 하나, 박동 하나가 논문 한 편. 누르면 그 논문이 아래에 나온다</p>
+      <p>점 하나, 박동 하나가 논문 한 편입니다. 누르면 그 논문이 아래에 나옵니다.</p>
     </div>
     <div class="trace-frame paper-grid" id="traceFrame">
       <svg class="trace" id="trace" tabindex="0" role="img" aria-describedby="traceDesc"></svg>
@@ -169,13 +169,13 @@
   </section>
 
   <section class="sec" id="phases" aria-labelledby="phases-h">
-    <div class="sec-head"><h2 id="phases-h">네 시기</h2><p>시기마다 무엇을 쟀는지. 재는 대상이 한 시점의 검체에서 계속 흐르는 신호로 옮겨 간다.</p></div>
+    <div class="sec-head"><h2 id="phases-h">네 시기</h2><p>시기마다 무엇을 쟀는지 모았습니다. 재는 대상이 한 시점의 검체에서 계속 흐르는 신호로 옮겨 갑니다.</p></div>
     <div class="panel phases" id="phaseCards"><span class="cx"></span></div>
     <div class="parallel" id="parallel"></div>
   </section>
 
   <section class="sec" id="questions" aria-labelledby="questions-h">
-    <div class="sec-head"><h2 id="questions-h">질문</h2><p>논문을 묻는 것으로 묶으면 다섯 질문이 나온다. 셋은 전민의 질문, 둘은 연구실과 함께한 질문이다. 시기별, 주제별로도 묶어 볼 수 있다.</p></div>
+    <div class="sec-head"><h2 id="questions-h">질문</h2><p>논문을 묻는 것으로 묶으면 다섯 질문이 나옵니다. 셋은 전민의 질문, 둘은 연구실과 함께한 질문입니다. 시기별, 주제별로도 묶어 볼 수 있습니다.</p></div>
     <div class="view-bar">
       <div class="seg" id="viewSeg" role="group" aria-label="색인 보기"><button data-k="q">질문별</button><button data-k="p">시기별</button><button data-k="t">주제별</button></div>
     </div>
@@ -183,7 +183,7 @@
   </section>
 
   <section class="sec" id="papers" aria-labelledby="papers-h">
-    <div class="sec-head"><h2 id="papers-h">논문 전체</h2><p>제목이나 학술지로 찾고, 주제와 연도, 역할, 시기, 방법으로 좁힐 수 있다. 해설 글이 있는 논문은 해설로, 요약이 있는 논문은 요약 페이지로 이어진다.</p></div>
+    <div class="sec-head"><h2 id="papers-h">논문 전체</h2><p>제목이나 학술지로 찾고, 주제와 연도, 역할, 시기, 방법으로 좁힐 수 있습니다. 해설 글이 있는 논문은 해설로, 요약이 있는 논문은 요약 페이지로 이어집니다.</p></div>
     <div class="filters" role="search">
       <label class="field search">찾기<input type="search" id="fq" placeholder="제목, 학술지, 연도" autocomplete="off"></label>
       <label class="field">주제<select id="fTopic"></select></label>
@@ -336,7 +336,7 @@ svg.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=k<0?0:(k+(e.key==='ArrowRight'?1:-1)+order.length)%order.length;mark(order[n])}
   if(e.key==='Enter'&&sel>=0){const a=$('#readout a');if(a)a.click()}
 });
-$('#readout').textContent='점이나 박동을 누르면(마우스는 올리면) 그 논문이 여기에 나온다. 키보드로는 기록지에서 왼쪽, 오른쪽 화살표.';
+$('#readout').textContent='점이나 박동을 누르면(마우스는 올리면) 그 논문이 여기에 나옵니다. 키보드로는 기록지에서 왼쪽, 오른쪽 화살표로 옮깁니다.';
 draw();
 let raf=0;addEventListener('resize',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{if(frame.clientWidth!==lastW)draw()})});
 $('#ytable').innerHTML=`<thead><tr><th>연도</th><th>검체와 척도</th><th>디지털 신호</th><th>전민 주도</th></tr></thead><tbody>${YEARS.map(y=>`<tr><td>${y}</td><td>${DOTS[y].length}</td><td>${BEATS[y].length}</td><td>${DOTS[y].concat(BEATS[y]).filter(p=>p.led).length}</td></tr>`).join('')}<tr><td>미상</td><td colspan="3">${undated}편, 기록지에서 뺌</td></tr></tbody>`;
@@ -350,7 +350,7 @@ $('#phaseCards').insertAdjacentHTML('beforeend',['P1','P2','P3','P4'].map(id=>{c
   <dl><dt>잰 것</dt><dd>${esc(MEASURED[id])}</dd><dt>논문</dt><dd><span class="v">${ph.ids.length}</span>편, 전민 주도 <span class="v">${ledN(ph.ids)}</span>편</dd></dl>
   <a class="go" href="#p=${id}">이 시기 논문 보기</a></article>`}).join(''));
 const par=PH.P_parallel;
-$('#parallel').innerHTML=`<span><span class="yr">${dash(par.years)}</span> 병행 줄기</span><p>같은 시기에 조기개입, 자살 정책, 신체질환과 외상, 노년의 정신건강 연구도 이어진다. 논문 <span class="v">${par.ids.length}</span>편, 전민 주도 <span class="v">${ledN(par.ids)}</span>편. <a href="#p=P_parallel">논문 보기</a></p>`;
+$('#parallel').innerHTML=`<span><span class="yr">${dash(par.years)}</span> 병행 줄기</span><p>같은 시기에 조기개입, 자살 정책, 신체질환과 외상, 노년의 정신건강 연구도 이어집니다. 논문 <span class="v">${par.ids.length}</span>편, 전민 주도 <span class="v">${ledN(par.ids)}</span>편. <a href="#p=P_parallel">논문 보기</a></p>`;
 
 /* ---------- 질문, 시기, 주제 색인 ---------- */
 const papersOf=ids=>ids.map(i=>byId[i]).filter(Boolean).sort(rank);
@@ -381,7 +381,7 @@ const F={q:$('#fq'),topic:$('#fTopic'),year:$('#fYear'),role:$('#fRole'),phase:$
 const norm=s=>String(s||'').toLowerCase().normalize('NFKC');
 const hay=Object.fromEntries(P.map(p=>[p.id,norm([p.title,p.title_ko,p.venue,p.year,p.short,p.post_title].join(' '))]));
 const sorted=P.slice().sort((a,b)=>((b.year||0)-(a.year||0))||rank(a,b));
-let shown=40;
+const PAGE=matchMedia("(max-width:600px)").matches?15:40;let shown=PAGE;
 function row(p){
   const h=S.href(p,''),role=S.roleKo(p.role);
   const kind=p.tier==='A'&&p.slug?'해설 글':'';
@@ -404,11 +404,11 @@ function apply(){
   const any=terms.length||['topic','year','role','phase','method'].some(v);
   $('#pcount').textContent=any?`${P.length}편 가운데 ${out.length}편`:`${P.length}편, 최근 것부터`;
   $('#freset').hidden=!any;
-  const m=$('#pmore');m.hidden=out.length<=shown;m.textContent=`${Math.min(40,out.length-shown)}편 더 보기 (남은 ${out.length-shown}편)`;
+  const m=$('#pmore');m.hidden=out.length<=shown;m.textContent=`${Math.min(PAGE,out.length-shown)}편 더 보기 (남은 ${out.length-shown}편)`;
 }
-Object.values(F).forEach(e=>e.addEventListener(e.tagName==='INPUT'?'input':'change',()=>{shown=40;apply()}));
-$('#pmore').onclick=()=>{shown+=40;apply()};
-$('#freset').onclick=()=>{Object.values(F).forEach(e=>e.value='');shown=40;apply()};
+Object.values(F).forEach(e=>e.addEventListener(e.tagName==='INPUT'?'input':'change',()=>{shown=PAGE;apply()}));
+$('#pmore').onclick=()=>{shown+=PAGE;apply()};
+$('#freset').onclick=()=>{Object.values(F).forEach(e=>e.value='');shown=PAGE;apply()};
 apply();
 
 /* ---------- 주소의 상태: #q=Q1(질문 색인 열기), #p=P4(시기로 거르기), #t=T5(주제로 거르기) ---------- */

@@ -8,7 +8,7 @@
 :root{
   --bg:#f7f7f5; --surface:#ffffff; --tint:#eff0f1;
   --ink:#121417; --ink-2:#4b5058; --meta:#646a73;
-  --line:#dcdedf; --line-2:#c4c7ca; --mark:#9aa0a6;
+  --line:#dcdedf; --line-2:#858a91; --mark:#9aa0a6;
   --grid-minor:#eef0f1; --grid-major:#dde1e4;
   --signal:#d93a40;        /* 측정값, 기록지 파형, 주도 표시 */
   --signal-ink:#b4232a;    /* 빨강으로 쓰는 작은 글자(4.5:1 이상) */
@@ -22,7 +22,7 @@
   :root:not([data-theme="light"]){
     --bg:#171b20; --surface:#1d2228; --tint:#232930;
     --ink:#e7e9ec; --ink-2:#b4bac2; --meta:#959ca5;
-    --line:#2f363e; --line-2:#3d454e; --mark:#5d6670;
+    --line:#2f363e; --line-2:#6e767f; --mark:#5d6670;
     --grid-minor:#20262d; --grid-major:#2b323a;
     --signal:#ff6a6f; --signal-ink:#ff8a8e; --signal-soft:#3d2629; --ok:#7fcf9b;
   }
@@ -30,7 +30,7 @@
 :root[data-theme="dark"]{
   --bg:#171b20; --surface:#1d2228; --tint:#232930;
   --ink:#e7e9ec; --ink-2:#b4bac2; --meta:#959ca5;
-  --line:#2f363e; --line-2:#3d454e; --mark:#5d6670;
+  --line:#2f363e; --line-2:#6e767f; --mark:#5d6670;
   --grid-minor:#20262d; --grid-major:#2b323a;
   --signal:#ff6a6f; --signal-ink:#ff8a8e; --signal-soft:#3d2629; --ok:#7fcf9b;
 }
